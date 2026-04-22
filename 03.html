@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>③ 거래처 · 인플루언서 — 쥬얼아이스 사업자산</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{font-family:'Pretendard','Malgun Gothic',system-ui,sans-serif;background:#FAFAFA}
+.sig-bar{background:linear-gradient(90deg,#7C3AED 0%,#A78BFA 55%,#FDE047 100%)}
+.sig-purple{background:#7C3AED;color:#fff}
+.sig-yellow{background:#FDE047;color:#1F2937}
+[contenteditable="true"]{background:#FFFBEB;outline:2px dashed #FCD34D;outline-offset:2px;border-radius:4px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
+th{background:#F3E8FF;color:#5B21B6;font-weight:700;padding:10px 8px;border:1px solid #E9D5FF;text-align:left}
+td{padding:8px;border:1px solid #EDE9FE;vertical-align:top}
+tr:hover td{background:#FEFCE8}
+h2{scroll-margin-top:80px}
+.anchor-nav a{display:inline-block;padding:6px 14px;background:#fff;border:1px solid #DDD6FE;border-radius:9999px;color:#6D28D9;font-weight:600;font-size:13px;margin:4px}
+.anchor-nav a:hover{background:#7C3AED;color:#fff}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #EDE9FE}
+summary{cursor:pointer;font-weight:700;padding:10px 14px;background:#F3E8FF;border-radius:8px;color:#6D28D9}
+details[open] summary{background:#7C3AED;color:#fff}
+.ctrl-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+.ctrl-btn-primary{background:#7C3AED;color:#fff}
+.ctrl-btn-yellow{background:#FDE047;color:#1F2937}
+.ctrl-btn-ghost{background:#F3F4F6;color:#374151}
+.chip{display:inline-block;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:700}
+.chip-duo{background:#DBEAFE;color:#1E40AF}
+.chip-abler{background:#FCE7F3;color:#BE185D}
+.chip-zero{background:#D1FAE5;color:#065F46}
+.chip-share{background:#E0E7FF;color:#4338CA}
+.chip-youtube{background:#FEE2E2;color:#991B1B}
+.chip-partner{background:#FEF3C7;color:#92400E}
+.chip-contract{background:#FECACA;color:#7F1D1D}
+.notice{background:#FEF3C7;border-left:4px solid #F59E0B;padding:12px 16px;border-radius:4px;margin:12px 0;font-size:14px;color:#78350F}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.search-box{padding:8px 12px;border:1px solid #DDD6FE;border-radius:8px;width:100%;font-size:14px}
+.search-box:focus{outline:2px solid #7C3AED;border-color:transparent}
+</style>
+</head>
+<body class="text-gray-800">
+
+<div class="sig-bar h-2"></div>
+
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-purple-100 shadow-sm">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div>
+      <div class="text-xs text-purple-600 font-bold tracking-wider">JEWELICE BUSINESS ASSET · 03 / 04</div>
+      <h1 class="text-xl font-black text-gray-900">거래처 <span class="text-purple-600">·</span> 인플루언서</h1>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="saveStatus" class="text-xs text-gray-500"></span>
+      <button class="ctrl-btn ctrl-btn-ghost" onclick="resetContent()">초기화</button>
+      <button class="ctrl-btn ctrl-btn-yellow" onclick="toggleEdit()" id="editBtn">✎ 편집</button>
+      <button class="ctrl-btn ctrl-btn-primary" onclick="saveContent()">💾 저장</button>
+    </div>
+  </div>
+  <nav class="max-w-7xl mx-auto px-6 pb-3 anchor-nav">
+    <a href="#supply">① 생산·공급처</a>
+    <a href="#logistics">② 물류·인쇄</a>
+    <a href="#content">③ 콘텐츠·디자인</a>
+    <a href="#youtube">④ 유튜브 크리에이터</a>
+    <a href="#group">⑤ 공동구매</a>
+    <a href="#sponsor">⑥ 후원·협회</a>
+    <a href="#cafe">⑦ 카페 배포</a>
+  </nav>
+</header>
+
+<main id="content" class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+
+<div class="notice">
+  <strong>1차안</strong> — 2026-04-21 · 원본: <em>거래처정보 · 인플루언서 및 기타 거래처사 · 카페배포 리스트</em>
+</div>
+
+<!-- ① 생산 공급처 -->
+<section id="supply">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>생산 · 공급처 (제품 제조 파트너)</h2>
+
+  <details open class="mb-3">
+    <summary><span class="chip chip-abler">아블러 라인</span> · 3개사</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto">
+    <table>
+      <thead><tr><th>협력 내용</th><th>업체명</th><th>담당자</th><th>연락처</th><th>이메일</th><th>MOQ · 리드타임</th><th>결제 조건</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>몰드 / 실리콘 사출</td><td class="font-bold">성준테크 / 세진정밀</td><td>김희진 주임</td><td>010-9902-5930</td><td>sejin5930@hanmail.net</td><td>MOQ 1,000개 · 일 최대생산량 64~128EA</td><td>착수금 50% · 납품 후 15일 이내 잔금</td><td>서울 중량구 신내역로 111 SKV1 A동 519-522호</td></tr>
+        <tr><td>텀블러 생산</td><td class="font-bold">Zhejiang Green Home Industry &amp; Trade</td><td>Ellie Sheng</td><td>+86-177-5808-7527</td><td>elliesheng@greenhomewares.cn</td><td>MOQ 1,000개/컬러 · 컬러배합 2,000개 · 리드타임 45일</td><td>PI 착수금 30% · BL 발급 전 70%</td><td>알리바바: nemochip@gmail.com / PW Dean@911</td></tr>
+        <tr><td>아블러 제로 생산</td><td class="font-bold">Shanghai ForeverGold Industrial</td><td>Aron</td><td>+86-21-6448-6703</td><td>—</td><td>MOQ 1,000개/컬러 · 리드타임 45일</td><td>PI 착수금 30% · BL 발급 전 70%</td><td>위쳇 ID: ufococo</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+
+  <details open class="mb-3">
+    <summary><span class="chip chip-duo">듀오메이커 라인</span> · 5개사</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto">
+    <table>
+      <thead><tr><th>협력 내용</th><th>업체명</th><th>담당자</th><th>연락처</th><th>이메일</th><th>MOQ · 리드타임</th><th>결제 조건</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>메이커 · TPE 몰드사출&amp;조립<br>[케이스 · 물통 · 조립 임가공]</td>
+          <td class="font-bold">해피홈</td>
+          <td>허현구 대표 (발주)<br>허현미 전무 (납품)</td>
+          <td>010-8873-4536<br>010-9334-4536</td>
+          <td>user1552@daum.net</td>
+          <td>—</td>
+          <td>착수금 50% · 납품 후 15일 이내 잔금</td>
+        </tr>
+        <tr>
+          <td>방한재 EPP 생산<br>[메이커 내 방한메모리폼]</td>
+          <td class="font-bold">태양케미컬</td>
+          <td>한영현 이사 (발주)<br>강경남 부장 (납품)<br>방현정 차장 (정산)</td>
+          <td>010-4599-1234<br>010-3855-6436<br>010-7296-9396</td>
+          <td>bhj9396@suninchem.co.kr</td>
+          <td>MOQ 1만개 · 1만개 기준 4주 내외</td>
+          <td>착수금 50% · 납품 후 15일 이내 잔금</td>
+        </tr>
+        <tr>
+          <td>메이커 인쇄 [배면·측면]</td>
+          <td class="font-bold">진명인쇄</td>
+          <td>장효동 대표</td>
+          <td>010-9141-9793</td>
+          <td>pupu2852@naver.com</td>
+          <td>6천개 내외 영업일 기준 5일</td>
+          <td>납품 후 7일 이내 결제</td>
+        </tr>
+        <tr>
+          <td>실링스티커 · 메뉴얼 제작</td>
+          <td class="font-bold">삼성피아이티</td>
+          <td>홍영호 대표<br>김가희 대리 (정산)</td>
+          <td>010-4283-4008<br>031-768-4008</td>
+          <td>ssprt@korea.com</td>
+          <td>납기 데드라인 준수</td>
+          <td>납품 후 7일 이내 결제</td>
+        </tr>
+        <tr>
+          <td>컬러박스 · 기프트박스 · 패키지</td>
+          <td class="font-bold">보명씨앤아이</td>
+          <td>정태욱 대표<br>윤원섭 실장 (디자인)</td>
+          <td>010-9010-4545<br>010-3436-4026</td>
+          <td>bmcni@naver.com</td>
+          <td>MOQ 1만개 · 영업일 기준 10일 이내</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+
+  <details class="mb-3">
+    <summary>공용 부자재 · 후가공</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto">
+    <table>
+      <thead><tr><th>항목</th><th>업체명</th><th>담당</th><th>연락처</th><th>조건</th></tr></thead>
+      <tbody>
+        <tr><td>글라스 발주 (온더락·하이볼)</td><td class="font-bold">노빌코리아</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>PE봉투 · 택배박스</td><td class="font-bold">박스몰</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>박스 테이프 [브랜드로고]</td><td class="font-bold">삼성테이프</td><td>정철운 이사</td><td>010-9921-2217</td><td>발주수량 변동 · 4천개↑ 영업일 10~14일</td></tr>
+        <tr><td>아이스몰드 레이저 각인 · 후가공</td><td class="font-bold">상상이상 인쇄</td><td>안명수 대표</td><td>010-5860-3323</td><td>MOQ 10개↑ (객단가 7천) · 50개↑ (객단가 6천) · 3~5일 납기</td></tr>
+        <tr><td>스틱얼음 보관통</td><td class="font-bold">세기프라텍</td><td>문지완 부장</td><td>010-8784-5537</td><td>sekitech14@naver.com · 리드타임 2주~2달</td></tr>
+        <tr><td>아이스볼(범용) 보관통</td><td class="font-bold">프라피아</td><td>김병수 차장</td><td>010-5415-2810</td><td>cleanqudtn@hanmail.net · 리드타임 3주</td></tr>
+        <tr><td>적재박스</td><td class="font-bold">박스코리아</td><td>—</td><td>010-8837-5878</td><td>—</td></tr>
+        <tr><td>명함 · 리플렛</td><td class="font-bold">우리명함</td><td>오진구 대표</td><td>010-3346-7158</td><td>wricd@naver.com</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+</section>
+
+<!-- ② 물류 -->
+<section id="logistics">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>물류 · 3PL · 택배</h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead><tr><th>구분</th><th>업체</th><th>담당자</th><th>연락처</th><th>이메일</th><th>주소</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip chip-partner">3PL</span></td><td class="font-bold">피플스토리</td><td>김명훈 대표</td><td>010-3927-2631</td><td>pps@ppslogis.com</td><td>경기도 양주시 은현면 화합로1169번길 72-54</td></tr>
+      <tr><td>택배</td><td class="font-bold">CJ대한통운 (본사)</td><td>임성희 실장</td><td>010-3215-5243 / 070-7766-0000</td><td>—</td><td>—</td></tr>
+      <tr><td>택배</td><td>CJ대한통운</td><td>이광배 기사</td><td>010-4223-4034</td><td>kwangbae.lee@cj.net</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ③ 콘텐츠 / 디자인 -->
+<section id="content">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span>콘텐츠 · 디자인 · 영상</h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead><tr><th>분류</th><th>협력 내용</th><th>업체명</th><th>담당자</th><th>직책</th><th>연락처</th><th>이메일</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td>영상 / 마케팅</td><td>숏폼 촬영 · 편집 / SNS 바이럴</td><td>쿠디</td><td>광후</td><td>대표 · 총괄/기획/크리에이터</td><td>010-9991-4662</td><td>uijk7051408@gmail.com</td><td class="text-red-500 font-bold">계약종료</td></tr>
+      <tr><td></td><td></td><td>쿠디</td><td>지걸 PD</td><td>PD · 콘티/촬영/편집</td><td>010-5840-0927</td><td>uijk7051408@gmail.com</td><td class="text-red-500">계약종료</td></tr>
+      <tr><td>영상제작</td><td>숏폼 · 영상편집 · 촬영</td><td class="font-bold">이재현 (재택/아웃소싱)</td><td>이재현</td><td>영상제작</td><td>010-2494-6348</td><td>—</td><td class="text-green-600">활성</td></tr>
+      <tr><td>디자인 (2D)</td><td>제품·컨셉 디자인 / 웹·인쇄물</td><td class="font-bold">프리랜서 남예원</td><td>남예원</td><td>디자인실무</td><td>010-3465-6639</td><td>hi0602199@gmail.com</td><td class="text-green-600">활성</td></tr>
+      <tr><td>기획/디자인/마케팅</td><td>와디즈 펀딩메이트 · 프로젝트 턴키</td><td class="font-bold">알렌미디어</td><td>홍정우</td><td>대표 · 총괄</td><td>010-5508-3235</td><td>allenmedia.master@gmail.com</td><td class="text-green-600">활성</td></tr>
+      <tr><td></td><td></td><td>알렌미디어</td><td>오수빈</td><td>실장 · 기획/일정조율</td><td>010-3146-5260</td><td>allenmedia.master@gmail.com</td><td></td></tr>
+      <tr><td></td><td></td><td>알렌미디어</td><td>정순용</td><td>PD · 촬영/편집/기획</td><td>010-9551-9382</td><td>allenmedia.master@gmail.com</td><td></td></tr>
+      <tr><td></td><td></td><td>알렌미디어</td><td>이진아</td><td>대리 · 운영어시스턴트</td><td>010-8802-0795</td><td>allenmedia.master@gmail.com</td><td></td></tr>
+      <tr><td>CM송 제작</td><td>CM송 · 로고송</td><td class="font-bold">케이준</td><td>김경준</td><td>PD · 총괄/제작</td><td>010-3295-1081</td><td>bspsd@naver.com</td><td></td></tr>
+      <tr><td>디자인 (3D)</td><td>입체 디자인</td><td class="font-bold">디자인36.5</td><td>강순구 대표</td><td>총괄</td><td>010-8253-2403</td><td>365design@naver.com</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ④ 유튜브 크리에이터 -->
+<section id="youtube">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>유튜브 크리에이터 · 위스키/칵테일/요리</h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead><tr><th>채널</th><th>카테고리</th><th>담당자</th><th>역할</th><th>연락처</th><th>이메일</th></tr></thead>
+    <tbody>
+      <tr><td class="font-bold">생명의물 위스키를 즐겁게</td><td><span class="chip chip-youtube">위스키 리뷰</span></td><td>박진수</td><td>대표 / 총괄</td><td>010-5272-7059</td><td>parkpoq7@gmail.com</td></tr>
+      <tr><td>생명의물 위스키를 즐겁게</td><td><span class="chip chip-youtube">위스키 리뷰</span></td><td>오민우</td><td>마스터 / 크리에이터 / 미누바 마스터</td><td>010-8181-1411</td><td>parkpoq7@gmail.com</td></tr>
+      <tr><td class="font-bold">술익는 집</td><td><span class="chip chip-youtube">전통주 리뷰</span></td><td>이찬주</td><td>대표 / 총괄</td><td>010-8963-2059</td><td>soolhcontact@gmail.com</td></tr>
+      <tr><td class="font-bold">은수저</td><td><span class="chip chip-youtube">요리 리뷰</span></td><td>허철</td><td>CYP · 컨텐츠 기획 운영 이사</td><td>010-4236-7774</td><td>me@cyp.kr</td></tr>
+      <tr><td class="font-bold">어쿠스틱 드링크</td><td><span class="chip chip-youtube">칵테일 리뷰</span></td><td>김정규</td><td>대표 / 총괄</td><td>010-9277-6862</td><td>acousticdrinker@gmail.com</td></tr>
+      <tr><td class="font-bold">위안의 시간</td><td><span class="chip chip-youtube">위스키 리뷰</span></td><td>현영민</td><td>대표 / 총괄</td><td>010-9978-7100</td><td>upinsidetime@gmail.com</td></tr>
+      <tr><td class="font-bold">한잔하는 MJ</td><td><span class="chip chip-youtube">위스키 리뷰</span></td><td>전명진</td><td>대표 / 총괄</td><td>010-9094-0003</td><td>planetmj9@gmail.com</td></tr>
+      <tr><td class="font-bold">빛나는 요술TV</td><td><span class="chip chip-youtube">위스키 리뷰</span></td><td>김빛나</td><td>대표 / 총괄</td><td>010-8570-5231</td><td>beitna108@naver.com</td></tr>
+      <tr><td class="font-bold">술주하</td><td><span class="chip chip-youtube">위스키 리뷰</span></td><td>황부영</td><td>게스트 / 크리에이터 매니저</td><td>010-7582-5601</td><td>calorina00@naver.com</td></tr>
+      <tr><td class="font-bold">미스터위스키</td><td><span class="chip chip-youtube">위스키 리뷰</span></td><td>박제영</td><td>마스터 / 크리에이터</td><td>010-8896-5357</td><td>—</td></tr>
+      <tr><td class="font-bold">아밥남</td><td><span class="chip chip-youtube">요리 리뷰</span></td><td>진태두</td><td>매니저 / 총괄</td><td>010-9050-3512</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="notice mt-3">
+    <strong>활용 팁:</strong> 위스키·칵테일 크리에이터는 아블러 3in1 · 듀오메이커 매칭 고감도. 요리 크리에이터는 아블러 제로 · 지거·바스푼 매칭.
+  </div>
+</section>
+
+<!-- ⑤ 공동구매 -->
+<section id="group">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span>공동구매 · 중계</h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead><tr><th>유형</th><th>업체</th><th>담당자</th><th>직책</th><th>연락처</th><th>이메일</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip chip-share">인스타 공구 중계 (벤더)</span></td><td class="font-bold">우하컴퍼니</td><td>우석준</td><td>대표 / 기획·운영·총괄</td><td>010-7577-7225</td><td>woohacompany@gmail.com</td></tr>
+      <tr><td><span class="chip chip-share">인스타 공구 직영</span></td><td class="font-bold">비즈 브릭스</td><td>김희철</td><td>이사 / 영업·운영·실장</td><td>010-9668-9667</td><td>slayers0128@naver.com</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ⑥ 후원 / 협회 -->
+<section id="sponsor">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑥</span>후원사 · 협회 · 단체</h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead><tr><th>단체명</th><th>담당자</th><th>직책</th><th>연락처</th><th>후원금</th></tr></thead>
+    <tbody>
+      <tr><td class="font-bold">베버리지 마스터협회</td><td>이석현</td><td>협회장</td><td>010-5329-2992</td><td>연 1,100,000원 (VAT별도)</td></tr>
+      <tr><td class="font-bold">한국음료강사협의회</td><td>전재구</td><td>회장</td><td>010-4530-7109</td><td>—</td></tr>
+      <tr><td class="font-bold">홈바리스타클럽</td><td>김유한</td><td>카페 매니저</td><td>010-4217-0777</td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ⑦ 카페 배포 -->
+<section id="cafe">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑦</span>네이버 카페 배포 리스트 <span class="text-sm font-normal text-gray-500">· 상위 100개</span></h2>
+  <div class="card mb-3">
+    <input type="text" id="cafeSearch" class="search-box" placeholder="🔍 카페명 · 카테고리로 검색 (예: 육아 / 맛집 / 뷰티)" oninput="filterCafes()">
+    <div class="mt-2 text-xs text-gray-500">전체 <strong>500+</strong>개 중 상위 100개 표시. 전체 리스트는 <em>★카페배포 리스트.xlsx</em> 참조.</div>
+  </div>
+  <div class="card !p-0 overflow-x-auto">
+  <table id="cafeTable">
+    <thead><tr><th class="w-12">No</th><th>카페명</th><th>카테고리</th><th class="text-right">회원수</th><th>URL</th></tr></thead>
+    <tbody id="cafeBody">
+      <tr><td>1</td><td class="font-bold">맘스홀릭베이비</td><td>육아</td><td class="num">2,875,800</td><td><a class="text-purple-600" href="https://cafe.naver.com/imsanbu" target="_blank">바로가기</a></td></tr>
+      <tr><td>2</td><td class="font-bold">파우더룸</td><td>화장품</td><td class="num">1,931,669</td><td><a class="text-purple-600" href="https://cafe.naver.com/cosmania" target="_blank">바로가기</a></td></tr>
+      <tr><td>3</td><td>레몬테라스</td><td>인테리어·여성</td><td class="num">2,997,472</td><td><a class="text-purple-600" href="https://cafe.naver.com/remonterrace" target="_blank">바로가기</a></td></tr>
+      <tr><td>4</td><td>스펙업</td><td>대학생·취업</td><td class="num">1,962,586</td><td><a class="text-purple-600" href="https://cafe.naver.com/specup" target="_blank">바로가기</a></td></tr>
+      <tr><td>5</td><td>전대모</td><td>대학생</td><td class="num">1,279,736</td><td><a class="text-purple-600" href="https://cafe.naver.com/goondae" target="_blank">바로가기</a></td></tr>
+      <tr><td>6</td><td>여우야</td><td>뷰티</td><td class="num">1,040,361</td><td><a class="text-purple-600" href="https://cafe.naver.com/feko" target="_blank">바로가기</a></td></tr>
+      <tr><td>7</td><td>은샘이네 초보요리</td><td>요리</td><td class="num">759,926</td><td><a class="text-purple-600" href="https://cafe.naver.com/esyori" target="_blank">바로가기</a></td></tr>
+      <tr><td>8</td><td>몰테일</td><td>해외직구</td><td class="num">695,211</td><td><a class="text-purple-600" href="https://cafe.naver.com/malltail" target="_blank">바로가기</a></td></tr>
+      <tr><td>9</td><td>네티즌성형토론카페</td><td>성형</td><td class="num">599,754</td><td><a class="text-purple-600" href="https://cafe.naver.com/sdfstptkd" target="_blank">바로가기</a></td></tr>
+      <tr><td>10</td><td>급매물과 반값매매</td><td>부동산</td><td class="num">550,408</td><td><a class="text-purple-600" href="https://cafe.naver.com/bk1009" target="_blank">바로가기</a></td></tr>
+      <tr><td>11</td><td>피부인</td><td>피부</td><td class="num">520,756</td><td><a class="text-purple-600" href="https://cafe.naver.com/acnescar" target="_blank">바로가기</a></td></tr>
+      <tr><td>12</td><td>지후맘의 임산부모여라</td><td>임신·육아</td><td class="num">474,741</td><td><a class="text-purple-600" href="https://cafe.naver.com/1msanbu" target="_blank">바로가기</a></td></tr>
+      <tr><td>13</td><td>결혼만들기 (팰리세이드)</td><td>자동차</td><td class="num">469,502</td><td><a class="text-purple-600" href="https://cafe.naver.com/naworl" target="_blank">바로가기</a></td></tr>
+      <tr><td>14</td><td>아이러브맘</td><td>육아</td><td class="num">449,760</td><td><a class="text-purple-600" href="https://cafe.naver.com/15668981" target="_blank">바로가기</a></td></tr>
+      <tr><td>15</td><td>맘스홀릭 사과나무</td><td>육아</td><td class="num">443,568</td><td><a class="text-purple-600" href="https://cafe.naver.com/appletreecafe" target="_blank">바로가기</a></td></tr>
+      <tr><td>16</td><td>인기통</td><td>인테리어 기술자</td><td class="num">440,907</td><td><a class="text-purple-600" href="https://cafe.naver.com/0404ab" target="_blank">바로가기</a></td></tr>
+      <tr><td>17</td><td>패밀리세일</td><td>쇼핑</td><td class="num">436,896</td><td><a class="text-purple-600" href="https://cafe.naver.com/famsale" target="_blank">바로가기</a></td></tr>
+      <tr><td>18</td><td>쇼핑지름신</td><td>쇼핑</td><td class="num">412,299</td><td><a class="text-purple-600" href="https://cafe.naver.com/shopjirmsin" target="_blank">바로가기</a></td></tr>
+      <tr><td>19</td><td>화장발카페</td><td>화장품</td><td class="num">397,074</td><td><a class="text-purple-600" href="https://cafe.naver.com/mp3musicdownloadcafe" target="_blank">바로가기</a></td></tr>
+      <tr><td>20</td><td>다이렉트결혼준비</td><td>결혼준비</td><td class="num">373,397</td><td><a class="text-purple-600" href="https://cafe.naver.com/directwedding" target="_blank">바로가기</a></td></tr>
+      <tr><td>21</td><td>강남엄마vs목동엄마</td><td>자녀교육</td><td class="num">357,451</td><td><a class="text-purple-600" href="https://cafe.naver.com/gangmok" target="_blank">바로가기</a></td></tr>
+      <tr><td>22</td><td>용광맘모여라</td><td>지역 육아</td><td class="num">335,224</td><td><a class="text-purple-600" href="https://cafe.naver.com/junkart" target="_blank">바로가기</a></td></tr>
+      <tr><td>23</td><td>맛의진미요리천국</td><td>요리</td><td class="num">325,378</td><td><a class="text-purple-600" href="https://cafe.naver.com/nawayo" target="_blank">바로가기</a></td></tr>
+      <tr><td>24</td><td>일산아지매</td><td>지역 여성</td><td class="num">324,774</td><td><a class="text-purple-600" href="https://cafe.naver.com/isajime" target="_blank">바로가기</a></td></tr>
+      <tr><td>25</td><td>예쁜카페 예카</td><td>인테리어·요리·식기</td><td class="num">323,619</td><td><a class="text-purple-600" href="https://cafe.naver.com/mjann" target="_blank">바로가기</a></td></tr>
+      <tr><td>26</td><td>공사모</td><td>공인중개사</td><td class="num">312,911</td><td><a class="text-purple-600" href="https://cafe.naver.com/landpro" target="_blank">바로가기</a></td></tr>
+      <tr><td>27</td><td>부경맘</td><td>임신·출산·육아</td><td class="num">279,308</td><td><a class="text-purple-600" href="https://cafe.naver.com/pusanmom" target="_blank">바로가기</a></td></tr>
+      <tr><td>28</td><td>리뷰의여왕</td><td>트럭 커뮤</td><td class="num">265,496</td><td><a class="text-purple-600" href="https://cafe.naver.com/mrlive" target="_blank">바로가기</a></td></tr>
+      <tr><td>29</td><td>수원맘모여라</td><td>지역 육아</td><td class="num">264,962</td><td><a class="text-purple-600" href="https://cafe.naver.com/byungs94" target="_blank">바로가기</a></td></tr>
+      <tr><td>30</td><td>월급쟁이부자들</td><td>재테크</td><td class="num">250,969</td><td><a class="text-purple-600" href="https://cafe.naver.com/wecando7" target="_blank">바로가기</a></td></tr>
+      <tr><td>31</td><td>쭉빵카페</td><td>20~30대 여성</td><td class="num">248,023</td><td><a class="text-purple-600" href="https://cafe.naver.com/planatic" target="_blank">바로가기</a></td></tr>
+      <tr><td>32</td><td>경기도맛집</td><td>지역 모임</td><td class="num">247,182</td><td><a class="text-purple-600" href="https://cafe.naver.com/ggmatzip" target="_blank">바로가기</a></td></tr>
+      <tr><td>33</td><td>우리아이 책카페</td><td>육아 도서</td><td class="num">246,224</td><td><a class="text-purple-600" href="https://cafe.naver.com/nowbook" target="_blank">바로가기</a></td></tr>
+      <tr><td>34</td><td>흥부야재테크하자</td><td>재테크</td><td class="num">245,772</td><td><a class="text-purple-600" href="https://cafe.naver.com/hbya" target="_blank">바로가기</a></td></tr>
+      <tr><td>35</td><td>지후맘의 맘스홀릭 (미즈넷)</td><td>육아</td><td class="num">232,181</td><td><a class="text-purple-600" href="https://cafe.naver.com/miznett" target="_blank">바로가기</a></td></tr>
+      <tr><td>36</td><td>대구365</td><td>지역 육아</td><td class="num">232,233</td><td><a class="text-purple-600" href="https://cafe.naver.com/dgmom365" target="_blank">바로가기</a></td></tr>
+      <tr><td>37</td><td>미즈넷</td><td>임신·육아</td><td class="num">231,809</td><td><a class="text-purple-600" href="https://cafe.naver.com/miznett" target="_blank">바로가기</a></td></tr>
+      <tr><td>38</td><td>더먹자</td><td>맛집</td><td class="num">224,760</td><td><a class="text-purple-600" href="https://cafe.naver.com/themukja" target="_blank">바로가기</a></td></tr>
+      <tr><td>39</td><td>웨딩공부</td><td>결혼준비</td><td class="num">211,861</td><td><a class="text-purple-600" href="https://cafe.naver.com/llchyll" target="_blank">바로가기</a></td></tr>
+      <tr><td>40</td><td>강남맘서초맘톡톡</td><td>지역 육아</td><td class="num">205,755</td><td><a class="text-purple-600" href="https://cafe.naver.com/motiontree" target="_blank">바로가기</a></td></tr>
+      <tr><td>41</td><td>창원 줌마렐라</td><td>지역 육아</td><td class="num">201,145</td><td><a class="text-purple-600" href="https://cafe.naver.com/masanmam" target="_blank">바로가기</a></td></tr>
+      <tr><td>42</td><td>줌마렐라</td><td>어머니 커뮤</td><td class="num">200,713</td><td><a class="text-purple-600" href="https://cafe.naver.com/masanmam" target="_blank">바로가기</a></td></tr>
+      <tr><td>43</td><td>대전세종맘스베이비</td><td>육아</td><td class="num">193,229</td><td><a class="text-purple-600" href="https://cafe.naver.com/msbabys" target="_blank">바로가기</a></td></tr>
+      <tr><td>44</td><td>2030여우카페</td><td>명품 중고</td><td class="num">184,084</td><td><a class="text-purple-600" href="https://cafe.naver.com/joonggonara2" target="_blank">바로가기</a></td></tr>
+      <tr><td>45</td><td>평안맘모여라</td><td>지역 육아</td><td class="num">171,195</td><td><a class="text-purple-600" href="https://cafe.naver.com/food100" target="_blank">바로가기</a></td></tr>
+      <tr><td>46</td><td>직장인탐구생활</td><td>직장인</td><td class="num">165,303</td><td><a class="text-purple-600" href="https://cafe.naver.com/workee" target="_blank">바로가기</a></td></tr>
+      <tr><td>47</td><td>도담도담</td><td>육아·교육</td><td class="num">163,236</td><td><a class="text-purple-600" href="https://cafe.naver.com/dodamdadam1004" target="_blank">바로가기</a></td></tr>
+      <tr><td>48</td><td>안평맘</td><td>지역 육아</td><td class="num">162,654</td><td><a class="text-purple-600" href="https://cafe.naver.com/fo2b" target="_blank">바로가기</a></td></tr>
+      <tr><td>49</td><td>노마진웨딩</td><td>결혼준비</td><td class="num">151,341</td><td><a class="text-purple-600" href="https://cafe.naver.com/ssekzoa" target="_blank">바로가기</a></td></tr>
+      <tr><td>50</td><td>짠순이</td><td>결혼준비</td><td class="num">151,351</td><td><a class="text-purple-600" href="https://cafe.naver.com/ssekzoa" target="_blank">바로가기</a></td></tr>
+      <tr><td>51</td><td>쇼핑매니아</td><td>쇼핑</td><td class="num">149,146</td><td><a class="text-purple-600" href="https://cafe.naver.com/hotdealcommunity" target="_blank">바로가기</a></td></tr>
+      <tr><td>52</td><td>지후맘 맘스베이비</td><td>육아</td><td class="num">146,624</td><td><a class="text-purple-600" href="https://cafe.naver.com/imoong" target="_blank">바로가기</a></td></tr>
+      <tr><td>53</td><td>남구중(남양주)</td><td>지역 육아</td><td class="num">146,728</td><td><a class="text-purple-600" href="https://cafe.naver.com/baby090" target="_blank">바로가기</a></td></tr>
+      <tr><td>54</td><td>분당판교위례맘모여라</td><td>지역 육아</td><td class="num">144,183</td><td><a class="text-purple-600" href="https://cafe.naver.com/sghi900user" target="_blank">바로가기</a></td></tr>
+      <tr><td>55</td><td>아이러브 부산맘</td><td>지역 육아</td><td class="num">138,080</td><td><a class="text-purple-600" href="https://cafe.naver.com/pusanmommy" target="_blank">바로가기</a></td></tr>
+      <tr><td>56</td><td>강서양천김포맘들 모여라</td><td>지역 육아</td><td class="num">137,114</td><td><a class="text-purple-600" href="https://cafe.naver.com/2daumnet" target="_blank">바로가기</a></td></tr>
+      <tr><td>57</td><td>모여라리뷰</td><td>리뷰·쇼핑</td><td class="num">135,321</td><td><a class="text-purple-600" href="https://cafe.naver.com/foodballmanager" target="_blank">바로가기</a></td></tr>
+      <tr><td>58</td><td>송강맘</td><td>지역 육아</td><td class="num">128,924</td><td><a class="text-purple-600" href="https://cafe.naver.com/everyhomework" target="_blank">바로가기</a></td></tr>
+      <tr><td>59</td><td>강양맘</td><td>지역 육아</td><td class="num">127,779</td><td><a class="text-purple-600" href="https://cafe.naver.com/q5q5q5" target="_blank">바로가기</a></td></tr>
+      <tr><td>60</td><td>대구맘장터</td><td>지역 부동산</td><td class="num">127,203</td><td><a class="text-purple-600" href="https://cafe.naver.com/fmshb2" target="_blank">바로가기</a></td></tr>
+      <tr><td>61</td><td>동탄맘들모여라</td><td>지역 육아</td><td class="num">255,549</td><td><a class="text-purple-600" href="https://cafe.naver.com/dongtanmom" target="_blank">바로가기</a></td></tr>
+      <tr><td>62</td><td>아이원맘</td><td>육아</td><td class="num">118,762</td><td><a class="text-purple-600" href="https://cafe.naver.com/ionemom" target="_blank">바로가기</a></td></tr>
+      <tr><td>63</td><td>파주운정맘</td><td>지역 육아</td><td class="num">113,908</td><td><a class="text-purple-600" href="https://cafe.naver.com/usem" target="_blank">바로가기</a></td></tr>
+      <tr><td>64</td><td>은일파</td><td>지역 육아</td><td class="num">112,334</td><td><a class="text-purple-600" href="https://cafe.naver.com/kakaogamehappy" target="_blank">바로가기</a></td></tr>
+      <tr><td>65</td><td>송강서</td><td>지역 육아</td><td class="num">112,260</td><td><a class="text-purple-600" href="https://cafe.naver.com/sojbb2233" target="_blank">바로가기</a></td></tr>
+      <tr><td>66</td><td>쇼핑1번지 보부상</td><td>애니메이션</td><td class="num">109,905</td><td><a class="text-purple-600" href="https://cafe.naver.com/tictoc" target="_blank">바로가기</a></td></tr>
+      <tr><td>67</td><td>알짜정보커뮤니티</td><td>어머니 커뮤</td><td class="num">105,051</td><td><a class="text-purple-600" href="https://cafe.naver.com/babyjoonggonara" target="_blank">바로가기</a></td></tr>
+      <tr><td>68</td><td>맘스공구</td><td>임신·출산·육아</td><td class="num">103,468</td><td><a class="text-purple-600" href="https://cafe.naver.com/maple7story3" target="_blank">바로가기</a></td></tr>
+      <tr><td>69</td><td>꿈녀</td><td>뷰티</td><td class="num">100,800</td><td><a class="text-purple-600" href="https://cafe.naver.com/bornnborn" target="_blank">바로가기</a></td></tr>
+      <tr><td>70</td><td>서울맘카페</td><td>여행 정보</td><td class="num">100,493</td><td><a class="text-purple-600" href="https://cafe.naver.com/luvya" target="_blank">바로가기</a></td></tr>
+      <tr><td>71</td><td>마더스</td><td>교육</td><td class="num">100,535</td><td><a class="text-purple-600" href="https://cafe.naver.com/moymoy" target="_blank">바로가기</a></td></tr>
+      <tr><td>72</td><td>송강모</td><td>지역 육아</td><td class="num">98,459</td><td><a class="text-purple-600" href="https://cafe.naver.com/zzandol" target="_blank">바로가기</a></td></tr>
+      <tr><td>73</td><td>맘스데이</td><td>임신·육아</td><td class="num">97,296</td><td><a class="text-purple-600" href="https://cafe.naver.com/mamstudio" target="_blank">바로가기</a></td></tr>
+      <tr><td>74</td><td>강서송♥강남맘</td><td>지역 육아</td><td class="num">95,902</td><td><a class="text-purple-600" href="https://cafe.naver.com/hricane1" target="_blank">바로가기</a></td></tr>
+      <tr><td>75</td><td>윤스맘</td><td>영어교제</td><td class="num">93,536</td><td><a class="text-purple-600" href="https://cafe.naver.com/iyoonsmom" target="_blank">바로가기</a></td></tr>
+      <tr><td>76</td><td>혼결모</td><td>결혼준비</td><td class="num">93,967</td><td><a class="text-purple-600" href="https://cafe.naver.com/mp3down99" target="_blank">바로가기</a></td></tr>
+      <tr><td>77</td><td>릴리의 해피웨딩 (셀토스)</td><td>자동차</td><td class="num">90,286</td><td><a class="text-purple-600" href="https://cafe.naver.com/haptic" target="_blank">바로가기</a></td></tr>
+      <tr><td>78</td><td>리뷰카페</td><td>임신·출산·육아</td><td class="num">90,495</td><td><a class="text-purple-600" href="https://cafe.naver.com/taisca" target="_blank">바로가기</a></td></tr>
+      <tr><td>79</td><td>고고태국</td><td>여행</td><td class="num">90,058</td><td><a class="text-purple-600" href="https://cafe.naver.com/1jiyun" target="_blank">바로가기</a></td></tr>
+      <tr><td>80</td><td>결혼이야기</td><td>결혼준비</td><td class="num">88,811</td><td><a class="text-purple-600" href="https://cafe.naver.com/weddingstory" target="_blank">바로가기</a></td></tr>
+      <tr><td>81</td><td>엄마는마법사</td><td>육아·교육</td><td class="num">81,667</td><td><a class="text-purple-600" href="https://cafe.naver.com/birthdatparty09" target="_blank">바로가기</a></td></tr>
+      <tr><td>82</td><td>행복한여왕</td><td>인테리어·요리·식기</td><td class="num">75,780</td><td><a class="text-purple-600" href="https://cafe.naver.com/playtomato" target="_blank">바로가기</a></td></tr>
+      <tr><td>83</td><td>대구맘수다방</td><td>지역 육아</td><td class="num">71,781</td><td><a class="text-purple-600" href="https://cafe.naver.com/hong0909" target="_blank">바로가기</a></td></tr>
+      <tr><td>84</td><td>청춘들의 감성카페</td><td>20~30대 커뮤</td><td class="num">65,749</td><td><a class="text-purple-600" href="https://cafe.naver.com/2039seoul" target="_blank">바로가기</a></td></tr>
+      <tr><td>85</td><td>광교맘</td><td>지역 육아</td><td class="num">65,416</td><td><a class="text-purple-600" href="https://cafe.naver.com/dongwoo79" target="_blank">바로가기</a></td></tr>
+      <tr><td>86</td><td>대전맛집멋집</td><td>지역 맛집</td><td class="num">64,172</td><td><a class="text-purple-600" href="https://cafe.naver.com/nyamnyam" target="_blank">바로가기</a></td></tr>
+      <tr><td>87</td><td>천안베베</td><td>지역 육아</td><td class="num">63,906</td><td><a class="text-purple-600" href="https://cafe.naver.com/camsbaby" target="_blank">바로가기</a></td></tr>
+      <tr><td>88</td><td>파워부산맘</td><td>지역 육아</td><td class="num">62,910</td><td><a class="text-purple-600" href="https://cafe.naver.com/cafeortop2" target="_blank">바로가기</a></td></tr>
+      <tr><td>89</td><td>일사모</td><td>지역 모임</td><td class="num">56,122</td><td><a class="text-purple-600" href="https://cafe.naver.com/ilsangood" target="_blank">바로가기</a></td></tr>
+      <tr><td>90</td><td>대구이야기</td><td>지역 모임</td><td class="num">56,344</td><td><a class="text-purple-600" href="https://cafe.naver.com/mp3wndtls" target="_blank">바로가기</a></td></tr>
+      <tr><td>91</td><td>대구마미</td><td>배달·창업</td><td class="num">51,132</td><td><a class="text-purple-600" href="https://cafe.naver.com/w3fate" target="_blank">바로가기</a></td></tr>
+      <tr><td>92</td><td>맘스비</td><td>지역 육아</td><td class="num">50,877</td><td><a class="text-purple-600" href="https://cafe.naver.com/magic26" target="_blank">바로가기</a></td></tr>
+      <tr><td>93</td><td>뷰티앤이모구비카페</td><td>화장품·체험단</td><td class="num">50,414</td><td><a class="text-purple-600" href="https://cafe.naver.com/imfos" target="_blank">바로가기</a></td></tr>
+      <tr><td>94</td><td>맘스우먼</td><td>육아·여성</td><td class="num">49,779</td><td><a class="text-purple-600" href="https://cafe.naver.com/0utv" target="_blank">바로가기</a></td></tr>
+      <tr><td>95</td><td>헬시맘</td><td>지역 육아</td><td class="num">47,437</td><td><a class="text-purple-600" href="https://cafe.naver.com/japan001" target="_blank">바로가기</a></td></tr>
+      <tr><td>96</td><td>서울여행의 모든 것</td><td>지역 여행</td><td class="num">47,913</td><td><a class="text-purple-600" href="https://cafe.naver.com/seoulian" target="_blank">바로가기</a></td></tr>
+      <tr><td>97</td><td>서울맘 대표카페</td><td>지역 임신·육아</td><td class="num">47,409</td><td><a class="text-purple-600" href="https://cafe.naver.com/applelog" target="_blank">바로가기</a></td></tr>
+      <tr><td>98</td><td>신부의정원</td><td>결혼준비</td><td class="num">46,654</td><td><a class="text-purple-600" href="https://cafe.naver.com/starcraftneed" target="_blank">바로가기</a></td></tr>
+      <tr><td>99</td><td>11번가</td><td>쇼핑</td><td class="num">46,530</td><td><a class="text-purple-600" href="https://cafe.naver.com/seoulmatzip" target="_blank">바로가기</a></td></tr>
+      <tr><td>100</td><td>뷰티no.1</td><td>화장품</td><td class="num">44,338</td><td><a class="text-purple-600" href="https://cafe.naver.com/kaka0tjjang" target="_blank">바로가기</a></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<div class="mt-12 p-6 sig-purple rounded-xl text-white">
+  <div class="font-bold text-xl mb-2">📌 다음 업데이트 예정</div>
+  <ul class="text-sm space-y-1 opacity-90">
+    <li>• 인플루언서별 이전 협업 이력 / 단가 정리</li>
+    <li>• 거래처별 계약서·품의서 링크 첨부</li>
+    <li>• 카페 500+ 전체 리스트 (별도 탭으로 분리 예정)</li>
+    <li>• 인플루언서 참여율(ER) 실측값 수집</li>
+    <li>• 세종기프트 · 스타겟 · 아블러 b2b 제안업체 병합</li>
+  </ul>
+</div>
+
+</main>
+
+<footer class="max-w-7xl mx-auto px-6 py-8 text-center text-xs text-gray-400 border-t">
+  쥬얼아이스 사업자산 허브 · 박지현 팀장 · 화경 제작 · 2026-04-21
+</footer>
+
+<script>
+const KEY='jihyun_partners_v1';
+function loadContent(){
+  const saved=localStorage.getItem(KEY);
+  if(saved){
+    try{
+      const data=JSON.parse(saved);
+      if(data.html)document.getElementById('content').innerHTML=data.html;
+      if(data.ts)document.getElementById('saveStatus').textContent='마지막 저장 '+new Date(data.ts).toLocaleString('ko-KR');
+    }catch(e){}
+  }
+}
+function saveContent(){
+  const data={html:document.getElementById('content').innerHTML,ts:Date.now()};
+  localStorage.setItem(KEY,JSON.stringify(data));
+  document.getElementById('saveStatus').textContent='✓ 저장됨 '+new Date().toLocaleTimeString('ko-KR');
+}
+function toggleEdit(){
+  const el=document.getElementById('content');
+  const btn=document.getElementById('editBtn');
+  const now=el.contentEditable==='true';
+  el.contentEditable=now?'false':'true';
+  btn.textContent=now?'✎ 편집':'✎ 편집중';
+  if(!now){el.focus();document.getElementById('saveStatus').textContent='편집 모드';}
+}
+function resetContent(){
+  if(confirm('편집한 내용을 모두 되돌립니다. 계속?')){
+    localStorage.removeItem(KEY);
+    location.reload();
+  }
+}
+function filterCafes(){
+  const q=document.getElementById('cafeSearch').value.toLowerCase();
+  const rows=document.querySelectorAll('#cafeBody tr');
+  rows.forEach(r=>{
+    const text=r.textContent.toLowerCase();
+    r.style.display=text.includes(q)?'':'none';
+  });
+}
+loadContent();
+window.addEventListener('beforeunload',()=>{
+  if(document.getElementById('content').contentEditable==='true')saveContent();
+});
+</script>
+</body>
+</html>
