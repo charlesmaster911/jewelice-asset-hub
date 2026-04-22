@@ -19,7 +19,7 @@ tr:hover td{background:#FEFCE8}
 .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .num-neg{color:#DC2626}
 .num-pos{color:#059669}
-h2{scroll-margin-top:140px}
+h2{scroll-margin-top:160px}
 .card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #EDE9FE}
 summary{cursor:pointer;font-weight:700;padding:10px 14px;background:#F3E8FF;border-radius:8px;color:#6D28D9}
 details[open] summary{background:#7C3AED;color:#fff}
@@ -28,10 +28,10 @@ details[open] summary{background:#7C3AED;color:#fff}
 .ctrl-btn-primary:hover{background:#6D28D9}
 .ctrl-btn-yellow{background:#FDE047;color:#1F2937}
 .ctrl-btn-ghost{background:#F3F4F6;color:#374151}
+.ctrl-btn-red{background:#FEE2E2;color:#991B1B}
 .tab-btn{padding:10px 20px;border-radius:10px;font-weight:700;font-size:14px;border:2px solid transparent;background:#F9FAFB;color:#6B7280;cursor:pointer;transition:all .15s}
 .tab-btn:hover{background:#F3E8FF;color:#6D28D9}
 .tab-btn.active{background:#7C3AED;color:#fff;border-color:#5B21B6}
-.tab-btn.active:hover{background:#6D28D9;color:#fff}
 .tab-content{display:none}
 .tab-content.active{display:block}
 .badge{display:inline-block;padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:700}
@@ -64,6 +64,9 @@ details[open] summary{background:#7C3AED;color:#fff}
 .search-box{padding:8px 12px;border:1px solid #DDD6FE;border-radius:8px;width:100%;font-size:14px}
 .search-box:focus{outline:2px solid #7C3AED;border-color:transparent}
 .brand-chip{display:inline-block;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:700}
+.pw-cell{font-family:'SFMono-Regular',Consolas,monospace;background:#FEF2F2;color:#991B1B;padding:2px 6px;border-radius:4px;font-size:12px;letter-spacing:.5px}
+.pw-mask{font-family:monospace;background:#F3F4F6;color:#6B7280;padding:2px 6px;border-radius:4px;font-size:12px;letter-spacing:2px;cursor:pointer;user-select:none}
+.sku-cell{font-family:monospace;background:#F3E8FF;color:#5B21B6;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700}
 </style>
 </head>
 <body>
@@ -73,12 +76,13 @@ details[open] summary{background:#7C3AED;color:#fff}
 <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-purple-100 shadow-sm">
   <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
     <div>
-      <div class="text-xs text-purple-600 font-bold tracking-wider">JEWELICE · BUSINESS ASSET HUB</div>
+      <div class="text-xs text-purple-600 font-bold tracking-wider">JEWELICE · BUSINESS ASSET HUB · v2</div>
       <h1 class="text-xl font-black text-gray-900">쥬얼아이스 사업자산 <span class="text-purple-600">·</span> 박지현 팀장</h1>
     </div>
     <div class="flex items-center gap-2">
       <span id="saveStatus" class="text-xs text-gray-500"></span>
-      <button class="ctrl-btn ctrl-btn-ghost" onclick="copyShareUrl()" title="공유 링크 복사">🔗 공유</button>
+      <button class="ctrl-btn ctrl-btn-red" onclick="togglePW()" id="pwBtn" title="계정 PW 토글">🔐 PW숨김</button>
+      <button class="ctrl-btn ctrl-btn-ghost" onclick="copyShareUrl()">🔗 공유</button>
       <button class="ctrl-btn ctrl-btn-ghost" onclick="resetContent()">↺ 초기화</button>
       <button class="ctrl-btn ctrl-btn-yellow" onclick="toggleEdit()" id="editBtn">✎ 편집</button>
       <button class="ctrl-btn ctrl-btn-primary" onclick="saveContent()">💾 저장</button>
@@ -86,117 +90,92 @@ details[open] summary{background:#7C3AED;color:#fff}
   </div>
   <nav class="max-w-7xl mx-auto px-6 pb-3 flex flex-wrap gap-2">
     <button class="tab-btn active" data-tab="home" onclick="showTab('home')">🏠 홈</button>
-    <button class="tab-btn" data-tab="ch" onclick="showTab('ch')">① 채널 · 회사정보</button>
-    <button class="tab-btn" data-tab="pr" onclick="showTab('pr')">② 상품 · 원가</button>
-    <button class="tab-btn" data-tab="pt" onclick="showTab('pt')">③ 거래처 · 인플루언서</button>
-    <button class="tab-btn" data-tab="sl" onclick="showTab('sl')">④ 목표 · 채널별 매출</button>
+    <button class="tab-btn" data-tab="ch" onclick="showTab('ch')">① 채널·계정·회사</button>
+    <button class="tab-btn" data-tab="pr" onclick="showTab('pr')">② 상품·SKU·원가</button>
+    <button class="tab-btn" data-tab="pt" onclick="showTab('pt')">③ 거래처·인플루언서</button>
+    <button class="tab-btn" data-tab="sl" onclick="showTab('sl')">④ 목표·채널별 매출</button>
   </nav>
 </header>
 
 <main id="content" class="max-w-7xl mx-auto px-6 py-8">
 
-<!-- ================ 홈 ================ -->
+<!-- ============ 홈 ============ -->
 <section id="tab-home" class="tab-content active">
   <div class="rounded-2xl p-10 mb-8 text-white relative overflow-hidden" style="background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 50%,#1E1B4B 100%)">
-    <div class="text-yellow-300 font-bold text-xs tracking-[0.3em] mb-3">JEWELICE · BUSINESS ASSET</div>
+    <div class="text-yellow-300 font-bold text-xs tracking-[0.3em] mb-3">JEWELICE · BUSINESS ASSET v2 · CROSS-CHECKED</div>
     <h2 class="text-4xl md:text-5xl font-black mb-3">4대 사업자산</h2>
-    <p class="text-lg text-purple-100">채널 · 상품 · 거래처 · 목표 — 사업 운영의 뼈대를 한 자리에</p>
-    <p class="text-sm text-purple-200 opacity-80 mt-2">박지현 팀장 · 화경 제작 · 2026-04-21 최초 생성 · 계속 업데이트</p>
+    <p class="text-lg text-purple-100">채널·상품·거래처·목표 — 원본 4종 엑셀 전수 대조 반영</p>
+    <p class="text-sm text-purple-200 opacity-80 mt-2">박지현 팀장 · 화경 제작 · 2026-04-22 v2 업데이트 · PW/SKU/v4.0 전체 반영</p>
   </div>
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
     <div class="kpi-card"><div class="kpi-number">61</div><div class="kpi-label">온라인 채널</div></div>
-    <div class="kpi-card"><div class="kpi-number">30+</div><div class="kpi-label">상품 SKU</div></div>
-    <div class="kpi-card"><div class="kpi-number">20+</div><div class="kpi-label">거래처·인플루언서</div></div>
-    <div class="kpi-card"><div class="kpi-number">10억</div><div class="kpi-label">2025 목표 매출</div></div>
+    <div class="kpi-card"><div class="kpi-number">49</div><div class="kpi-label">상품 SKU (v4.0)</div></div>
+    <div class="kpi-card"><div class="kpi-number">21</div><div class="kpi-label">상품 품번 (100xxx)</div></div>
+    <div class="kpi-card"><div class="kpi-number">10억</div><div class="kpi-label">2025 목표</div></div>
   </div>
 
   <div class="grid md:grid-cols-2 gap-4 mb-8">
     <button onclick="showTab('ch')" class="card text-left hover:border-purple-500 hover:shadow-lg transition-all">
-      <div class="flex justify-between mb-3"><span class="text-4xl font-black text-purple-600">01</span><span class="chip chip-new">운영 정보</span></div>
-      <h3 class="text-xl font-black mb-2">채널 계정 · 회사정보</h3>
-      <p class="text-sm text-gray-600">법인·일반 사업자 / 팀 6명 / 채널 61개 / 사방넷·SNS·광고·전자계약</p>
+      <div class="flex justify-between mb-3"><span class="text-4xl font-black text-purple-600">01</span><span class="chip chip-new">🔐 PW 포함</span></div>
+      <h3 class="text-xl font-black mb-2">채널·계정·회사정보</h3>
+      <p class="text-sm text-gray-600">법인/일반 사업자 · 팀 6명 · 채널 61개 (ID/PW/수수료/코드 전체) · 사방넷·SNS·광고·전자계약 계정 일체</p>
     </button>
     <button onclick="showTab('pr')" class="card text-left hover:border-purple-500 hover:shadow-lg transition-all">
-      <div class="flex justify-between mb-3"><span class="text-4xl font-black text-purple-600">02</span><span class="chip chip-duo">상품·가격</span></div>
-      <h3 class="text-xl font-black mb-2">상품리스트 · 원가</h3>
-      <p class="text-sm text-gray-600">3브랜드 / 7단계 가격 정책 / 원가·마진·이익률 / 신규 2종</p>
+      <div class="flex justify-between mb-3"><span class="text-4xl font-black text-purple-600">02</span><span class="chip chip-duo">상품·원가 v4.0</span></div>
+      <h3 class="text-xl font-black mb-2">상품 SKU · 원가</h3>
+      <p class="text-sm text-gray-600">품번 21종 · SKU 49종 · 7단계 가격 (정상/상시/특가/단독/B2B/공구/폐쇄) · 원가·마진·이익률 전체</p>
     </button>
     <button onclick="showTab('pt')" class="card text-left hover:border-purple-500 hover:shadow-lg transition-all">
       <div class="flex justify-between mb-3"><span class="text-4xl font-black text-purple-600">03</span><span class="chip chip-abler">파트너</span></div>
-      <h3 class="text-xl font-black mb-2">거래처 · 인플루언서</h3>
-      <p class="text-sm text-gray-600">공급처·물류·콘텐츠·유튜버 11명·공구·카페 100+</p>
+      <h3 class="text-xl font-black mb-2">거래처·인플루언서</h3>
+      <p class="text-sm text-gray-600">공급처·물류·콘텐츠 파트너·유튜버 11·공구 2·후원사 3·카페 100+</p>
     </button>
     <button onclick="showTab('sl')" class="card text-left hover:border-purple-500 hover:shadow-lg transition-all">
       <div class="flex justify-between mb-3"><span class="text-4xl font-black text-purple-600">04</span><span class="chip chip-zero">목표·KPI</span></div>
-      <h3 class="text-xl font-black mb-2">목표 매출 · 채널별</h3>
-      <p class="text-sm text-gray-600">2025년 10억 · 25채널 배분 · 월/분기 · 2024 Gap(×114) · 시즌</p>
+      <h3 class="text-xl font-black mb-2">목표 매출·채널별</h3>
+      <p class="text-sm text-gray-600">2025년 10억 · 25채널 배분 · 월/분기 · 2024 실적 Gap · 시즌</p>
     </button>
-  </div>
-
-  <div class="card mb-6">
-    <h3 class="text-lg font-bold mb-3">🛠 공통 기능</h3>
-    <div class="grid md:grid-cols-4 gap-3 text-sm">
-      <div class="p-3 bg-purple-50 rounded-lg">
-        <div class="font-bold text-purple-700 mb-1">✎ 편집</div>
-        <p class="text-xs text-gray-600">상단 <b>편집</b> 버튼으로 아무 항목이나 직접 수정</p>
-      </div>
-      <div class="p-3 bg-yellow-50 rounded-lg">
-        <div class="font-bold text-yellow-800 mb-1">💾 저장</div>
-        <p class="text-xs text-gray-600">브라우저 localStorage에 자동 저장 · 창 닫아도 유지</p>
-      </div>
-      <div class="p-3 bg-blue-50 rounded-lg">
-        <div class="font-bold text-blue-800 mb-1">🔗 공유</div>
-        <p class="text-xs text-gray-600">파일 경로를 클립보드에 복사 · URL 배포 방법은 아래</p>
-      </div>
-      <div class="p-3 bg-red-50 rounded-lg">
-        <div class="font-bold text-red-700 mb-1">↺ 초기화</div>
-        <p class="text-xs text-gray-600">편집 내용을 원본 상태로 복구</p>
-      </div>
-    </div>
   </div>
 
   <div class="card" style="background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%);color:white">
     <div class="flex items-center gap-2 mb-3">
       <span class="text-2xl">🌐</span>
-      <h3 class="text-xl font-black">영구 공유 URL — 배포 완료</h3>
-      <span class="badge" style="background:#FDE047;color:#78350F">LIVE</span>
+      <h3 class="text-xl font-black">영구 공유 URL</h3>
+      <span class="badge" style="background:#FDE047;color:#78350F">LIVE v2</span>
     </div>
     <div class="p-4 bg-white/10 rounded-lg mb-3">
-      <div class="text-xs opacity-80 mb-1">이 페이지의 공유 URL</div>
       <a href="https://charlesmaster911.github.io/jewelice-asset-hub/" target="_blank" class="text-yellow-300 font-black text-lg break-all hover:underline">https://charlesmaster911.github.io/jewelice-asset-hub/</a>
-      <button onclick="navigator.clipboard.writeText('https://charlesmaster911.github.io/jewelice-asset-hub/').then(()=>alert('복사됨'))" class="ml-2 px-3 py-1 bg-yellow-300 text-purple-900 rounded text-xs font-bold">복사</button>
+      <button onclick="copyShareUrl()" class="ml-2 px-3 py-1 bg-yellow-300 text-purple-900 rounded text-xs font-bold">복사</button>
     </div>
     <div class="grid md:grid-cols-2 gap-3 text-sm">
-      <div class="p-3 bg-white/10 rounded">
-        <div class="font-black mb-1">📌 공유 방법</div>
-        <p class="text-xs opacity-90">위 URL을 카카오톡·슬랙·이메일 어디든 붙여넣기. 받는 사람이 바로 볼 수 있음.</p>
-      </div>
-      <div class="p-3 bg-white/10 rounded">
-        <div class="font-black mb-1">🔄 업데이트</div>
-        <p class="text-xs opacity-90">로컬 파일 수정 후 찰스 대표님이 push하면 <b>같은 URL에 자동 덮어쓰기</b>. 링크 유지.</p>
-      </div>
-      <div class="p-3 bg-white/10 rounded">
-        <div class="font-black mb-1">⚠ 주의 — 공개 URL</div>
-        <p class="text-xs opacity-90">GitHub Pages 공개 접속 가능. 민감 비밀번호 페이지(① 채널)는 <b>사내 공유 권장</b>.</p>
-      </div>
-      <div class="p-3 bg-white/10 rounded">
-        <div class="font-black mb-1">🗂 Repo</div>
-        <p class="text-xs opacity-90"><a href="https://github.com/charlesmaster911/jewelice-asset-hub" target="_blank" class="underline text-yellow-200">github.com/charlesmaster911/jewelice-asset-hub</a></p>
-      </div>
+      <div class="p-3 bg-white/10 rounded"><div class="font-black mb-1">📌 공유</div><p class="text-xs opacity-90">URL을 카톡·슬랙·메일 어디든 붙여넣기</p></div>
+      <div class="p-3 bg-white/10 rounded"><div class="font-black mb-1">🔄 업데이트</div><p class="text-xs opacity-90">같은 URL에 자동 덮어쓰기 (링크 유지)</p></div>
+      <div class="p-3 bg-white/10 rounded"><div class="font-black mb-1">⚠ PW 페이지 공개 주의</div><p class="text-xs opacity-90">① 탭은 내부 공유만. 공개 URL 이후 repo private 전환 권장</p></div>
+      <div class="p-3 bg-white/10 rounded"><div class="font-black mb-1">🗂 Repo</div><p class="text-xs opacity-90"><a href="https://github.com/charlesmaster911/jewelice-asset-hub" target="_blank" class="underline text-yellow-200">charlesmaster911/jewelice-asset-hub</a></p></div>
     </div>
-    <div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-      <a href="https://charlesmaster911.github.io/jewelice-asset-hub/01.html" target="_blank" class="p-2 bg-white/20 rounded hover:bg-white/30 text-center">① 채널·회사</a>
-      <a href="https://charlesmaster911.github.io/jewelice-asset-hub/02.html" target="_blank" class="p-2 bg-white/20 rounded hover:bg-white/30 text-center">② 상품·원가</a>
-      <a href="https://charlesmaster911.github.io/jewelice-asset-hub/03.html" target="_blank" class="p-2 bg-white/20 rounded hover:bg-white/30 text-center">③ 거래처·인플</a>
-      <a href="https://charlesmaster911.github.io/jewelice-asset-hub/04.html" target="_blank" class="p-2 bg-white/20 rounded hover:bg-white/30 text-center">④ 목표·채널매출</a>
-    </div>
+  </div>
+
+  <div class="card mt-6">
+    <h3 class="text-lg font-bold mb-3">✅ v2 업데이트 (2026-04-22) — 크로스 체크 결과</h3>
+    <table class="text-sm">
+      <thead><tr><th>개선 항목</th><th>v1</th><th>v2</th></tr></thead>
+      <tbody>
+        <tr><td>채널 계정 PW</td><td class="text-gray-500">표에 미표시</td><td class="text-green-700 font-bold">61개 채널 전부 ID+PW 반영 · 🔐토글</td></tr>
+        <tr><td>상품 SKU 품번</td><td class="text-gray-500">없음</td><td class="text-green-700 font-bold">100002~100034 품번 21종 + 검색어 최적화 상품명</td></tr>
+        <tr><td>가격 구간</td><td class="text-gray-500">4단계 (정/상시/특가/단독)</td><td class="text-green-700 font-bold">7단계 전체 (+B2B/공구/폐쇄몰) · 마진·마진율 전체</td></tr>
+        <tr><td>듀오메이커 미니큐브</td><td class="text-gray-500">간략</td><td class="text-green-700 font-bold">신규 라인 · 7구간 전체 반영</td></tr>
+        <tr><td>크리슨 글라스잔</td><td class="text-gray-500">1종 언급</td><td class="text-green-700 font-bold">하이볼·언더락 2종 분리 · 적자 경고</td></tr>
+        <tr><td>제품 본질/리스크</td><td class="text-gray-500">한 줄</td><td class="text-green-700 font-bold">첫화면·광고방향·유도문장·리스크 전문</td></tr>
+        <tr><td>회사정보</td><td class="text-gray-500">법인+일반</td><td class="text-green-700 font-bold">택배 담당자 · 3PL 주소 · 다우오피스 등 완비</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
-<!-- ================ ① 채널 · 회사정보 ================ -->
+<!-- ============ ① 채널·계정·회사 ============ -->
 <section id="tab-ch" class="tab-content space-y-8">
-  <div class="notice"><b>1차안</b> — 2026-04-21 · 원본: 촤종★마스터마인딩 사업팀_거래처정보20260330.xlsx</div>
+  <div class="pack-warn">🔐 <b>이 탭은 실 계정 비밀번호를 포함합니다.</b> 상단 <b>PW숨김/PW표시</b> 버튼으로 토글. 외부 공유 금지.</div>
 
   <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>회사 기본정보</h2>
   <div class="grid md:grid-cols-2 gap-4">
@@ -205,16 +184,16 @@ details[open] summary{background:#7C3AED;color:#fff}
       <h3 class="text-lg font-bold mb-3">주식회사 마스터마인딩그룹</h3>
       <table class="text-sm">
         <tr><th class="w-28">대표</th><td>장정훈</td></tr>
-        <tr><th>사업자등록번호</th><td>426-87-00479</td></tr>
-        <tr><th>법인등록번호</th><td>110111-6134186</td></tr>
+        <tr><th>사업자등록</th><td>426-87-00479</td></tr>
+        <tr><th>법인등록</th><td>110111-6134186</td></tr>
         <tr><th>통신판매업</th><td>제 2023-성남중원-0086호</td></tr>
         <tr><th>대표번호</th><td>070-7152-0340</td></tr>
         <tr><th>휴대폰</th><td>010-9625-0340</td></tr>
-        <tr><th>대표메일</th><td>jewelice@jewelice.kr</td></tr>
-        <tr><th>정산계좌</th><td>KB국민은행 <b>207301-04-086853</b></td></tr>
-        <tr><th>본사주소</th><td>(13403) 경기도 성남시 중원구 둔촌대로 388번길 24, 13층 1305A호</td></tr>
-        <tr><th>출고/반품지</th><td>경기도 양주시 은현면 화합로1169번길 72-54 주식회사 피플스토리</td></tr>
-        <tr><th>기본 택배사</th><td>CJ대한통운</td></tr>
+        <tr><th>메일</th><td>jewelice@jewelice.kr</td></tr>
+        <tr><th>정산계좌</th><td>KB국민은행 <b>207301-04-086853</b><br>(주식회사마스터마인딩그룹)</td></tr>
+        <tr><th>본사</th><td>(13403) 경기도 성남시 중원구 둔촌대로 388번길 24, 13층 1305A호<br>(상대원동, 성남 우림라이온스밸리 3차)</td></tr>
+        <tr><th>출고/반품</th><td>경기도 양주시 은현면 화합로1169번길 72-54 (주)피플스토리</td></tr>
+        <tr><th>택배</th><td>CJ대한통운 · CNPlus 설치</td></tr>
       </table>
     </div>
     <div class="card">
@@ -222,356 +201,493 @@ details[open] summary{background:#7C3AED;color:#fff}
       <h3 class="text-lg font-bold mb-3">씨앤에프 트레이딩 (C&amp;F Trading)</h3>
       <table class="text-sm">
         <tr><th class="w-28">대표</th><td>장정훈</td></tr>
-        <tr><th>사업자등록번호</th><td>620-38-00938</td></tr>
+        <tr><th>사업자등록</th><td>620-38-00938</td></tr>
         <tr><th>통신판매업</th><td>제 2024-성남수정-0869호</td></tr>
-        <tr><th>주소</th><td>경기도 성남시 수정구 위례서일로 30, 1018호</td></tr>
+        <tr><th>주소</th><td>경기도 성남시 수정구 위례서일로 30, 1018호 (창곡동, 위례혜리움)</td></tr>
+        <tr><th>출고/반품</th><td>(주)피플스토리 (법인과 공통)</td></tr>
         <tr><th>활용</th><td>쿠팡 씨앤에프 계정 · 오픈마켓 서브</td></tr>
       </table>
+      <div class="mt-3 p-3 bg-yellow-50 rounded text-xs"><b>내선·메일 분장:</b> 발주(3PL)·세금계산서 정산·문자 수발신·팩스 전부 <code>jewelice@jewelice.kr</code>로 통일</div>
     </div>
   </div>
 
   <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>팀 명단</h2>
   <div class="card !p-0 overflow-x-auto">
     <table>
-      <thead><tr><th>NO</th><th>직함/부서</th><th>이름</th><th>휴대폰</th><th>회사메일</th><th>네이트온</th><th>담당</th></tr></thead>
+      <thead><tr><th>#</th><th>직함/부서</th><th>이름</th><th>휴대폰</th><th>회사메일</th><th>네이트온</th><th>담당</th><th>비고 메일</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td class="font-bold">대표</td><td class="font-bold">장정훈</td><td>010-3167-0961</td><td>charles@jewelice.kr</td><td>—</td><td>전체 총괄</td></tr>
-        <tr class="bg-yellow-50"><td>2</td><td class="font-bold">팀장·사업본부</td><td class="font-bold">박지현</td><td>010-9942-7171</td><td>lucy@jewelice.kr</td><td>upupnn@nate.com</td><td>사업 총괄 운영</td></tr>
-        <tr><td>3</td><td>차장·경영관리/SCM</td><td>이호혁</td><td>010-5000-8761</td><td>denny@jewelice.kr</td><td>—</td><td></td></tr>
-        <tr><td>4</td><td>과장·MD 운영팀</td><td>권나경</td><td>010-4133-5844</td><td>bona@jewelice.kr</td><td>bknk32@nate.com</td><td></td></tr>
-        <tr><td>5</td><td>대리·콘텐츠 광고팀</td><td>조송희</td><td>010-7471-4479</td><td>kathy@jewelice.kr</td><td>zzong1324@nate.com</td><td></td></tr>
-        <tr><td>6</td><td>대리·고객지원팀</td><td>권수지</td><td>010-9545-1147</td><td>—</td><td></td><td></td></tr>
+        <tr><td>1</td><td class="font-bold">대표</td><td class="font-bold">장정훈</td><td>010-3167-0961</td><td>charles@jewelice.kr</td><td>—</td><td>전체 총괄</td><td>thinkintoreal@gmail.com · jewelice99@gmail.com · mmg.master3@gmail.com · nemochip@gmail.com · jeweliceglobal@gmail.com · jewelice99@hotmail.com · hello@jewelice.kr</td></tr>
+        <tr class="bg-yellow-50"><td>2</td><td class="font-bold">팀장·사업본부</td><td class="font-bold">박지현</td><td>010-9942-7171</td><td>lucy@jewelice.kr</td><td>upupnn@nate.com</td><td>사업 총괄 운영 관리</td><td></td></tr>
+        <tr><td>3</td><td>차장·경영관리/SCM</td><td>이호혁</td><td>010-5000-8761</td><td>denny@jewelice.kr</td><td>—</td><td></td><td></td></tr>
+        <tr><td>4</td><td>과장·MD 운영팀</td><td>권나경</td><td>010-4133-5844</td><td>bona@jewelice.kr</td><td>bknk32@nate.com</td><td></td><td></td></tr>
+        <tr><td>5</td><td>대리·콘텐츠 광고팀</td><td>조송희</td><td>010-7471-4479</td><td>kathy@jewelice.kr</td><td>zzong1324@nate.com</td><td></td><td></td></tr>
+        <tr><td>6</td><td>대리·고객지원팀</td><td>권수지</td><td>010-9545-1147</td><td>—</td><td></td><td></td><td></td></tr>
       </tbody>
     </table>
   </div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span>채널 계정 현황 <span class="text-sm font-normal text-gray-500">· 61개</span></h2>
-  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
-    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">A등급</div><div class="text-2xl font-black text-emerald-600">9</div></div>
-    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">B등급</div><div class="text-2xl font-black text-blue-600">12</div></div>
-    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">신규</div><div class="text-2xl font-black text-amber-600">15</div></div>
-    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">보류</div><div class="text-2xl font-black text-gray-600">2</div></div>
-    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">검토</div><div class="text-2xl font-black text-violet-600">3</div></div>
-    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">글로벌</div><div class="text-2xl font-black text-sky-600">2</div></div>
-    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">중단</div><div class="text-2xl font-black text-red-500">18</div></div>
-  </div>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span>채널 계정 61개 <span class="text-sm text-gray-500">· ID / PW / 수수료 / 코드</span></h2>
 
-  <details open><summary>🟢 A등급 · 현 운영 (9개)</summary>
-  <div class="mt-2 card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>구분</th><th>채널</th><th>입점수수료</th><th>행사</th><th>ID</th><th>비고</th></tr></thead>
-    <tbody>
-      <tr><td>자사몰</td><td class="font-bold">카페24</td><td>—</td><td>5%</td><td>nemochip</td><td>자사몰</td></tr>
-      <tr><td>전문몰</td><td class="font-bold">유튜브 쇼핑</td><td>—</td><td>—</td><td>nemochip</td><td>자사몰 연결</td></tr>
-      <tr><td>자사몰</td><td class="font-bold">네이버 스마트스토어</td><td>2%</td><td>5%</td><td>jewelice99@gmail.com</td><td></td></tr>
-      <tr><td>자사몰</td><td class="font-bold">네이버페이</td><td>2%</td><td>5%</td><td>nemochip2</td><td></td></tr>
-      <tr><td>오픈마켓</td><td class="font-bold">카카오 파트너/페이</td><td>—</td><td>—</td><td>jewelice99@daum.net</td><td>기본3.3%+노출3.3%, 톡딜10%</td></tr>
-      <tr><td>오픈마켓</td><td class="font-bold">카카오 선물/톡스토어</td><td>—</td><td>—</td><td>jewelice99@daum.net</td><td></td></tr>
-      <tr><td>오픈마켓</td><td class="font-bold">와디즈</td><td>—</td><td>—</td><td>jewelice99@gmail.com</td><td>펀딩메이트: 알렌미디어</td></tr>
-      <tr><td>오픈마켓</td><td class="font-bold">쿠팡 (한반도키친)</td><td>35%</td><td>—</td><td>hanbandokitchen</td><td>메인</td></tr>
-      <tr><td>오픈마켓</td><td class="font-bold">쿠팡 (씨앤에프)</td><td>35%</td><td>—</td><td>nemochip</td><td>씨앤에프</td></tr>
-    </tbody>
-  </table></div></details>
+  <details open class="mb-3">
+    <summary>🟢 A등급 현 운영 · 9개</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto"><table>
+      <thead><tr><th>#</th><th>구분</th><th>채널</th><th>입점</th><th>행사</th><th>ID</th><th>PW</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>자사몰</td><td class="font-bold">카페24</td><td>—</td><td>5%</td><td>nemochip</td><td><span class="pw-mask" data-pw="mmg@Jewelice*">••••••••</span></td><td>자사몰</td></tr>
+        <tr><td>2</td><td>전문몰</td><td class="font-bold">유튜브 쇼핑</td><td>—</td><td>—</td><td>nemochip</td><td><span class="pw-mask" data-pw="mmg@Jewelice*">••••••••</span></td><td>자사몰 연결</td></tr>
+        <tr><td>3</td><td>자사몰</td><td class="font-bold">네이버 스마트스토어</td><td>2%</td><td>5%</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="mmg@1203@911**">••••••••</span></td><td>판매자아이디</td></tr>
+        <tr><td>4</td><td>자사몰</td><td class="font-bold">네이버페이</td><td>2%</td><td>5%</td><td>nemochip2</td><td><span class="pw-mask" data-pw="mmg@1203@0340">••••••••</span></td><td>네이버아이디</td></tr>
+        <tr><td>5</td><td>오픈마켓</td><td class="font-bold">카카오 파트너/페이</td><td colspan="2">기본3.3%+노출3.3%, 톡딜10%</td><td>jewelice99@daum.net</td><td><span class="pw-mask" data-pw="dream@911**">••••••••</span></td><td></td></tr>
+        <tr><td>6</td><td>오픈마켓</td><td class="font-bold">카카오 선물/톡스토어</td><td colspan="2">기본3.3%+노출3.3%, 톡딜10%</td><td>jewelice99@daum.net</td><td><span class="pw-mask" data-pw="dream@911**">••••••••</span></td><td></td></tr>
+        <tr><td>7</td><td>오픈마켓</td><td class="font-bold">와디즈</td><td>—</td><td>—</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="mmg@1203@911**">••••••••</span></td><td>펀딩메이트: 알렌미디어</td></tr>
+        <tr><td>8</td><td>오픈마켓</td><td class="font-bold">쿠팡 (한반도키친)</td><td>35%</td><td>—</td><td>hanbandokitchen</td><td><span class="pw-mask" data-pw="jewelice**@0340">••••••••</span></td><td>한반도키친-메인</td></tr>
+        <tr><td>9</td><td>오픈마켓</td><td class="font-bold">쿠팡 (씨앤에프)</td><td>35%</td><td>—</td><td>nemochip</td><td><span class="pw-mask" data-pw="jewelice*@@0340">••••••••</span></td><td>씨앤에프</td></tr>
+      </tbody>
+    </table></div>
+  </details>
 
-  <details><summary>🔵 B등급 · 현 운영 (12개)</summary>
-  <div class="mt-2 card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>구분</th><th>채널</th><th>입점</th><th>행사</th><th>ID</th></tr></thead>
-    <tbody>
-      <tr><td>종합몰</td><td>SSG</td><td>—</td><td>—</td><td>24778914</td></tr>
-      <tr><td>종합몰</td><td>롯데ON</td><td>15%</td><td>15%</td><td>jewelice99</td></tr>
-      <tr><td>오픈마켓</td><td>이베이 (마스터)</td><td>—</td><td>—</td><td>nemochip99</td></tr>
-      <tr><td>오픈마켓</td><td>지마켓</td><td>13%</td><td>—</td><td>nemochip</td></tr>
-      <tr><td>오픈마켓</td><td>지마켓 (메인)</td><td>13%</td><td>—</td><td>nemochip99</td></tr>
-      <tr><td>오픈마켓</td><td>옥션</td><td>13%</td><td>—</td><td>nemochip99</td></tr>
-      <tr><td>오픈마켓</td><td>11번가</td><td>13%</td><td>—</td><td>hanbandokitchen</td></tr>
-      <tr><td>전문몰</td><td>오아시스</td><td>8%</td><td>—</td><td>jewelice99</td></tr>
-      <tr><td>전문몰</td><td>오늘의집</td><td>8%</td><td>—</td><td>jewelice99@gmail.com</td></tr>
-      <tr><td>전문몰</td><td>토스</td><td>—</td><td>—</td><td>jewelice99@gmail.com</td></tr>
-      <tr><td>기타몰</td><td>올웨이즈 (app)</td><td>—</td><td>—</td><td>jewelice99</td></tr>
-      <tr><td>판촉</td><td>고려기프트</td><td>—</td><td>—</td><td>jewelice99</td></tr>
-    </tbody>
-  </table></div></details>
+  <details open class="mb-3">
+    <summary>🔵 B등급 현 운영 · 12개</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto"><table>
+      <thead><tr><th>#</th><th>구분</th><th>채널</th><th>입점</th><th>행사</th><th>ID</th><th>PW</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>10</td><td>종합몰</td><td class="font-bold">SSG</td><td>—</td><td>—</td><td>24778914</td><td><span class="pw-mask" data-pw="Charles@916">••••••••</span></td><td></td></tr>
+        <tr><td>11</td><td>종합몰</td><td class="font-bold">롯데ON</td><td>15%</td><td>15%</td><td>jewelice99</td><td><span class="pw-mask" data-pw="Charles@912">••••••••</span></td><td></td></tr>
+        <tr><td>12</td><td>오픈마켓</td><td class="font-bold">이베이 (마스터)</td><td>—</td><td>—</td><td>nemochip99</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td></td></tr>
+        <tr><td>13</td><td>오픈마켓</td><td class="font-bold">지마켓</td><td>13%</td><td>—</td><td>nemochip</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td></td></tr>
+        <tr><td>14</td><td>오픈마켓</td><td class="font-bold">지마켓 (메인)</td><td>13%</td><td>—</td><td>nemochip99</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td>메인</td></tr>
+        <tr><td>15</td><td>오픈마켓</td><td class="font-bold">옥션</td><td>13%</td><td>—</td><td>nemochip99</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td>메인</td></tr>
+        <tr><td>16</td><td>오픈마켓</td><td class="font-bold">11번가</td><td>13%</td><td>—</td><td>hanbandokitchen</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td></td></tr>
+        <tr><td>17</td><td>전문몰</td><td class="font-bold">오아시스</td><td>8%</td><td>—</td><td>jewelice99</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td></td></tr>
+        <tr><td>18</td><td>전문몰</td><td class="font-bold">오늘의집</td><td>8%</td><td>—</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="mmg@1203@911**">••••••••</span></td><td></td></tr>
+        <tr><td>19</td><td>전문몰</td><td class="font-bold">토스</td><td>—</td><td>—</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="mmg@1203@912**">••••••••</span></td><td></td></tr>
+        <tr><td>20</td><td>기타몰</td><td class="font-bold">올웨이즈</td><td>—</td><td>—</td><td>jewelice99</td><td><span class="pw-mask" data-pw="9713abc!">••••••••</span></td><td>app 전용</td></tr>
+        <tr><td>21</td><td>판촉</td><td class="font-bold">고려기프트</td><td>—</td><td>—</td><td>jewelice99</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </details>
 
-  <details><summary>🟠 신규 추진 (15개)</summary>
-  <div class="mt-2 card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>구분</th><th>채널</th><th>입점</th><th>행사</th><th>ID</th></tr></thead>
-    <tbody>
-      <tr><td>전문몰</td><td>마켓컬리</td><td>—</td><td>—</td><td>—</td></tr>
-      <tr><td>종합몰</td><td>GS</td><td>30%</td><td>15%</td><td>1055784</td></tr>
-      <tr><td>종합몰</td><td>CJ</td><td>30%</td><td>15%</td><td>576570</td></tr>
-      <tr><td>종합몰</td><td>갤러리아몰</td><td>25%</td><td>8%</td><td>—</td></tr>
-      <tr><td>라이브</td><td>그립</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td></tr>
-      <tr><td>전문몰</td><td>리멤버 선물하기</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td></tr>
-      <tr><td>종합몰</td><td>신세계TV쇼핑</td><td>—</td><td>—</td><td>—</td></tr>
-      <tr><td>전문몰</td><td>SK스토아</td><td>—</td><td>—</td><td>—</td></tr>
-      <tr><td>전문몰</td><td>T딜</td><td>—</td><td>—</td><td>jewelice</td></tr>
-      <tr><td>전문몰</td><td>HyundaiShop</td><td>—</td><td>—</td><td>jewelice99</td></tr>
-      <tr><td>전문몰</td><td>올리브영</td><td>—</td><td>—</td><td>jewelice99</td></tr>
-      <tr><td>전문몰</td><td>지그재그</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td></tr>
-      <tr><td>전문몰</td><td>코오롱</td><td>—</td><td>—</td><td>—</td></tr>
-      <tr><td>전문몰</td><td>에이블리</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td></tr>
-      <tr><td>전문몰</td><td>무신사</td><td>—</td><td>—</td><td>342215</td></tr>
-    </tbody>
-  </table></div></details>
+  <details class="mb-3">
+    <summary>🟠 신규 추진 · 15개</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto"><table>
+      <thead><tr><th>#</th><th>구분</th><th>채널</th><th>입점</th><th>행사</th><th>협력사코드</th><th>ID</th><th>PW</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>22</td><td>전문몰</td><td class="font-bold">마켓컬리</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td></td></tr>
+        <tr><td>23</td><td>종합몰</td><td class="font-bold">GS</td><td>30%</td><td>15%</td><td>1055784</td><td>1055784</td><td><span class="pw-mask" data-pw="2177218551">••••••••</span></td><td></td></tr>
+        <tr><td>24</td><td>종합몰</td><td class="font-bold">CJ</td><td>30%</td><td>15%</td><td>576570</td><td>jewelice99</td><td><span class="pw-mask" data-pw="mmg@1203@911**">••••••••</span></td><td></td></tr>
+        <tr><td>25</td><td>종합몰</td><td class="font-bold">갤러리아몰</td><td>25%</td><td>8%</td><td>—</td><td>—</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td></td></tr>
+        <tr><td>26</td><td>라이브</td><td class="font-bold">그립</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td><td>jewelice99</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td></td></tr>
+        <tr><td>27</td><td>전문몰</td><td class="font-bold">리멤버 선물하기</td><td>—</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td><td><span class="pw-mask" data-pw="Charles@911**">••••••••</span></td><td></td></tr>
+        <tr><td>28</td><td>종합몰</td><td class="font-bold">신세계TV쇼핑</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td></td></tr>
+        <tr><td>29</td><td>전문몰</td><td class="font-bold">SK스토아</td><td>—</td><td>—</td><td>—</td><td>—</td><td><span class="pw-mask" data-pw="Dean@911">••••••••</span></td><td></td></tr>
+        <tr><td>30</td><td>전문몰</td><td class="font-bold">T딜</td><td>—</td><td>—</td><td>—</td><td>jewelice</td><td><span class="pw-mask" data-pw="Charles&amp;911">••••••••</span></td><td></td></tr>
+        <tr><td>31</td><td>전문몰</td><td class="font-bold">HyundaiShop</td><td>—</td><td>—</td><td>—</td><td>jewelice99</td><td><span class="pw-mask" data-pw="Charles&amp;911">••••••••</span></td><td></td></tr>
+        <tr><td>32</td><td>전문몰</td><td class="font-bold">올리브영</td><td>—</td><td>—</td><td>—</td><td>jewelice99</td><td><span class="pw-mask" data-pw="Charles@911**">••••••••</span></td><td></td></tr>
+        <tr><td>33</td><td>전문몰</td><td class="font-bold">지그재그</td><td>—</td><td>—</td><td>partners.kakaostyle.com</td><td>thinkintoreal@gmail.com</td><td><span class="pw-mask" data-pw="Charles@911**">••••••••</span></td><td>카카오스타일</td></tr>
+        <tr><td>34</td><td>전문몰</td><td class="font-bold">코오롱</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td></td></tr>
+        <tr><td>35</td><td>전문몰</td><td class="font-bold">에이블리</td><td>—</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td><td>—</td><td></td></tr>
+        <tr><td>36</td><td>전문몰</td><td class="font-bold">무신사</td><td>—</td><td>—</td><td>—</td><td>342215</td><td><span class="pw-mask" data-pw="Charles@911**">••••••••</span></td><td></td></tr>
+      </tbody>
+    </table></div>
+  </details>
 
-  <details><summary>⚪ 보류·검토·글로벌·중단</summary>
-  <div class="mt-2 card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>구분</th><th>채널</th><th>상태</th><th>비고</th></tr></thead>
-    <tbody>
-      <tr><td>종합몰</td><td>Hmall</td><td><span class="badge badge-hold">보류</span></td><td>25%/20%</td></tr>
-      <tr><td>종합몰</td><td>더현대닷컴</td><td><span class="badge badge-hold">보류</span></td><td></td></tr>
-      <tr><td>종합몰</td><td>공영홈쇼핑</td><td><span class="badge badge-review">검토</span></td><td></td></tr>
-      <tr><td>종합몰</td><td>NS</td><td><span class="badge badge-review">검토</span></td><td>25%/15%</td></tr>
-      <tr><td>종합몰</td><td>홈앤쇼핑</td><td><span class="badge badge-review">검토</span></td><td></td></tr>
-      <tr><td>전문몰</td><td>쇼피파이</td><td><span class="badge badge-global">글로벌</span></td><td>jewelice@jewelice.kr</td></tr>
-      <tr><td>전문몰</td><td>아마존</td><td><span class="badge badge-global">글로벌</span></td><td>jewelice99@gmail.com</td></tr>
-      <tr><td colspan="4" class="bg-red-50 font-bold text-red-700">운영중단 18개: 인터파크/AK/닥터다이어리/국민클럽/군복지몰/PX몰/에이블리구/허닭/제이슨딜/핑크다이어리/W컨셉/떠리몰/이유몰/카카오메이커스/홈플러스/롯데마트/아이스크림미디어/이케이</td></tr>
-    </tbody>
-  </table></div></details>
+  <details class="mb-3">
+    <summary>⚪ 보류 2 · 검토 3 · 글로벌 2</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto"><table>
+      <thead><tr><th>구분</th><th>채널</th><th>상태</th><th>수수료</th><th>ID</th><th>PW</th></tr></thead>
+      <tbody>
+        <tr><td>종합몰</td><td>Hmall</td><td><span class="badge badge-hold">보류</span></td><td>25%/20%</td><td>—</td><td>—</td></tr>
+        <tr><td>종합몰</td><td>더현대닷컴</td><td><span class="badge badge-hold">보류</span></td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>종합몰</td><td>공영홈쇼핑</td><td><span class="badge badge-review">검토</span></td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>종합몰</td><td>NS</td><td><span class="badge badge-review">검토</span></td><td>25%/15%</td><td>—</td><td>—</td></tr>
+        <tr><td>종합몰</td><td>홈앤쇼핑</td><td><span class="badge badge-review">검토</span></td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>전문몰</td><td>쇼피파이</td><td><span class="badge badge-global">글로벌</span></td><td>—</td><td>jewelice@jewelice.kr</td><td><span class="pw-mask" data-pw="kimq@0340**">••••••••</span></td></tr>
+        <tr><td>전문몰</td><td>아마존</td><td><span class="badge badge-global">글로벌</span></td><td>—</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="kimq@0340**">••••••••</span></td></tr>
+      </tbody>
+    </table></div>
+  </details>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>기타 계정 · 운영 시스템</h2>
+  <details class="mb-3">
+    <summary>🔴 운영 중단 · 18개</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto"><table>
+      <thead><tr><th>구분</th><th>채널</th><th>수수료</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>오픈마켓</td><td>인터파크</td><td>13%</td><td></td></tr>
+        <tr><td>종합몰</td><td>AK</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>닥터다이어리</td><td>—</td><td>app 전용</td></tr>
+        <tr><td>전문몰</td><td>국민클럽</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>군복지몰</td><td>7%</td><td></td></tr>
+        <tr><td>전문몰</td><td>PX몰</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>에이블리 (구)</td><td>—</td><td>신규로 재진행</td></tr>
+        <tr><td>전문몰</td><td>허닭</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>제이슨딜</td><td>25%</td><td></td></tr>
+        <tr><td>전문몰</td><td>핑크다이어리</td><td>—</td><td>app 전용</td></tr>
+        <tr><td>전문몰</td><td>W 컨셉</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>떠리몰</td><td>15%</td><td></td></tr>
+        <tr><td>전문몰</td><td>이유몰</td><td>15%</td><td></td></tr>
+        <tr><td>오픈마켓</td><td>카카오 메이커스</td><td>—</td><td></td></tr>
+        <tr><td>마트</td><td>홈플러스</td><td>—</td><td></td></tr>
+        <tr><td>마트</td><td>롯데마트</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>아이스크림미디어</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>이케이 주식회사 (EK Co., Ltd)</td><td>—</td><td>매입 포함</td></tr>
+      </tbody>
+    </table></div>
+  </details>
+
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>사방넷 · SNS · 광고 계정</h2>
+
   <div class="grid md:grid-cols-2 gap-4">
-    <div class="card"><h3 class="font-bold mb-3 text-purple-700">📦 사방넷</h3>
-      <table><tbody>
-        <tr><td><b>마스터</b> jewelice99</td><td>Charles@911</td></tr>
-        <tr><td>찰스</td><td>jewelice_charles</td></tr>
-        <tr class="bg-yellow-50"><td class="font-bold">박지현</td><td>jewelice_lucy</td></tr>
-        <tr><td>이호혁</td><td>jewelice_denny</td></tr>
-        <tr><td>권나경</td><td>jewelice_bon2</td></tr>
-        <tr><td>조송희</td><td>jewelice_kathy</td></tr>
+    <div class="card"><h3 class="font-bold mb-3 text-purple-700">📦 사방넷 (법인 마스터 + 개인)</h3>
+      <table><thead><tr><th>이름</th><th>ID</th><th>PW</th></tr></thead><tbody>
+        <tr><td><b>마스터 계정</b></td><td>jewelice99</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td></tr>
+        <tr><td>찰스</td><td>jewelice_charles</td><td><span class="pw-mask" data-pw="찰스">••••••••</span></td></tr>
+        <tr class="bg-yellow-50"><td class="font-bold">박지현</td><td>jewelice_lucy</td><td><span class="pw-mask" data-pw="박지현">••••••••</span></td></tr>
+        <tr><td>이호혁</td><td>jewelice_denny</td><td><span class="pw-mask" data-pw="이호혁">••••••••</span></td></tr>
+        <tr><td>권나경</td><td>jewelice_bon2</td><td><span class="pw-mask" data-pw="권나경">••••••••</span></td></tr>
+        <tr><td>조송희</td><td>jewelice_kathy</td><td><span class="pw-mask" data-pw="조송희">••••••••</span></td></tr>
       </tbody></table>
     </div>
+
     <div class="card"><h3 class="font-bold mb-3 text-purple-700">👥 채용·운영 플랫폼</h3>
-      <table><tbody>
-        <tr><td>사람인 · 잡코리아 · 이지어드민</td><td>도메인 triplehhh · ID jewelice</td></tr>
-        <tr><td>판판대로</td><td>jewelice99@gmail.com</td></tr>
+      <table><thead><tr><th>플랫폼</th><th>ID</th><th>PW</th><th>비고</th></tr></thead><tbody>
+        <tr><td>사람인</td><td>jewelice</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td>도메인: triplehhh</td></tr>
+        <tr><td>잡코리아</td><td>jewelice</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td>도메인: triplehhh</td></tr>
+        <tr><td>이지어드민</td><td>jewelice</td><td><span class="pw-mask" data-pw="Charles@911">••••••••</span></td><td>도메인: triplehhh</td></tr>
+        <tr><td>판판대로</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="bb9ded">••••••••</span></td><td>fanfandaero.kr</td></tr>
+        <tr><td>다우오피스 (원해)</td><td>charles@jewelice.kr</td><td><span class="pw-mask" data-pw="Dean@911">••••••••</span></td><td></td></tr>
       </tbody></table>
     </div>
-    <div class="card md:col-span-2"><h3 class="font-bold mb-3 text-purple-700">📱 SNS · 광고</h3>
+
+    <div class="card md:col-span-2"><h3 class="font-bold mb-3 text-purple-700">📱 SNS · 광고 · 구글</h3>
       <table>
-        <thead><tr><th>채널</th><th>ID</th><th>비고</th></tr></thead>
+        <thead><tr><th>채널</th><th>ID</th><th>PW</th><th>비고</th></tr></thead>
         <tbody>
-          <tr><td>구글 (대표)</td><td>thinktoreal@gmail.com</td><td>2차인증: 회사 폰</td></tr>
-          <tr><td>구글 (회사)</td><td>jewelice99@gmail.com</td><td>2차인증: 대표 폰</td></tr>
-          <tr><td>유튜브</td><td>thinktoreal@gmail.com</td><td></td></tr>
-          <tr><td>페이스북</td><td>nemochip@gmail.com</td><td>2차인증: 대표 폰</td></tr>
-          <tr class="bg-yellow-50"><td class="font-bold">인스타 (공식)</td><td>jewelice_official</td><td>2차인증: 대표 폰</td></tr>
-          <tr><td>인스타 (정과)</td><td>nut.nut_official</td><td>정과프로젝트</td></tr>
-          <tr><td>틱톡</td><td>jewelice99@gmail.com</td><td></td></tr>
-          <tr><td>X</td><td>thinktoreal@gmail.com</td><td>구글 로그인</td></tr>
-          <tr><td>메타 광고 (현)</td><td>jewelice99@gmail.com</td><td>2차 해킹 후 재생성</td></tr>
-          <tr><td>메타 광고 (구)</td><td>nemochip@gmail.com</td><td>1차 해킹 후 재생성</td></tr>
+          <tr><td>구글 (대표)</td><td>thinktoreal@gmail.com</td><td><span class="pw-mask" data-pw="mmg@makedream**">••••••••</span></td><td>대표님 계정 · 2차인증 회사폰</td></tr>
+          <tr><td>구글 (회사)</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="mmg@1203@911**">••••••••</span></td><td>회사메일 · 2차인증 대표폰</td></tr>
+          <tr><td>유튜브 (SNS)</td><td>thinktoreal@gmail.com</td><td><span class="pw-mask" data-pw="mmg@makedream**">••••••••</span></td><td></td></tr>
+          <tr><td>유튜브 (주유소)</td><td>thinktoreal@gmail.com</td><td><span class="pw-mask" data-pw="mmg@makedream**">••••••••</span></td><td>정과프로젝트</td></tr>
+          <tr><td>페이스북</td><td>nemochip@gmail.com</td><td><span class="pw-mask" data-pw="mmg1203@912**">••••••••</span></td><td>2차인증 대표폰</td></tr>
+          <tr class="bg-yellow-50"><td class="font-bold">인스타그램 (공식)</td><td>jewelice_official</td><td><span class="pw-mask" data-pw="mmg@1203@0340**">••••••••</span></td><td>2차인증 대표폰 · 추가계정</td></tr>
+          <tr><td>인스타 (정과)</td><td>nut.nut_official</td><td><span class="pw-mask" data-pw="Dean@911**">••••••••</span></td><td>정과프로젝트</td></tr>
+          <tr><td>틱톡</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="mmg1203@912**">••••••••</span></td><td>이메일/아이디 로그인</td></tr>
+          <tr><td>X (트위터)</td><td>thinktoreal@gmail.com</td><td><span class="pw-mask" data-pw="-">(구글 로그인)</span></td><td>구글 계정 연결</td></tr>
+          <tr><td>메타 광고 (현)</td><td>jewelice99@gmail.com</td><td><span class="pw-mask" data-pw="Charles@912">••••••••</span></td><td>2차 해킹 후 재생성</td></tr>
+          <tr><td>메타 광고 (1차)</td><td>nemochip@gmail.com</td><td><span class="pw-mask" data-pw="mmg1203@912**">••••••••</span></td><td>1차 해킹 후 재생성</td></tr>
+          <tr><td>메타 광고 (구)</td><td>nemochip@gmail.com</td><td><span class="pw-mask" data-pw="mmg1203@912**">••••••••</span></td><td>구 광고 계정</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span>전자계약 · 광고 · 배송</h2>
-  <div class="grid md:grid-cols-3 gap-4">
-    <div class="card"><h3 class="font-bold mb-2 text-purple-700">전자계약</h3>
-      <ul class="text-sm space-y-1">
-        <li>• 공인인증서 (법인)</li><li>• Hmall</li><li>• 갤러리아몰</li><li>• 공영쇼핑</li>
-        <li>• 더블유쇼핑</li><li>• 싸인오케이</li><li>• 스마트빌사인/스마트빌</li><li>• 트러스트온</li>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span>전자계약 · 광고 · 배송 · 디자인 · 참고</h2>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="card"><h3 class="font-bold mb-2 text-purple-700">📝 전자계약 (법인 공인인증서)</h3>
+      <ul class="text-sm space-y-1 columns-2">
+        <li>• Hmall</li><li>• 갤러리아몰</li><li>• 공영쇼핑</li><li>• 더블유쇼핑</li>
+        <li>• 싸인오케이</li><li>• 스마트빌사인</li><li>• 스마트빌</li><li>• 트러스트온</li>
       </ul>
     </div>
-    <div class="card"><h3 class="font-bold mb-2 text-purple-700">광고</h3>
+    <div class="card"><h3 class="font-bold mb-2 text-purple-700">📣 광고 플랫폼</h3>
       <ul class="text-sm space-y-1">
-        <li>• 네이버 광고 / GFA</li><li>• 카카오 광고 / 모먼트</li><li>• 메타 광고 (상기 SNS)</li>
+        <li>• 네이버 광고 / GFA</li>
+        <li>• 카카오모먼트 / 카카오 광고</li>
+        <li>• 메타 광고 (상기 SNS 참조)</li>
       </ul>
     </div>
-    <div class="card"><h3 class="font-bold mb-2 text-purple-700">배송·디자인·참고</h3>
+    <div class="card"><h3 class="font-bold mb-2 text-purple-700">🚚 배송·물류</h3>
       <ul class="text-sm space-y-1">
-        <li>• CJ대한통운 (CNPlus) · 후다닥퀵</li>
-        <li>• 클립아트코리아 · 성원애드피아</li>
-        <li>• 네이버 쇼핑라이브 · 서치어드바이저</li>
-        <li>• 특허로 · 코리안넷 · 식품안전나라</li>
+        <li>• <b>CJ대한통운</b> (법인 · 본사·3PL 공통) · CNPlus</li>
+        <li>• 후다닥퀵</li>
+        <li>• 롯데택배 [엘토스]</li>
+        <li>• 다음메일</li>
+      </ul>
+    </div>
+    <div class="card"><h3 class="font-bold mb-2 text-purple-700">🎨 디자인·인쇄</h3>
+      <ul class="text-sm space-y-1">
+        <li>• 클립아트코리아 (이미지/PPT/폰트)</li>
+        <li>• 성원애드피아 (인쇄/출력)</li>
+      </ul>
+    </div>
+    <div class="card md:col-span-2"><h3 class="font-bold mb-2 text-purple-700">📚 참고·신고·협회</h3>
+      <ul class="text-sm space-y-1 grid md:grid-cols-3 gap-x-2">
+        <li>• 네이버 쇼핑라이브 관리툴</li>
+        <li>• 네이버 서치어드바이저</li>
+        <li>• 카카오 비즈니스 · 세미나</li>
+        <li>• 11번가 지식재산권보호센터</li>
+        <li>• 네이버 지식재산권신고센터</li>
+        <li>• 네이버 게시중단 요청</li>
+        <li>• 특허로 · 코리안넷</li>
+        <li>• 중소기업현황정보시스템</li>
+        <li>• 식품안전나라</li>
+        <li>• 한국건강기능식품협회 (광고심의)</li>
+        <li>• 한국식품산업협회</li>
+        <li>• 건강기능식품교육센터</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- ================ ② 상품 · 원가 ================ -->
+<!-- ============ ② 상품·SKU·원가 ============ -->
 <section id="tab-pr" class="tab-content space-y-8">
-  <div class="notice"><b>1차안</b> — 2026-04-21 · 원본: 거래처정보 상품리스트 + 가격관리표 v4.0 + 제품 본질 · VAT별도 / 배송 3,000원 기준</div>
+  <div class="notice"><b>v2 크로스체크 반영</b> — 품번 21종 + SKU 49종 + 7단계 가격(v4.0) + 제품별 본질 전문 + 미니큐브/크리슨 신규 + 콘텐츠 방향 · 원본: 마스터마인딩_가격관리표_v4 · 쥬얼아이스 상품명 · 제품별 본질</div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>브랜드 · 본질 개요</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>브랜드·본질 (제품별 전문)</h2>
   <div class="grid md:grid-cols-3 gap-4">
     <div class="card border-t-4 border-blue-500">
-      <div class="brand-chip chip-duo mb-3">듀오메이커</div>
-      <h3 class="text-lg font-bold mb-2">좋은 음료를 더 제대로 즐기게 해주는 좋은 얼음</h3>
-      <p class="text-xs text-gray-600 mb-2">프리미엄 얼음 경험 / 좋은 음료에는 좋은 얼음</p>
-      <div class="text-xs space-y-1">
-        <div>• 정상가 <b>89,000원~</b></div>
-        <div>• 최저 <b>49,000원</b> (▼44.9%)</div>
-        <div>• 타겟: 위스키·하이볼·홈바 2030</div>
-      </div>
+      <div class="brand-chip chip-duo mb-2">듀오메이커</div>
+      <h3 class="text-lg font-bold mb-1">좋은 음료를 더 제대로 즐기게 해주는 좋은 얼음</h3>
+      <p class="text-xs text-gray-500 mb-3">프리미엄 얼음 경험 / 좋은 음료에는 좋은 얼음</p>
+      <table class="text-xs">
+        <tr><th class="w-16">기능</th><td>얼음 제작 · 형태감 있는 얼음 · 쉬운 분리</td></tr>
+        <tr><th>장점</th><td>예쁨 · 단단·천천히 녹음 · 음료 비주얼 고급화</td></tr>
+        <tr><th>첫화면</th><td>단단·맑은 얼음 클로즈업 / 위스키·하이볼·아이스커피 장면</td></tr>
+        <tr><th>광고</th><td>기능 설명보다 분위기 중심 · UGC 숏폼 적합</td></tr>
+        <tr><th>유도문장</th><td>"어? 집에서도 저렇게 마실 수 있네"</td></tr>
+        <tr class="bg-red-50"><th>리스크</th><td>기능 설명만 하면 평범한 얼음틀처럼 보임</td></tr>
+      </table>
+      <div class="mt-2 text-xs text-gray-700 font-bold">정상 89,000~ / 최저 49,000 (▼44.9%)</div>
     </div>
     <div class="card border-t-4 border-pink-500">
-      <div class="brand-chip chip-abler mb-3">아블러</div>
-      <h3 class="text-lg font-bold mb-2">얼음 좋아하는 사람이 시원함을 오래 누리게 해주는 제품</h3>
-      <p class="text-xs text-gray-600 mb-2">얼음 부자 경험</p>
-      <div class="text-xs space-y-1">
-        <div>• 정상가 <b>69,000원~</b></div>
-        <div>• 최저 <b>39,000원</b> (▼43.5%)</div>
-        <div>• 타겟: 사무실·운동·일상</div>
-      </div>
+      <div class="brand-chip chip-abler mb-2">아블러</div>
+      <h3 class="text-lg font-bold mb-1">얼음 좋아하는 사람이 시원함을 오래 누리게 해주는 제품</h3>
+      <p class="text-xs text-gray-500 mb-3">얼음 부자 경험</p>
+      <table class="text-xs">
+        <tr><th class="w-16">기능</th><td>얼음 제작 · 텀블러 · 얼음 보관·휴대 · 지속 활용</td></tr>
+        <tr><th>장점</th><td>하루종일 시원 · 얼음 챙길 필요 없음 · 범용 (사무실/외출/운동/캠핑)</td></tr>
+        <tr><th>첫화면</th><td>아침 채워 저녁까지 시원한 장면 · 얼음 넉넉함</td></tr>
+        <tr><th>광고</th><td>리뷰형·바이럴 최적 · 생활 경험 언어</td></tr>
+        <tr><th>유도문장</th><td>"이건 진짜 나한테 필요하다"</td></tr>
+        <tr class="bg-red-50"><th>리스크</th><td>기능 나열 중심이면 강점이 약해짐</td></tr>
+      </table>
+      <div class="mt-2 text-xs text-gray-700 font-bold">정상 69,000~ / 최저 39,000 (▼43.5%) · <span class="text-pink-700">⭐ 메인 후보</span></div>
     </div>
     <div class="card border-t-4 border-emerald-500">
-      <div class="brand-chip chip-zero mb-3">아블러 제로</div>
-      <h3 class="text-lg font-bold mb-2">매일 쓰는 텀블러를 더 깨끗하고 안심되게</h3>
-      <p class="text-xs text-gray-600 mb-2">위생적·안심·데일리</p>
-      <div class="text-xs space-y-1">
-        <div>• 정상가 <b>49,000원~</b></div>
-        <div>• 최저 <b>29,000원</b> (▼40.8%)</div>
-        <div>• 타겟: 위생·안심·데일리</div>
-      </div>
+      <div class="brand-chip chip-zero mb-2">아블러 제로</div>
+      <h3 class="text-lg font-bold mb-1">매일 쓰는 텀블러를 더 깨끗하고 안심되게</h3>
+      <p class="text-xs text-gray-500 mb-3">위생적·안심·데일리 사용 경험</p>
+      <table class="text-xs">
+        <tr><th class="w-16">기능</th><td>음료 담기 · 빨대 사용 · 세척 · 강화유리·위생</td></tr>
+        <tr><th>장점</th><td>깨끗한 느낌 · 데일리 사용성 · 입 닿는 제품의 위생 강조</td></tr>
+        <tr><th>첫화면</th><td>세척 장면 · 강화유리 투명감 · 매일 쓰는 텀블러 메시지</td></tr>
+        <tr><th>광고</th><td>기능보다 안심 사용 경험 · 세척·사용감·위생</td></tr>
+        <tr class="bg-red-50"><th>리스크</th><td><b>빨대 구조·뚜껑 밀폐·샘 이슈·결합부 안정성</b> — 제품력 보완 선행 필요</td></tr>
+      </table>
+      <div class="mt-2 text-xs text-gray-700 font-bold">정상 49,000~ / 최저 29,000 (▼40.8%) · <span class="text-red-600">⚠ 메시지 과대화 금지</span></div>
     </div>
   </div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>가격 구간 · 공급가 정책 (v4.0)</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>가격 정책 v4.0 (7단계)</h2>
   <div class="card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>구간</th><th>정의</th><th class="text-center">수수료</th><th>공급가 산출</th><th>주의</th></tr></thead>
+    <thead><tr><th>구간</th><th>정의</th><th class="text-center">수수료</th><th>판매가 ↔ 공급가</th><th>운영 주의</th></tr></thead>
     <tbody>
-      <tr><td class="font-bold">정상가</td><td>기준점</td><td class="text-center">0%</td><td>판매가 ÷ 1.1</td><td>임의 변경 금지</td></tr>
-      <tr><td class="font-bold">상시가</td><td>연중 운영 기준가</td><td class="text-center">15%</td><td>공급가(포함)÷1.1</td><td>정상가 대비 15~30%</td></tr>
-      <tr><td class="font-bold">특가</td><td>시즌 한정</td><td class="text-center">15%</td><td>공급가(포함)÷1.1</td><td>상시가 대비 15%</td></tr>
-      <tr class="bg-red-50"><td class="font-bold text-red-700">단독특가</td><td>MD 단독 · <b>최저 하한</b></td><td class="text-center">15%</td><td>공급가(포함)÷1.1</td><td class="text-red-700">최저 이하 불가</td></tr>
-      <tr><td class="font-bold">B2B</td><td>기업 직거래</td><td class="text-center">0%</td><td>판매가 ÷ 1.1</td><td>계약서 필수</td></tr>
-      <tr><td class="font-bold">공동구매</td><td>인스타·카카오 공구</td><td class="text-center">10%</td><td>공급가(포함)÷1.1</td><td>중계사 수수료 별도</td></tr>
-      <tr><td class="font-bold">폐쇄몰</td><td>기업 복지몰</td><td class="text-center">20%</td><td>공급가(포함)÷1.1</td><td>계약 확인</td></tr>
+      <tr><td class="font-bold">정상가</td><td>기준점 · 모든 할인율 기준</td><td class="text-center">0%</td><td>판매가 ÷ 1.1 = 공급가(별도)</td><td>임의 변경 금지</td></tr>
+      <tr><td class="font-bold">상시가</td><td>연중 운영 기준가</td><td class="text-center">15%</td><td>판매가 × 0.85 ÷ 1.1</td><td>정상 대비 15~30%</td></tr>
+      <tr><td class="font-bold">특가</td><td>시즌 한정</td><td class="text-center">15%</td><td>판매가 × 0.85 ÷ 1.1</td><td>상시 대비 15% 추가</td></tr>
+      <tr class="bg-red-50"><td class="font-bold text-red-700">단독특가</td><td>MD 단독 · <b>절대 하한</b></td><td class="text-center">15%</td><td>판매가 × 0.85 ÷ 1.1</td><td class="text-red-700">하한: 듀오 49,000 / 아블러 39,000 / 제로 29,000 / 미니큐브 35,000</td></tr>
+      <tr><td class="font-bold">B2B가</td><td>기업 직거래 · 판촉</td><td class="text-center">0%</td><td>판매가 ÷ 1.1</td><td>계약서 · 재판매 금지</td></tr>
+      <tr><td class="font-bold">공동구매가</td><td>인스타·카카오 공구</td><td class="text-center">10%</td><td>판매가 × 0.9 ÷ 1.1</td><td>중계사 수수료 별도</td></tr>
+      <tr><td class="font-bold">폐쇄몰가</td><td>기업 복지몰</td><td class="text-center">20%</td><td>판매가 × 0.8 ÷ 1.1</td><td>계약 조건 확인</td></tr>
     </tbody>
   </table></div>
-  <div class="pack-warn">⛔ <b>마진:</b> 공급가(별도) − 원가(별도) − 배송비(3,000) · <b>금형비 원가 불포함</b></div>
+  <div class="pack-warn">⛔ <b>마진 공식:</b> 공급가(VAT별도) − 원가(VAT별도) − 배송비 3,000원 · <b>금형개발비 원가 불포함</b> (별도 회수 기획)</div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span><span class="brand-chip chip-duo">듀오메이커</span></h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span>품번 (SKU 코드)</h2>
   <div class="card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>제품</th><th>형태</th><th>색상</th><th class="text-right">정상가</th><th class="text-right">단독특가</th><th class="text-right">공급가</th><th class="text-right">원가</th><th class="text-right">마진</th><th class="text-right">이익률</th></tr></thead>
+    <thead><tr><th>#</th><th>품번</th><th>원본 상품명</th><th>검색어 최적화 상품명 (쇼핑몰 업로드용)</th></tr></thead>
     <tbody>
-      <tr><td>아이스스틱 투명 얼음틀</td><td>스틱</td><td>화/블/블루</td><td class="num">89,000</td><td class="num">49,000</td><td class="num">37,864</td><td class="num">12,364</td><td class="num num-pos">21,881</td><td class="num num-pos">58%</td></tr>
-      <tr><td>아이스볼 투명 얼음틀</td><td>아이스볼</td><td>화/블/블루</td><td class="num">89,000</td><td class="num">49,000</td><td class="num">37,864</td><td class="num">12,364</td><td class="num num-pos">21,881</td><td class="num num-pos">58%</td></tr>
-      <tr class="bg-purple-50"><td><b>+추가몰드</b></td><td>스틱·볼</td><td>4색</td><td class="num">158,000</td><td class="num">88,000</td><td class="num">68,000</td><td class="num">17,364</td><td class="num num-pos">46,768</td><td class="num num-pos">69%</td></tr>
-      <tr class="bg-yellow-50"><td><b>더블세트</b> + 보관통·집게</td><td>스틱·볼</td><td>4색</td><td class="num">197,000</td><td class="num">118,000</td><td class="num">91,182</td><td class="num">27,637</td><td class="num num-pos">59,163</td><td class="num num-pos">65%</td></tr>
-      <tr><td>쥬얼아이스 개별 몰드</td><td>스틱·볼</td><td>화이트</td><td class="num">69,000</td><td class="num">49,000</td><td class="num">37,864</td><td class="num">5,000</td><td class="num num-pos">29,614</td><td class="num num-pos">78%</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span><span class="brand-chip chip-abler">아블러</span></h2>
-  <div class="card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>제품</th><th>형태</th><th class="text-right">정상가</th><th class="text-right">상시가</th><th class="text-right">특가</th><th class="text-right">단독</th><th class="text-right">원가</th><th class="text-right">단독마진</th><th class="text-right">이익률</th></tr></thead>
-    <tbody>
-      <tr><td class="font-semibold">아블러 텀블러</td><td>—</td><td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td><td class="num">3,985</td><td class="num num-pos">22,952</td><td class="num num-pos">76%</td></tr>
-      <tr><td>3in1 - 볼</td><td>볼</td><td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td><td class="num">11,364</td><td class="num num-pos">15,204</td><td class="num num-pos">50%</td></tr>
-      <tr><td>3in1 - 스피어</td><td>스피어</td><td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td><td class="num">11,364</td><td class="num num-pos">15,204</td><td class="num num-pos">50%</td></tr>
-      <tr><td>3in1 - 큐브</td><td>큐브</td><td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td><td class="num">11,364</td><td class="num num-pos">15,204</td><td class="num num-pos">50%</td></tr>
-      <tr class="bg-purple-50"><td><b>+추가몰드</b> (4종)</td><td>볼·스피어·큐브·해골</td><td class="num">108,000</td><td class="num">79,000</td><td class="num">69,000</td><td class="num">63,000</td><td class="num">17,273</td><td class="num num-pos">27,545</td><td class="num num-pos">57%</td></tr>
-      <tr class="bg-yellow-50"><td><b>더블세트</b> + 보관통·집게</td><td>4종</td><td class="num">138,000</td><td class="num">99,000</td><td class="num">85,000</td><td class="num">78,000</td><td class="num">37,273</td><td class="num num-pos">18,136</td><td class="num num-pos">30%</td></tr>
-      <tr><td>추가 몰드</td><td>4종 화이트</td><td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td><td class="num">5,909</td><td class="num num-pos">20,932</td><td class="num num-pos">69%</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span><span class="brand-chip chip-zero">아블러 제로</span></h2>
-  <div class="card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>제품</th><th>색상</th><th class="text-right">정상</th><th class="text-right">상시</th><th class="text-right">특가</th><th class="text-right">단독</th><th class="text-right">원가</th><th class="text-right">단독마진</th><th class="text-right">이익률</th></tr></thead>
-    <tbody>
-      <tr><td>강화유리 이중 투명 텀블러</td><td>아이보리/블랙</td><td class="num">49,000</td><td class="num">39,000</td><td class="num">34,000</td><td class="num">29,000</td><td class="num">5,690</td><td class="num num-pos">13,150</td><td class="num num-pos">59%</td></tr>
-      <tr class="bg-purple-50"><td><b>[1+1]</b></td><td>아이보리/블랙</td><td class="num">98,000</td><td class="num">78,000</td><td class="num">68,000</td><td class="num">58,000</td><td class="num">11,380</td><td class="num num-pos">29,300</td><td class="num num-pos">65%</td></tr>
-      <tr class="bg-yellow-50"><td class="font-bold">톡딜 [1+1] ★</td><td>2종</td><td class="num">98,000</td><td class="num">78,000</td><td class="num">49,000</td><td class="num">39,000</td><td class="num">11,380</td><td class="num num-pos">14,618</td><td class="num num-pos">49%</td></tr>
+      <tr><td>1</td><td><span class="sku-cell">100034</span></td><td>하이볼 유리잔</td><td>하이볼 유리잔 홈바 위스키잔</td></tr>
+      <tr><td>2</td><td><span class="sku-cell">100033</span></td><td>온더락 유리잔</td><td>온더락 유리잔 홈바 위스키잔</td></tr>
+      <tr><td>3</td><td><span class="sku-cell">100032</span></td><td>스틱보관통 (듀오메이커 전용)</td><td>스틱보관통 듀오메이커 전용 스틱얼음 보관통</td></tr>
+      <tr><td>4</td><td><span class="sku-cell">100031</span></td><td>지거 (30/45ml)</td><td>지거 30ml 45ml 홈바 칵테일 계량컵</td></tr>
+      <tr><td>5</td><td><span class="sku-cell">100030</span></td><td>이글 집게</td><td>이글 집게 얼음집게 홈바용</td></tr>
+      <tr><td>6</td><td><span class="sku-cell">100029</span></td><td>얼음(아이스볼·큐브·스피어다이아) 보관통+집게세트</td><td>얼음보관통 집게세트 아이스볼 큐브 스피어다이아</td></tr>
+      <tr><td>7</td><td><span class="sku-cell">100028</span></td><td>아블러 전용몰드 (텀블러 제외)</td><td>아블러 전용몰드 텀블러제외 하이볼얼음틀 왕얼음틀</td></tr>
+      <tr><td>8</td><td><span class="sku-cell">100027</span></td><td>아블러 텀블러 (몰드 제외)</td><td>아블러 텀블러 몰드 제외 얼음텀블러 홈바텀블러</td></tr>
+      <tr><td>9</td><td><span class="sku-cell">100026</span></td><td>듀오메이커+추가몰드</td><td>듀오메이커 추가몰드 아이스메이커 투명 얼음틀 스틱얼음 원형얼음 아이스볼 하이볼얼음 위스키얼음 홈바</td></tr>
+      <tr><td>10</td><td><span class="sku-cell">100025</span></td><td>아블러+추가몰드</td><td>아블러 추가몰드 3in1 아이스메이커 텀블러 하이볼얼음틀 위스키얼음틀 홈바</td></tr>
+      <tr><td>11</td><td><span class="sku-cell">100024</span></td><td>아블러 더블세트</td><td>아블러 더블세트 3in1 아이스메이커 텀블러 하이볼얼음틀 위스키얼음틀 홈바</td></tr>
+      <tr><td>12</td><td><span class="sku-cell">100023</span></td><td>아블러 (아이스메이커+얼음컵+텀블러) 390ml</td><td>아블러 (아이스메이커 얼음컵 텀블러) 390ml 하이볼 텀블러세트</td></tr>
+      <tr><td>13</td><td><span class="sku-cell">100022</span></td><td>듀오메이커 (프리미엄 아이스메이커) - 틀·색상</td><td>듀오메이커 아이스메이커 (프리미엄 아이스메이커) 스틱얼음 원형얼음 아이스볼</td></tr>
+      <tr><td>14</td><td><span class="sku-cell">100020</span></td><td>아블러제로 더블세트</td><td>아블러제로 더블세트 아이스메이커 강화유리 이중 투명 쇠맛 제로 가볍고 세척 편한 필수템</td></tr>
+      <tr><td>15</td><td><span class="sku-cell">100019</span></td><td>듀오메이커 더블세트</td><td>듀오메이커 더블세트 아이스메이커 투명 얼음틀 보관통 집게 포함 하이볼얼음 위스키얼음 홈바</td></tr>
+      <tr><td>16</td><td><span class="sku-cell">100008</span></td><td>아블러제로</td><td>아블러제로 강화유리 이중 투명 쇠맛 제로 가볍고 세척 편한 필수템</td></tr>
+      <tr><td>17</td><td><span class="sku-cell">100007</span></td><td>듀오메이커 스틱</td><td>듀오메이커 스틱 아이스메이커 투명 얼음틀 스틱얼음 하이볼얼음 위스키얼음 홈바</td></tr>
+      <tr><td>18</td><td><span class="sku-cell">100006</span></td><td>듀오메이커 아이스볼</td><td>듀오메이커 아이스볼 아이스메이커 투명 얼음틀 원형얼음틀 하이볼얼음 위스키얼음 홈바</td></tr>
+      <tr><td>19</td><td><span class="sku-cell">100005</span></td><td>아블러 (큐브)</td><td>아블러 큐브 3in1 아이스메이커 텀블러 얼음컵 사각얼음틀</td></tr>
+      <tr><td>20</td><td><span class="sku-cell">100003</span></td><td>아블러 (스피어다이아)</td><td>아블러 스피어다이아 3in1 아이스메이커 텀블러 얼음컵 다이아얼음틀</td></tr>
+      <tr><td>21</td><td><span class="sku-cell">100002</span></td><td>아블러 (아이스볼)</td><td>아블러 아이스볼 3in1 아이스메이커 텀블러 얼음컵 원형얼음틀</td></tr>
     </tbody>
   </table></div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑥</span><span class="brand-chip chip-new">신규 라인</span></h2>
-  <div class="grid md:grid-cols-2 gap-4">
-    <div class="card border-t-4 border-yellow-400">
-      <div class="brand-chip chip-duo mb-2">듀오메이커</div>
-      <h3 class="text-lg font-bold mb-2">미니큐브 몰드 ★신규</h3>
-      <table class="text-sm">
-        <tr><th>정상</th><td class="num">49,000원</td></tr>
-        <tr><th>최저</th><td class="num">35,000원 (▼28.6%)</td></tr>
-        <tr><th>원가</th><td class="num">12,982원</td></tr>
-      </table>
-    </div>
-    <div class="card border-t-4 border-red-400">
-      <div class="brand-chip chip-new mb-2">크리슨 글라스잔</div>
-      <h3 class="text-lg font-bold mb-2">신규 ★ 세트 판매 권장</h3>
-      <table class="text-sm">
-        <tr><th>단품 정상</th><td class="num">19,000원</td></tr>
-        <tr><th>원가</th><td class="num">8,000원</td></tr>
-        <tr class="bg-red-50"><th class="text-red-700">단품 단독</th><td class="num num-neg">13,000원 (적자)</td></tr>
-        <tr class="bg-green-50"><th class="text-green-700">세트 포함</th><td class="num num-pos">21.1% 마진</td></tr>
-      </table>
-      <div class="pack-warn !my-2">⛔ 단품 단독 판매 금지 · 세트로만</div>
-    </div>
-  </div>
-
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑦</span><span class="brand-chip chip-acc">구성품 · 증정용</span></h2>
-  <div class="pack-warn">⚠ 구성품 단독 판매 대부분 적자 · 세트 증정 또는 묶음용</div>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>듀오메이커 · 가격 v4.0 전체</h2>
   <div class="card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>품목</th><th class="text-right">정상가</th><th class="text-right">상시가</th><th class="text-right">원가</th><th class="text-right">상시마진</th><th>운영</th></tr></thead>
+    <thead><tr><th>제품</th><th>형/색</th>
+      <th class="text-right">정상</th><th class="text-right">상시</th><th class="text-right">특가</th><th class="text-right">단독</th>
+      <th class="text-right">B2B</th><th class="text-right">공구</th><th class="text-right">폐쇄몰</th>
+      <th class="text-right">원가(별도)</th><th class="text-right">단독마진</th><th class="text-right">이익률</th></tr></thead>
     <tbody>
-      <tr><td>범용 볼 보관통</td><td class="num">10,000</td><td class="num">5,000</td><td class="num">1,545</td><td class="num num-neg">(759)</td><td>증정</td></tr>
-      <tr><td>스틱 보관통</td><td class="num">10,000</td><td class="num">5,000</td><td class="num">1,727</td><td class="num num-neg">(950)</td><td>증정</td></tr>
-      <tr><td>볼 보관통+집게</td><td class="num">12,000</td><td class="num">6,000</td><td class="num">2,727</td><td class="num num-neg">(1,227)</td><td>증정</td></tr>
-      <tr><td>스틱 보관통+집게</td><td class="num">12,000</td><td class="num">6,000</td><td class="num">2,909</td><td class="num num-neg">(1,418)</td><td>증정</td></tr>
-      <tr><td>얼음집게</td><td class="num">5,000</td><td class="num">2,500</td><td class="num">1,182</td><td class="num num-neg">(2,309)</td><td>증정</td></tr>
-      <tr><td>지거</td><td class="num">10,000</td><td class="num">5,000</td><td class="num">5,909</td><td class="num num-neg">(5,341)</td><td>세트</td></tr>
-      <tr><td>바스푼</td><td class="num">5,000</td><td class="num">2,500</td><td class="num">1,364</td><td class="num num-neg">(2,500)</td><td>증정</td></tr>
-      <tr><td>하이볼 글라스</td><td class="num">4,500</td><td class="num">2,250</td><td class="num">1,209</td><td class="num num-neg">(2,531)</td><td>세트</td></tr>
-      <tr><td>온더락 글라스</td><td class="num">4,500</td><td class="num">2,250</td><td class="num">1,527</td><td class="num num-neg">(2,865)</td><td>세트</td></tr>
-      <tr><td>닐링 체어</td><td class="num">199,000</td><td class="num">99,500</td><td class="num">82,654</td><td class="num num-neg">(12,900)</td><td>⛔ 재검토</td></tr>
-      <tr><td>정과</td><td class="num">9,800</td><td class="num">4,900</td><td class="num">3,984</td><td class="num num-neg">(3,397)</td><td>콜라보</td></tr>
+      <tr><td>아이스스틱</td><td>화/블랙/블루</td>
+        <td class="num">89,000</td><td class="num">69,000</td><td class="num">59,000</td><td class="num">49,000</td>
+        <td class="num">55,000</td><td class="num">57,000</td><td class="num">53,000</td>
+        <td class="num">11,802</td><td class="num num-pos">23,062</td><td class="num num-pos">60.9%</td></tr>
+      <tr><td>아이스볼</td><td>화/블랙/블루</td>
+        <td class="num">89,000</td><td class="num">69,000</td><td class="num">59,000</td><td class="num">49,000</td>
+        <td class="num">55,000</td><td class="num">57,000</td><td class="num">53,000</td>
+        <td class="num">11,802</td><td class="num num-pos">23,062</td><td class="num num-pos">60.9%</td></tr>
+      <tr class="bg-purple-50"><td><b>+추가몰드</b></td><td>스틱·볼 4색</td>
+        <td class="num">158,000</td><td class="num">122,000</td><td class="num">105,000</td><td class="num">49,000</td>
+        <td class="num">98,000</td><td class="num">101,000</td><td class="num">94,000</td>
+        <td class="num">16,575</td><td class="num num-pos">18,289</td><td class="num num-pos">48.3%</td></tr>
+      <tr class="bg-yellow-50"><td><b>더블세트</b> +보관통·집게</td><td>스틱·볼 4색</td>
+        <td class="num">197,000</td><td class="num">153,000</td><td class="num">131,000</td><td class="num">49,000</td>
+        <td class="num">122,000</td><td class="num">126,000</td><td class="num">117,000</td>
+        <td class="num">26,381</td><td class="num num-pos">8,483</td><td class="num num-pos">22.4%</td></tr>
+      <tr><td>쥬얼아이스 개별 몰드</td><td>스틱·볼 화이트</td>
+        <td class="num">69,000</td><td class="num">53,000</td><td class="num">49,000</td><td class="num">49,000</td>
+        <td class="num">49,000</td><td class="num">49,000</td><td class="num">49,000</td>
+        <td class="num">4,773</td><td class="num num-pos">30,091</td><td class="num num-pos">79.5%</td></tr>
+      <tr class="bg-green-50"><td class="font-bold">★ 미니큐브 몰드 (신규)</td><td>미니큐브</td>
+        <td class="num">49,000</td><td class="num">42,000</td><td class="num">38,000</td><td class="num">35,000</td>
+        <td class="num">37,000</td><td class="num">38,000</td><td class="num">36,000</td>
+        <td class="num">11,802</td><td class="num num-pos">12,244</td><td class="num num-pos">45.3%</td></tr>
     </tbody>
   </table></div>
+  <div class="notice">미니큐브: 금형비 회수 별도 기획. 원가는 제조원가 12,802원(별도) 기준만 관리.</div>
+
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span>아블러 · 가격 v4.0 전체</h2>
+  <div class="card !p-0 overflow-x-auto"><table>
+    <thead><tr><th>제품</th><th>형/색</th>
+      <th class="text-right">정상</th><th class="text-right">상시</th><th class="text-right">특가</th><th class="text-right">단독</th>
+      <th class="text-right">B2B</th><th class="text-right">공구</th><th class="text-right">폐쇄몰</th>
+      <th class="text-right">원가(별도)</th><th class="text-right">단독마진</th><th class="text-right">이익률</th></tr></thead>
+    <tbody>
+      <tr><td class="font-semibold">아블러 텀블러</td><td>블/블루/실/화</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">43,000</td><td class="num">45,000</td><td class="num">41,000</td>
+        <td class="num">3,804</td><td class="num num-pos">23,333</td><td class="num num-pos">77.4%</td></tr>
+      <tr><td>3in1 - <b>볼</b></td><td>4색</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">43,000</td><td class="num">45,000</td><td class="num">41,000</td>
+        <td class="num">10,847</td><td class="num num-pos">16,289</td><td class="num num-pos">54.1%</td></tr>
+      <tr><td>3in1 - <b>스피어</b></td><td>4색</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">43,000</td><td class="num">45,000</td><td class="num">41,000</td>
+        <td class="num">10,847</td><td class="num num-pos">16,289</td><td class="num num-pos">54.1%</td></tr>
+      <tr><td>3in1 - <b>큐브</b></td><td>4색</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">43,000</td><td class="num">45,000</td><td class="num">41,000</td>
+        <td class="num">10,847</td><td class="num num-pos">16,289</td><td class="num num-pos">54.1%</td></tr>
+      <tr class="bg-purple-50"><td><b>+추가몰드</b> (볼·스피어·큐브·해골)</td><td>4색</td>
+        <td class="num">108,000</td><td class="num">77,000</td><td class="num">70,000</td><td class="num">39,000</td>
+        <td class="num">67,000</td><td class="num">70,000</td><td class="num">64,000</td>
+        <td class="num">16,488</td><td class="num num-pos">10,648</td><td class="num num-pos">35.3%</td></tr>
+      <tr class="bg-yellow-50"><td><b>더블세트</b> +보관통·집게</td><td>4색</td>
+        <td class="num">138,000</td><td class="num">98,000</td><td class="num">90,000</td><td class="num">39,000</td>
+        <td class="num">86,000</td><td class="num">90,000</td><td class="num">82,000</td>
+        <td class="num">35,579</td><td class="num num-neg">(8,443)</td><td class="num num-neg">(28.0%)</td></tr>
+      <tr><td>추가 몰드</td><td>볼·스피어·큐브·해골 화이트</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">43,000</td><td class="num">45,000</td><td class="num">41,000</td>
+        <td class="num">5,641</td><td class="num num-pos">21,495</td><td class="num num-pos">71.3%</td></tr>
+    </tbody>
+  </table></div>
+  <div class="pack-warn">⛔ <b>아블러 더블세트 단독특가</b>는 마진 적자 (-28%) · MD 단독행사 시 <b>최저 단독가 49,000원 이하 판매 금지</b> 또는 구성 변경 필요</div>
+
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑥</span>아블러 제로 · 가격 v4.0</h2>
+  <div class="card !p-0 overflow-x-auto"><table>
+    <thead><tr><th>제품</th><th>색</th>
+      <th class="text-right">정상</th><th class="text-right">상시</th><th class="text-right">특가</th><th class="text-right">단독</th>
+      <th class="text-right">B2B</th><th class="text-right">공구</th><th class="text-right">폐쇄몰</th>
+      <th class="text-right">원가(별도)</th><th class="text-right">단독마진</th><th class="text-right">이익률</th></tr></thead>
+    <tbody>
+      <tr><td>강화유리 이중 투명 텀블러</td><td>아이보리/블랙</td>
+        <td class="num">49,000</td><td class="num">39,000</td><td class="num">34,000</td><td class="num">29,000</td>
+        <td class="num">32,000</td><td class="num">33,000</td><td class="num">31,000</td>
+        <td class="num">5,690</td><td class="num num-pos">13,719</td><td class="num num-pos">61.2%</td></tr>
+      <tr class="bg-purple-50"><td><b>[1+1]</b></td><td>아이보리/블랙</td>
+        <td class="num">98,000</td><td class="num">78,000</td><td class="num">68,000</td><td class="num">29,000</td>
+        <td class="num">64,000</td><td class="num">66,000</td><td class="num">62,000</td>
+        <td class="num">11,380</td><td class="num num-pos">8,029</td><td class="num num-pos">35.8%</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑦</span>구성품 · 증정용 · 신규 글라스</h2>
+  <div class="pack-warn">⚠ 집게·지거·바스푼·글라스 등은 단독 판매 대부분 적자 — 세트 증정/묶음 판매 전용</div>
+  <div class="card !p-0 overflow-x-auto"><table>
+    <thead><tr><th>품목</th>
+      <th class="text-right">정상</th><th class="text-right">상시</th><th class="text-right">단독</th>
+      <th class="text-right">원가(별도)</th><th class="text-right">상시마진</th><th>운영</th></tr></thead>
+    <tbody>
+      <tr><td>범용 볼 보관통</td><td class="num">10,000</td><td class="num">10,000</td><td class="num">10,000</td><td class="num">1,475</td><td class="num num-pos">3,253</td><td>증정</td></tr>
+      <tr><td>스틱 보관통</td><td class="num">10,000</td><td class="num">10,000</td><td class="num">10,000</td><td class="num">1,648</td><td class="num num-pos">3,079</td><td>증정</td></tr>
+      <tr><td>볼 보관통+집게</td><td class="num">12,000</td><td class="num">12,000</td><td class="num">12,000</td><td class="num">2,603</td><td class="num num-pos">3,670</td><td>증정</td></tr>
+      <tr><td>스틱 보관통+집게</td><td class="num">12,000</td><td class="num">12,000</td><td class="num">12,000</td><td class="num">2,776</td><td class="num num-pos">3,496</td><td>증정</td></tr>
+      <tr><td>얼음집게 (이글)</td><td class="num">5,000</td><td class="num">5,000</td><td class="num">5,000</td><td class="num">1,128</td><td class="num num-neg">(265)</td><td>증정</td></tr>
+      <tr><td>지거 (30/45ml)</td><td class="num">10,000</td><td class="num">10,000</td><td class="num">10,000</td><td class="num">5,640</td><td class="num num-neg">(913)</td><td>세트 전용</td></tr>
+      <tr><td>바스푼</td><td class="num">5,000</td><td class="num">5,000</td><td class="num">5,000</td><td class="num">1,302</td><td class="num num-neg">(438)</td><td>증정</td></tr>
+      <tr class="bg-yellow-50"><td class="font-bold">★ 크리슨 글라스 하이볼잔 (신규)</td><td class="num">19,000</td><td class="num">16,000</td><td class="num">13,000</td><td class="num">8,000</td><td class="num num-pos">1,364</td><td>⛔ 세트 전용</td></tr>
+      <tr class="bg-yellow-50"><td class="font-bold">★ 크리슨 글라스 언더락잔 (신규)</td><td class="num">19,000</td><td class="num">16,000</td><td class="num">13,000</td><td class="num">8,000</td><td class="num num-pos">1,364</td><td>⛔ 세트 전용</td></tr>
+      <tr><td>하이볼 글라스 (기존)</td><td class="num">4,500</td><td class="num">4,500</td><td class="num">4,500</td><td class="num">1,154</td><td class="num num-neg">(676)</td><td>세트 전용</td></tr>
+      <tr><td>온더락 글라스 (기존)</td><td class="num">4,500</td><td class="num">4,500</td><td class="num">4,500</td><td class="num">1,457</td><td class="num num-neg">(980)</td><td>세트 전용</td></tr>
+      <tr><td>닐링 체어</td><td class="num">199,000</td><td class="num">199,000</td><td class="num">199,000</td><td class="num">78,897</td><td class="num num-pos">71,875</td><td>46.7% 유지</td></tr>
+      <tr><td>정과</td><td class="num">9,800</td><td class="num">9,800</td><td class="num">9,800</td><td class="num">3,803</td><td class="num num-pos">770</td><td>콜라보</td></tr>
+      <tr><td>세척솔</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>등록 예정</td></tr>
+      <tr><td>쇼핑백</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>등록 예정</td></tr>
+    </tbody>
+  </table></div>
+  <div class="notice"><b>크리슨 글라스잔 (신규):</b> 단품 단독특가 13,000원은 적자 (-9.5%). 세트 포함 시 흑자 전환. <b>홈바 세트·몰드 세트·선물세트 결합 판매만 운영.</b></div>
 </section>
 
-<!-- ================ ③ 거래처 · 인플루언서 ================ -->
+<!-- ============ ③ 거래처·인플루언서 ============ -->
 <section id="tab-pt" class="tab-content space-y-8">
-  <div class="notice"><b>1차안</b> — 2026-04-21 · 원본: 거래처정보 · 인플루언서 및 기타 거래처사 · 카페배포 리스트</div>
+  <div class="notice"><b>1차안</b> — 2026-04-22 · 원본: 거래처정보 · 인플루언서 및 기타 거래처사 · 카페배포 리스트</div>
 
   <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>생산·공급처</h2>
 
-  <details open><summary><span class="chip chip-abler">아블러 라인</span></summary>
+  <details open><summary><span class="chip chip-abler">아블러 라인</span> · 3개사</summary>
   <div class="mt-2 card !p-0 overflow-x-auto"><table>
     <thead><tr><th>협력</th><th>업체</th><th>담당</th><th>연락처</th><th>이메일</th><th>MOQ/리드</th><th>결제</th></tr></thead>
     <tbody>
-      <tr><td>몰드/실리콘 사출</td><td class="font-bold">성준테크/세진정밀</td><td>김희진</td><td>010-9902-5930</td><td>sejin5930@hanmail.net</td><td>MOQ 1천 · 일 64~128EA</td><td>착수 50% · 15일 잔금</td></tr>
-      <tr><td>텀블러</td><td class="font-bold">Zhejiang Green Home</td><td>Ellie Sheng</td><td>+86-177-5808-7527</td><td>elliesheng@greenhomewares.cn</td><td>MOQ 1천/컬러 · 리드 45일</td><td>PI 30% · BL 70%</td></tr>
-      <tr><td>아블러 제로</td><td class="font-bold">Shanghai ForeverGold</td><td>Aron</td><td>+86-21-6448-6703</td><td>—</td><td>MOQ 1천/컬러 · 45일</td><td>PI 30% · BL 70%</td></tr>
+      <tr><td>몰드/실리콘 사출</td><td class="font-bold">성준테크/세진정밀</td><td>김희진 주임</td><td>010-9902-5930</td><td>sejin5930@hanmail.net</td><td>MOQ 1천 · 일 8cavity 1벌: 64EA / 아이스볼 128EA / 스틱 128EA</td><td>착수 50% · 납품후 15일 잔금</td></tr>
+      <tr><td>텀블러</td><td class="font-bold">Zhejiang Green Home</td><td>Ellie Sheng</td><td>+86-177-5808-7527</td><td>elliesheng@greenhomewares.cn</td><td>MOQ 1천/컬러 · 2천(컬러배합) · 45일</td><td>PI 30% · BL 70%<br>알리바바 nemochip@gmail.com · Dean@911</td></tr>
+      <tr><td>아블러 제로</td><td class="font-bold">Shanghai ForeverGold</td><td>Aron</td><td>+86-21-6448-6703</td><td>—</td><td>MOQ 1천/컬러 · 45일</td><td>PI 30% · BL 70%<br>위쳇 ufococo</td></tr>
     </tbody>
   </table></div></details>
 
-  <details open><summary><span class="chip chip-duo">듀오메이커 라인</span></summary>
+  <details open><summary><span class="chip chip-duo">듀오메이커 라인</span> · 5개사</summary>
   <div class="mt-2 card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>협력</th><th>업체</th><th>담당</th><th>연락처</th><th>이메일</th></tr></thead>
+    <thead><tr><th>협력</th><th>업체</th><th>담당</th><th>연락처</th><th>이메일</th><th>MOQ/리드</th><th>결제</th></tr></thead>
     <tbody>
-      <tr><td>메이커·TPE 조립</td><td class="font-bold">해피홈</td><td>허현구 대표<br>허현미 전무</td><td>010-8873-4536<br>010-9334-4536</td><td>user1552@daum.net</td></tr>
-      <tr><td>방한재 EPP</td><td class="font-bold">태양케미컬</td><td>한영현 이사<br>강경남 부장<br>방현정 차장</td><td>010-4599-1234<br>010-3855-6436<br>010-7296-9396</td><td>bhj9396@suninchem.co.kr</td></tr>
-      <tr><td>메이커 인쇄</td><td class="font-bold">진명인쇄</td><td>장효동 대표</td><td>010-9141-9793</td><td>pupu2852@naver.com</td></tr>
-      <tr><td>실링스티커·메뉴얼</td><td class="font-bold">삼성피아이티</td><td>홍영호 대표<br>김가희 대리</td><td>010-4283-4008<br>031-768-4008</td><td>ssprt@korea.com</td></tr>
-      <tr><td>컬러박스·패키지</td><td class="font-bold">보명씨앤아이</td><td>정태욱 대표<br>윤원섭 실장</td><td>010-9010-4545<br>010-3436-4026</td><td>bmcni@naver.com</td></tr>
+      <tr><td>메이커·TPE 조립<br>[케이스·물통·조립 임가공]</td><td class="font-bold">해피홈</td><td>허현구 대표 (발주)<br>허현미 전무 (납품)</td><td>010-8873-4536<br>010-9334-4536</td><td>user1552@daum.net</td><td>—</td><td>착수 50% · 납품후 15일 잔금</td></tr>
+      <tr><td>방한재 EPP [메모리폼]</td><td class="font-bold">태양케미컬</td><td>한영현 이사 (발주)<br>강경남 부장 (납품)<br>방현정 차장 (회계)</td><td>010-4599-1234<br>010-3855-6436<br>010-7296-9396</td><td>bhj9396@suninchem.co.kr</td><td>MOQ 1만 · 1만 기준 4주</td><td>착수 50% · 납품후 15일 잔금</td></tr>
+      <tr><td>메이커 인쇄 [배면·측면]</td><td class="font-bold">진명인쇄</td><td>장효동 대표</td><td>010-9141-9793</td><td>pupu2852@naver.com</td><td>6천개 내외 영업일 5일</td><td>납품후 7일 결제</td></tr>
+      <tr><td>실링스티커·메뉴얼</td><td class="font-bold">삼성피아이티</td><td>홍영호 대표<br>김가희 대리 (회계)</td><td>010-4283-4008<br>031-768-4008</td><td>ssprt@korea.com</td><td>납기 데드라인 준수</td><td>납품후 7일 결제</td></tr>
+      <tr><td>컬러박스·기프트박스·패키지</td><td class="font-bold">보명씨앤아이</td><td>정태욱 대표<br>윤원섭 실장 (디자인)</td><td>010-9010-4545<br>010-3436-4026</td><td>bmcni@naver.com</td><td>MOQ 1만 · 영업일 10일</td><td>—</td></tr>
     </tbody>
   </table></div></details>
 
   <details><summary>공용 부자재·후가공</summary>
   <div class="mt-2 card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>항목</th><th>업체</th><th>담당</th><th>연락처</th><th>조건</th></tr></thead>
+    <thead><tr><th>항목</th><th>업체</th><th>담당</th><th>연락처</th><th>이메일</th><th>조건</th></tr></thead>
     <tbody>
-      <tr><td>글라스 (온더락/하이볼)</td><td>노빌코리아</td><td>—</td><td>—</td><td>—</td></tr>
-      <tr><td>PE봉투·택배박스</td><td>박스몰</td><td>—</td><td>—</td><td>—</td></tr>
-      <tr><td>박스 테이프</td><td>삼성테이프</td><td>정철운 이사</td><td>010-9921-2217</td><td>4천↑ 10~14일</td></tr>
-      <tr><td>레이저 각인</td><td>상상이상 인쇄</td><td>안명수 대표</td><td>010-5860-3323</td><td>MOQ 10↑(7천) · 50↑(6천) · 3~5일</td></tr>
-      <tr><td>스틱 보관통</td><td>세기프라텍</td><td>문지완 부장</td><td>010-8784-5537</td><td>sekitech14@naver.com · 2주~2달</td></tr>
-      <tr><td>볼 보관통</td><td>프라피아</td><td>김병수 차장</td><td>010-5415-2810</td><td>cleanqudtn@hanmail.net · 3주</td></tr>
-      <tr><td>적재박스</td><td>박스코리아</td><td>—</td><td>010-8837-5878</td><td>—</td></tr>
-      <tr><td>명함·리플렛</td><td>우리명함</td><td>오진구 대표</td><td>010-3346-7158</td><td>wricd@naver.com</td></tr>
+      <tr><td>글라스 (온더락/하이볼)</td><td>노빌코리아</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>PE봉투·택배박스</td><td>박스몰</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>박스 테이프 [브랜드로고]</td><td>삼성테이프</td><td>정철운 이사</td><td>010-9921-2217</td><td>—</td><td>4천개↑ 영업일 10~14일</td></tr>
+      <tr><td>아이스몰드 레이저 각인</td><td>상상이상 인쇄</td><td>안명수 대표</td><td>010-5860-3323</td><td>—</td><td>MOQ 10개↑(7천) · 50개↑(6천) · 3~5일</td></tr>
+      <tr><td>스틱얼음 보관통</td><td>세기프라텍</td><td>문지완 부장</td><td>010-8784-5537</td><td>sekitech14@naver.com</td><td>리드타임 2주~2달</td></tr>
+      <tr><td>아이스볼 보관통</td><td>프라피아</td><td>김병수 차장</td><td>010-5415-2810</td><td>cleanqudtn@hanmail.net</td><td>리드타임 3주</td></tr>
+      <tr><td>적재박스</td><td>박스코리아</td><td>—</td><td>010-8837-5878</td><td>—</td><td>—</td></tr>
+      <tr><td>명함·리플렛</td><td>우리명함</td><td>오진구 대표</td><td>010-3346-7158</td><td>wricd@naver.com</td><td>—</td></tr>
     </tbody>
   </table></div></details>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>물류 · 3PL · 택배</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>물류·3PL·택배</h2>
   <div class="card !p-0 overflow-x-auto"><table>
-    <thead><tr><th>구분</th><th>업체</th><th>담당</th><th>연락처</th><th>주소</th></tr></thead>
+    <thead><tr><th>구분</th><th>업체</th><th>담당</th><th>연락처</th><th>이메일</th><th>주소</th></tr></thead>
     <tbody>
-      <tr><td><span class="chip chip-partner">3PL</span></td><td class="font-bold">피플스토리</td><td>김명훈 대표</td><td>010-3927-2631 · pps@ppslogis.com</td><td>경기도 양주시 은현면 화합로1169번길 72-54</td></tr>
-      <tr><td>택배</td><td>CJ대한통운</td><td>임성희 실장</td><td>010-3215-5243 / 070-7766-0000</td><td>—</td></tr>
-      <tr><td>택배</td><td>CJ대한통운</td><td>이광배 기사</td><td>010-4223-4034 · kwangbae.lee@cj.net</td><td>—</td></tr>
+      <tr><td><span class="chip chip-partner">3PL</span></td><td class="font-bold">피플스토리</td><td>김명훈 대표</td><td>010-3927-2631</td><td>pps@ppslogis.com</td><td>경기도 양주시 은현면 화합로1169번길 72-54</td></tr>
+      <tr><td>택배 (본사)</td><td>CJ대한통운</td><td>임성희 실장</td><td>010-3215-5243 · 070-7766-0000</td><td>—</td><td>—</td></tr>
+      <tr><td>택배 기사</td><td>CJ대한통운</td><td>이광배 기사</td><td>010-4223-4034</td><td>kwangbae.lee@cj.net</td><td>—</td></tr>
     </tbody>
   </table></div>
 
@@ -579,60 +695,58 @@ details[open] summary{background:#7C3AED;color:#fff}
   <div class="card !p-0 overflow-x-auto"><table>
     <thead><tr><th>분류</th><th>업체</th><th>담당</th><th>역할</th><th>연락처</th><th>이메일</th><th>상태</th></tr></thead>
     <tbody>
-      <tr><td>영상/마케팅</td><td>쿠디</td><td>광후</td><td>대표·총괄</td><td>010-9991-4662</td><td>uijk7051408@gmail.com</td><td class="text-red-500 font-bold">계약종료</td></tr>
+      <tr><td>영상/마케팅</td><td>쿠디</td><td>광후</td><td>대표·총괄/기획</td><td>010-9991-4662</td><td>uijk7051408@gmail.com</td><td class="text-red-500 font-bold">계약종료</td></tr>
       <tr><td></td><td>쿠디</td><td>지걸 PD</td><td>콘티/촬영/편집</td><td>010-5840-0927</td><td>—</td><td class="text-red-500">종료</td></tr>
-      <tr><td>영상제작</td><td class="font-bold">이재현</td><td>이재현</td><td>영상제작</td><td>010-2494-6348</td><td>—</td><td class="text-green-600">활성</td></tr>
-      <tr><td>디자인 2D</td><td class="font-bold">프리랜서 남예원</td><td>남예원</td><td>웹·인쇄</td><td>010-3465-6639</td><td>hi0602199@gmail.com</td><td class="text-green-600">활성</td></tr>
-      <tr><td>기획/마케팅</td><td class="font-bold">알렌미디어</td><td>홍정우 대표</td><td>와디즈 펀딩메이트</td><td>010-5508-3235</td><td>allenmedia.master@gmail.com</td><td class="text-green-600">활성</td></tr>
-      <tr><td></td><td>알렌미디어</td><td>오수빈 실장</td><td>기획·일정</td><td>010-3146-5260</td><td>—</td><td></td></tr>
-      <tr><td></td><td>알렌미디어</td><td>정순용 PD</td><td>촬영·편집</td><td>010-9551-9382</td><td>—</td><td></td></tr>
-      <tr><td></td><td>알렌미디어</td><td>이진아 대리</td><td>운영 어시</td><td>010-8802-0795</td><td>—</td><td></td></tr>
-      <tr><td>CM송</td><td class="font-bold">케이준</td><td>김경준 PD</td><td>총괄·제작</td><td>010-3295-1081</td><td>bspsd@naver.com</td><td></td></tr>
+      <tr><td>영상제작</td><td class="font-bold">이재현 (재택/아웃소싱)</td><td>이재현</td><td>콘티/촬영/편집</td><td>010-2494-6348</td><td>—</td><td class="text-green-600">활성</td></tr>
+      <tr><td>디자인 2D</td><td class="font-bold">프리랜서 남예원</td><td>남예원</td><td>웹디자인/인쇄물</td><td>010-3465-6639</td><td>hi0602199@gmail.com</td><td class="text-green-600">활성</td></tr>
+      <tr><td>기획/마케팅 (와디즈 펀딩메이트)</td><td class="font-bold">알렌미디어</td><td>홍정우 대표</td><td>총괄</td><td>010-5508-3235</td><td>allenmedia.master@gmail.com</td><td class="text-green-600">활성</td></tr>
+      <tr><td></td><td>알렌미디어</td><td>오수빈 실장</td><td>기획·일정조율</td><td>010-3146-5260</td><td>—</td><td></td></tr>
+      <tr><td></td><td>알렌미디어</td><td>정순용 PD</td><td>촬영·편집·기획</td><td>010-9551-9382</td><td>—</td><td></td></tr>
+      <tr><td></td><td>알렌미디어</td><td>이진아 대리</td><td>운영 어시스턴트</td><td>010-8802-0795</td><td>—</td><td></td></tr>
+      <tr><td>CM송 제작</td><td class="font-bold">케이준</td><td>김경준 PD</td><td>총괄·제작</td><td>010-3295-1081</td><td>bspsd@naver.com</td><td></td></tr>
       <tr><td>디자인 3D</td><td class="font-bold">디자인36.5</td><td>강순구 대표</td><td>총괄</td><td>010-8253-2403</td><td>365design@naver.com</td><td></td></tr>
     </tbody>
   </table></div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>유튜브 크리에이터</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>유튜브 크리에이터 (11명)</h2>
   <div class="card !p-0 overflow-x-auto"><table>
     <thead><tr><th>채널</th><th>카테고리</th><th>담당</th><th>역할</th><th>연락처</th><th>이메일</th></tr></thead>
     <tbody>
       <tr><td class="font-bold">생명의물 위스키</td><td><span class="chip chip-youtube">위스키</span></td><td>박진수</td><td>대표/총괄</td><td>010-5272-7059</td><td>parkpoq7@gmail.com</td></tr>
-      <tr><td>생명의물 위스키</td><td><span class="chip chip-youtube">위스키</span></td><td>오민우</td><td>마스터/크리에이터</td><td>010-8181-1411</td><td>parkpoq7@gmail.com</td></tr>
-      <tr><td class="font-bold">술익는 집</td><td><span class="chip chip-youtube">전통주</span></td><td>이찬주</td><td>대표</td><td>010-8963-2059</td><td>soolhcontact@gmail.com</td></tr>
-      <tr><td class="font-bold">은수저</td><td><span class="chip chip-youtube">요리</span></td><td>허철</td><td>CYP 이사</td><td>010-4236-7774</td><td>me@cyp.kr</td></tr>
-      <tr><td class="font-bold">어쿠스틱 드링크</td><td><span class="chip chip-youtube">칵테일</span></td><td>김정규</td><td>대표</td><td>010-9277-6862</td><td>acousticdrinker@gmail.com</td></tr>
-      <tr><td class="font-bold">위안의 시간</td><td><span class="chip chip-youtube">위스키</span></td><td>현영민</td><td>대표</td><td>010-9978-7100</td><td>upinsidetime@gmail.com</td></tr>
-      <tr><td class="font-bold">한잔하는 MJ</td><td><span class="chip chip-youtube">위스키</span></td><td>전명진</td><td>대표</td><td>010-9094-0003</td><td>planetmj9@gmail.com</td></tr>
-      <tr><td class="font-bold">빛나는 요술TV</td><td><span class="chip chip-youtube">위스키</span></td><td>김빛나</td><td>대표</td><td>010-8570-5231</td><td>beitna108@naver.com</td></tr>
-      <tr><td class="font-bold">술주하</td><td><span class="chip chip-youtube">위스키</span></td><td>황부영</td><td>게스트·매니저</td><td>010-7582-5601</td><td>calorina00@naver.com</td></tr>
-      <tr><td class="font-bold">미스터위스키</td><td><span class="chip chip-youtube">위스키</span></td><td>박제영</td><td>마스터</td><td>010-8896-5357</td><td>—</td></tr>
-      <tr><td class="font-bold">아밥남</td><td><span class="chip chip-youtube">요리</span></td><td>진태두</td><td>매니저</td><td>010-9050-3512</td><td>—</td></tr>
+      <tr><td>생명의물 위스키</td><td><span class="chip chip-youtube">위스키</span></td><td>오민우</td><td>마스터·미누바 마스터</td><td>010-8181-1411</td><td>parkpoq7@gmail.com</td></tr>
+      <tr><td class="font-bold">술익는 집</td><td><span class="chip chip-youtube">전통주</span></td><td>이찬주</td><td>대표/총괄</td><td>010-8963-2059</td><td>soolhcontact@gmail.com</td></tr>
+      <tr><td class="font-bold">은수저</td><td><span class="chip chip-youtube">요리</span></td><td>허철</td><td>CYP·컨텐츠 기획 운영 이사</td><td>010-4236-7774</td><td>me@cyp.kr</td></tr>
+      <tr><td class="font-bold">어쿠스틱 드링크</td><td><span class="chip chip-youtube">칵테일</span></td><td>김정규</td><td>대표/총괄</td><td>010-9277-6862</td><td>acousticdrinker@gmail.com</td></tr>
+      <tr><td class="font-bold">위안의 시간</td><td><span class="chip chip-youtube">위스키</span></td><td>현영민</td><td>대표/총괄</td><td>010-9978-7100</td><td>upinsidetime@gmail.com</td></tr>
+      <tr><td class="font-bold">한잔하는 MJ</td><td><span class="chip chip-youtube">위스키</span></td><td>전명진</td><td>대표/총괄</td><td>010-9094-0003</td><td>planetmj9@gmail.com</td></tr>
+      <tr><td class="font-bold">빛나는 요술TV</td><td><span class="chip chip-youtube">위스키</span></td><td>김빛나</td><td>대표/총괄</td><td>010-8570-5231</td><td>beitna108@naver.com</td></tr>
+      <tr><td class="font-bold">술주하</td><td><span class="chip chip-youtube">위스키</span></td><td>황부영</td><td>게스트·크리에이터 매니저</td><td>010-7582-5601</td><td>calorina00@naver.com</td></tr>
+      <tr><td class="font-bold">미스터위스키</td><td><span class="chip chip-youtube">위스키</span></td><td>박제영</td><td>마스터·크리에이터</td><td>010-8896-5357</td><td>—</td></tr>
+      <tr><td class="font-bold">아밥남</td><td><span class="chip chip-youtube">요리</span></td><td>진태두</td><td>매니저/총괄</td><td>010-9050-3512</td><td>—</td></tr>
     </tbody>
   </table></div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span>공동구매·후원사</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span>공동구매·후원사·협회</h2>
   <div class="grid md:grid-cols-2 gap-4">
     <div class="card !p-0 overflow-x-auto"><table>
       <thead><tr><th>유형</th><th>업체</th><th>담당</th><th>연락처</th></tr></thead>
       <tbody>
-        <tr><td><span class="chip chip-share">공구 중계</span></td><td class="font-bold">우하컴퍼니</td><td>우석준 대표</td><td>010-7577-7225 · woohacompany@gmail.com</td></tr>
+        <tr><td><span class="chip chip-share">공구 중계 (벤더)</span></td><td class="font-bold">우하컴퍼니</td><td>우석준 대표</td><td>010-7577-7225 · woohacompany@gmail.com</td></tr>
         <tr><td><span class="chip chip-share">공구 직영</span></td><td class="font-bold">비즈 브릭스</td><td>김희철 이사</td><td>010-9668-9667 · slayers0128@naver.com</td></tr>
       </tbody>
     </table></div>
     <div class="card !p-0 overflow-x-auto"><table>
       <thead><tr><th>단체</th><th>담당</th><th>연락처</th><th>후원</th></tr></thead>
       <tbody>
-        <tr><td class="font-bold">베버리지 마스터협회</td><td>이석현 협회장</td><td>010-5329-2992</td><td>연 110만원</td></tr>
+        <tr><td class="font-bold">베버리지 마스터협회</td><td>이석현 협회장</td><td>010-5329-2992</td><td>연 110만원 (VAT별도)</td></tr>
         <tr><td class="font-bold">한국음료강사협의회</td><td>전재구 회장</td><td>010-4530-7109</td><td>—</td></tr>
-        <tr><td class="font-bold">홈바리스타클럽</td><td>김유한 매니저</td><td>010-4217-0777</td><td>—</td></tr>
+        <tr><td class="font-bold">홈바리스타클럽</td><td>김유한 카페매니저</td><td>010-4217-0777</td><td>—</td></tr>
       </tbody>
     </table></div>
   </div>
 
   <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑥</span>네이버 카페 배포 <span class="text-sm text-gray-500">· 상위 50</span></h2>
-  <div class="card mb-3">
-    <input type="text" id="cafeSearch" class="search-box" placeholder="🔍 카페명·카테고리 검색" oninput="filterCafes()">
-  </div>
+  <div class="card mb-3"><input type="text" id="cafeSearch" class="search-box" placeholder="🔍 카페명·카테고리 검색" oninput="filterCafes()"></div>
   <div class="card !p-0 overflow-x-auto">
   <table id="cafeTable">
     <thead><tr><th>No</th><th>카페명</th><th>카테고리</th><th class="text-right">회원수</th><th>URL</th></tr></thead>
@@ -672,7 +786,7 @@ details[open] summary{background:#7C3AED;color:#fff}
       <tr><td>33</td><td>경기도맛집</td><td>지역</td><td class="num">247,182</td><td><a class="text-purple-600" href="https://cafe.naver.com/ggmatzip" target="_blank">→</a></td></tr>
       <tr><td>34</td><td>우리아이 책카페</td><td>육아 도서</td><td class="num">246,224</td><td><a class="text-purple-600" href="https://cafe.naver.com/nowbook" target="_blank">→</a></td></tr>
       <tr><td>35</td><td>흥부야재테크</td><td>재테크</td><td class="num">245,772</td><td><a class="text-purple-600" href="https://cafe.naver.com/hbya" target="_blank">→</a></td></tr>
-      <tr><td>36</td><td>미즈넷 (구 지후맘)</td><td>임신·육아</td><td class="num">231,809</td><td><a class="text-purple-600" href="https://cafe.naver.com/miznett" target="_blank">→</a></td></tr>
+      <tr><td>36</td><td>미즈넷</td><td>임신·육아</td><td class="num">231,809</td><td><a class="text-purple-600" href="https://cafe.naver.com/miznett" target="_blank">→</a></td></tr>
       <tr><td>37</td><td>대구365</td><td>지역 육아</td><td class="num">232,233</td><td><a class="text-purple-600" href="https://cafe.naver.com/dgmom365" target="_blank">→</a></td></tr>
       <tr><td>38</td><td>더먹자</td><td>맛집</td><td class="num">224,760</td><td><a class="text-purple-600" href="https://cafe.naver.com/themukja" target="_blank">→</a></td></tr>
       <tr><td>39</td><td>웨딩공부</td><td>결혼</td><td class="num">211,861</td><td><a class="text-purple-600" href="https://cafe.naver.com/llchyll" target="_blank">→</a></td></tr>
@@ -690,30 +804,30 @@ details[open] summary{background:#7C3AED;color:#fff}
     </tbody>
   </table>
   </div>
-  <div class="text-xs text-gray-500 mt-2">※ 전체 500+ 원본: 01.거래처정보/★카페배포 리스트.xlsx</div>
+  <div class="text-xs text-gray-500 mt-2">전체 500+ 원본: 01.거래처정보/★카페배포 리스트.xlsx</div>
 </section>
 
-<!-- ================ ④ 목표 매출 ================ -->
+<!-- ============ ④ 목표 매출 ============ -->
 <section id="tab-sl" class="tab-content space-y-8">
-  <div class="notice"><b>1차안</b> — 2026-04-21 · 2025년 한국에프앤비 온라인 10억 목표</div>
+  <div class="notice">2025년 한국에프앤비 온라인 10억 목표</div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>대시보드</h2>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
     <div class="kpi-card"><div class="kpi-number">10억</div><div class="kpi-label">2025 총 목표</div></div>
     <div class="kpi-card"><div class="kpi-number">25</div><div class="kpi-label">배분 채널</div></div>
     <div class="kpi-card"><div class="kpi-number">8.7K</div><div class="kpi-label">2024 실적 (원)</div></div>
     <div class="kpi-card"><div class="kpi-number">×114K</div><div class="kpi-label">필요 성장</div></div>
   </div>
+
   <div class="card">
     <h3 class="font-bold mb-3 text-purple-700">A/B/C 등급별 배분</h3>
     <div class="space-y-3">
-      <div><div class="flex justify-between text-sm mb-1"><span><span class="chip badge-A">A</span> <b>핵심 9개</b></span><b>6억 5,200만 (65.2%)</b></div><div class="bar-track"><div class="bar-fill" style="width:65.2%"></div></div></div>
-      <div><div class="flex justify-between text-sm mb-1"><span><span class="chip badge-B">B</span> <b>확장 12개</b></span><b>3억 1,300만 (31.3%)</b></div><div class="bar-track"><div class="bar-fill" style="width:31.3%"></div></div></div>
-      <div><div class="flex justify-between text-sm mb-1"><span><span class="chip badge-review">C</span> <b>보조 4개</b></span><b>3,500만 (3.5%)</b></div><div class="bar-track"><div class="bar-fill" style="width:3.5%"></div></div></div>
+      <div><div class="flex justify-between text-sm mb-1"><span><span class="chip badge-A">A</span> 핵심 9개</span><b>6억 5,200만 (65.2%)</b></div><div class="bar-track"><div class="bar-fill" style="width:65.2%"></div></div></div>
+      <div><div class="flex justify-between text-sm mb-1"><span><span class="chip badge-B">B</span> 확장 12개</span><b>3억 1,300만 (31.3%)</b></div><div class="bar-track"><div class="bar-fill" style="width:31.3%"></div></div></div>
+      <div><div class="flex justify-between text-sm mb-1"><span><span class="chip badge-review">C</span> 보조 5개</span><b>3,500만 (3.5%)</b></div><div class="bar-track"><div class="bar-fill" style="width:3.5%"></div></div></div>
     </div>
   </div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>채널별 2025 목표</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>채널별 2025 목표</h2>
   <details open><summary><span class="badge badge-A">A등급</span> · 핵심 (65.2%)</summary>
   <div class="mt-2 card !p-0 overflow-x-auto"><table>
     <thead><tr><th>채널</th><th>구분</th><th class="text-right">비율</th><th class="text-right">연 목표</th><th class="text-right">1Q</th><th class="text-right">2Q</th><th class="text-right">3Q</th><th class="text-right">4Q</th></tr></thead>
@@ -723,8 +837,8 @@ details[open] summary{background:#7C3AED;color:#fff}
       <tr><td class="font-bold">카카오 톡스토어</td><td>오픈</td><td class="num">10%</td><td class="num">100,000,000</td><td class="num">2,500,000</td><td class="num">18,500,000</td><td class="num">32,500,000</td><td class="num">46,500,000</td></tr>
       <tr><td class="font-bold">그립</td><td>라이브</td><td class="num">5%</td><td class="num">50,000,000</td><td class="num">1,250,000</td><td class="num">9,250,000</td><td class="num">16,250,000</td><td class="num">23,250,000</td></tr>
       <tr><td>카카오 선물하기</td><td>오픈</td><td class="num">0.1%</td><td class="num">1,000,000</td><td class="num">25,000</td><td class="num">185,000</td><td class="num">325,000</td><td class="num">465,000</td></tr>
-      <tr><td>오아시스</td><td>전문몰</td><td class="num">0.1%</td><td class="num">1,000,000</td><td class="num">25,000</td><td class="num">185,000</td><td class="num">325,000</td><td class="num">465,000</td></tr>
-      <tr><td>마켓컬리</td><td>전문몰</td><td class="num">0.1%</td><td class="num">1,000,000</td><td class="num">25,000</td><td class="num">185,000</td><td class="num">325,000</td><td class="num">465,000</td></tr>
+      <tr><td>오아시스</td><td>전문</td><td class="num">0.1%</td><td class="num">1,000,000</td><td class="num">25,000</td><td class="num">185,000</td><td class="num">325,000</td><td class="num">465,000</td></tr>
+      <tr><td>마켓컬리</td><td>전문</td><td class="num">0.1%</td><td class="num">1,000,000</td><td class="num">25,000</td><td class="num">185,000</td><td class="num">325,000</td><td class="num">465,000</td></tr>
     </tbody>
   </table></div></details>
 
@@ -760,30 +874,30 @@ details[open] summary{background:#7C3AED;color:#fff}
     </tbody>
   </table></div></details>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span>월별 배분</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>월별 배분</h2>
   <div class="card !p-0 overflow-x-auto"><table>
     <thead><tr><th>월</th><th>비율</th><th class="text-right">목표</th><th>시즌</th><th>이슈</th></tr></thead>
     <tbody>
-      <tr class="season-winter"><td class="font-bold">1월</td><td>0.5%</td><td class="num">5,000,000</td><td>겨울</td><td>설</td></tr>
+      <tr class="season-winter"><td class="font-bold">1월</td><td>0.5%</td><td class="num">5,000,000</td><td>겨울</td><td>설 연휴</td></tr>
       <tr class="season-winter"><td class="font-bold">2월</td><td>1%</td><td class="num">10,000,000</td><td>봄 신상</td><td>비수기</td></tr>
       <tr class="season-spring"><td class="font-bold">3월</td><td>1%</td><td class="num">10,000,000</td><td>봄</td><td>신학기</td></tr>
-      <tr class="season-spring bg-green-50"><td class="font-bold">1분기</td><td class="font-bold">2.5%</td><td class="num font-bold">25,000,000</td><td>—</td><td>초기</td></tr>
+      <tr class="bg-green-50"><td class="font-bold">1분기</td><td class="font-bold">2.5%</td><td class="num font-bold">25,000,000</td><td>—</td><td>초기</td></tr>
       <tr class="season-spring"><td class="font-bold">4월</td><td>4.5%</td><td class="num">45,000,000</td><td>간절기</td><td>가정의달 준비</td></tr>
       <tr class="season-spring"><td class="font-bold">5월</td><td>6%</td><td class="num">60,000,000</td><td>간절기</td><td>⭐ 가정의 달</td></tr>
       <tr class="season-summer"><td class="font-bold">6월</td><td>8%</td><td class="num">80,000,000</td><td>여름</td><td>여름 준비</td></tr>
-      <tr class="bg-green-50"><td class="font-bold">2분기</td><td class="font-bold">18.5%</td><td class="num font-bold">185,000,000</td><td>—</td><td>가정의달</td></tr>
+      <tr class="bg-green-50"><td class="font-bold">2분기</td><td class="font-bold">18.5%</td><td class="num font-bold">185,000,000</td><td>—</td><td>가정의달 특수</td></tr>
       <tr class="season-summer"><td class="font-bold">7월</td><td>10%</td><td class="num">100,000,000</td><td>여름</td><td>⭐ 얼음 피크</td></tr>
-      <tr class="season-summer"><td class="font-bold">8월</td><td>9.5%</td><td class="num">95,000,000</td><td>여름</td><td>⭐ 여름</td></tr>
-      <tr class="season-fall"><td class="font-bold">9월</td><td>13%</td><td class="num">130,000,000</td><td>FW</td><td>⭐⭐ 추석</td></tr>
+      <tr class="season-summer"><td class="font-bold">8월</td><td>9.5%</td><td class="num">95,000,000</td><td>여름</td><td>⭐ 여름 후반</td></tr>
+      <tr class="season-fall"><td class="font-bold">9월</td><td>13%</td><td class="num">130,000,000</td><td>FW 시작</td><td>⭐⭐ 추석 선물</td></tr>
       <tr class="bg-green-50"><td class="font-bold">3분기</td><td class="font-bold">32.5%</td><td class="num font-bold">325,000,000</td><td>—</td><td>여름+추석</td></tr>
-      <tr class="season-fall"><td class="font-bold">10월</td><td>10.5%</td><td class="num">105,000,000</td><td>겨울</td><td>이사·결혼</td></tr>
-      <tr class="season-winter"><td class="font-bold">11월</td><td>14%</td><td class="num">140,000,000</td><td>겨울</td><td>블프</td></tr>
-      <tr class="season-winter"><td class="font-bold">12월</td><td>22%</td><td class="num">220,000,000</td><td>겨울</td><td>⭐⭐⭐ 크리스마스</td></tr>
+      <tr class="season-fall"><td class="font-bold">10월</td><td>10.5%</td><td class="num">105,000,000</td><td>겨울 시작</td><td>이사·결혼</td></tr>
+      <tr class="season-winter"><td class="font-bold">11월</td><td>14%</td><td class="num">140,000,000</td><td>겨울</td><td>블랙프라이데이</td></tr>
+      <tr class="season-winter"><td class="font-bold">12월</td><td>22%</td><td class="num">220,000,000</td><td>겨울</td><td>⭐⭐⭐ 크리스마스·연말</td></tr>
       <tr class="bg-green-50"><td class="font-bold">4분기</td><td class="font-bold">46.5%</td><td class="num font-bold">465,000,000</td><td>—</td><td>연말 피크</td></tr>
     </tbody>
   </table></div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>2024 실적 vs 2025 목표 (Gap)</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span>2024 실적 vs 2025 목표 Gap</h2>
   <div class="card !p-0 overflow-x-auto"><table>
     <thead><tr><th>채널</th><th class="text-right">2024 실적</th><th class="text-right">2024 비중</th><th class="text-right">2025 목표</th><th class="text-right">2025 비중</th><th class="text-right">필요</th><th>판단</th></tr></thead>
     <tbody>
@@ -799,13 +913,13 @@ details[open] summary{background:#7C3AED;color:#fff}
       <tr class="bg-gray-50 font-bold"><td>합계</td><td class="num">8,742,119</td><td class="num">100%</td><td class="num">1,000,000,000</td><td class="num">100%</td><td class="num text-purple-700">×114</td><td>전체</td></tr>
     </tbody>
   </table></div>
-  <div class="notice"><b>🎯 핵심:</b> 네이버 스마트스토어 3%→30%가 최대 Gap · 자사몰·톡스토어·쿠팡 3채널 합계 60%가 2025 집중 포인트. 쿠팡 편중 해소 전략.</div>
+  <div class="notice"><b>🎯 핵심:</b> 네이버 스마트스토어 3%→30% 최대 Gap · 자사몰·톡스토어·쿠팡 3채널 합계 60% 집중 · 쿠팡 편중 해소.</div>
 
-  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span>시즌 × 제품 매칭</h2>
+  <h2 class="text-2xl font-black flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>시즌 × 제품 매칭</h2>
   <div class="grid md:grid-cols-3 gap-4">
     <div class="card border-l-4 border-blue-500">
       <div class="brand-chip chip-duo mb-2">듀오메이커</div>
-      <p class="text-sm">5월 가정의 달 선물 · 9월 추석 · 12월 크리스마스 홈바 — <b>연중 객단가 중심</b></p>
+      <p class="text-sm">5월 가정의달 · 9월 추석 · 12월 크리스마스 홈바 — <b>연중 객단가 중심</b></p>
     </div>
     <div class="card border-l-4 border-pink-500">
       <div class="brand-chip chip-abler mb-2">아블러</div>
@@ -813,7 +927,7 @@ details[open] summary{background:#7C3AED;color:#fff}
     </div>
     <div class="card border-l-4 border-emerald-500">
       <div class="brand-chip chip-zero mb-2">아블러 제로</div>
-      <p class="text-sm">연중 베이스 · 3월 신학기 · 9월 이사철</p>
+      <p class="text-sm">연중 베이스 · 3월 신학기 · 9월 이사철 — <b>제품력 보완 후 확장</b></p>
     </div>
   </div>
 </section>
@@ -821,11 +935,12 @@ details[open] summary{background:#7C3AED;color:#fff}
 </main>
 
 <footer class="max-w-7xl mx-auto px-6 py-8 text-center text-xs text-gray-400 border-t">
-  쥬얼아이스 사업자산 통합 · 박지현 팀장 · 화경 제작 · 2026-04-21 · 계속 업데이트
+  쥬얼아이스 사업자산 통합 v2 · 박지현 팀장 · 화경 제작 · 2026-04-22 업데이트
 </footer>
 
 <script>
-const KEY='jihyun_asset_hub_v1';
+const KEY='jihyun_asset_hub_v2';
+let pwVisible=false;
 function showTab(id){
   document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
@@ -853,9 +968,7 @@ function saveContent(){
   try{
     localStorage.setItem(KEY,JSON.stringify(data));
     document.getElementById('saveStatus').textContent='✓ 저장됨 '+new Date().toLocaleTimeString('ko-KR');
-  }catch(e){
-    document.getElementById('saveStatus').textContent='⚠ 저장 실패 (용량 초과)';
-  }
+  }catch(e){document.getElementById('saveStatus').textContent='⚠ 저장 실패';}
 }
 function toggleEdit(){
   const el=document.getElementById('content');
@@ -865,8 +978,8 @@ function toggleEdit(){
   btn.textContent=now?'✎ 편집':'✎ 편집중...';
   btn.style.background=now?'#FDE047':'#DC2626';
   btn.style.color=now?'#1F2937':'#fff';
-  if(!now){el.focus();document.getElementById('saveStatus').textContent='편집 모드 ON';}
-  else{document.getElementById('saveStatus').textContent='편집 모드 OFF';}
+  document.getElementById('saveStatus').textContent=now?'편집 모드 OFF':'편집 모드 ON';
+  if(!now)el.focus();
 }
 function resetContent(){
   if(confirm('편집한 내용을 모두 되돌립니다. 계속?')){
@@ -875,12 +988,27 @@ function resetContent(){
   }
 }
 function copyShareUrl(){
-  const url=location.href;
+  const url='https://charlesmaster911.github.io/jewelice-asset-hub/';
   navigator.clipboard.writeText(url).then(()=>{
     document.getElementById('saveStatus').textContent='🔗 주소 복사됨';
-  }).catch(()=>{
-    prompt('이 주소를 복사하세요:',url);
+  }).catch(()=>{prompt('이 주소를 복사하세요:',url);});
+}
+function togglePW(){
+  pwVisible=!pwVisible;
+  const btn=document.getElementById('pwBtn');
+  document.querySelectorAll('.pw-mask').forEach(el=>{
+    if(pwVisible){
+      if(!el.dataset.masked){el.dataset.masked=el.textContent;}
+      el.textContent=el.dataset.pw;
+      el.className='pw-cell';
+    }else{
+      el.className='pw-mask';
+      el.textContent='••••••••';
+    }
   });
+  btn.textContent=pwVisible?'🔓 PW표시중':'🔐 PW숨김';
+  btn.style.background=pwVisible?'#DC2626':'#FEE2E2';
+  btn.style.color=pwVisible?'#fff':'#991B1B';
 }
 function filterCafes(){
   const q=document.getElementById('cafeSearch').value.toLowerCase();
