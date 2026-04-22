@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>① 채널 계정 & 회사정보 — 쥬얼아이스 사업자산</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{font-family:'Pretendard','Malgun Gothic',system-ui,sans-serif;background:#FAFAFA}
+.sig-bar{background:linear-gradient(90deg,#7C3AED 0%,#A78BFA 55%,#FDE047 100%)}
+.sig-purple{background:#7C3AED;color:#fff}
+.sig-yellow{background:#FDE047;color:#1F2937}
+.sig-purple-soft{background:#F3E8FF;color:#6D28D9}
+[contenteditable="true"]{background:#FFFBEB;outline:2px dashed #FCD34D;outline-offset:2px;border-radius:4px}
+.badge{display:inline-block;padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:700}
+.badge-A{background:#10B981;color:#fff}
+.badge-B{background:#3B82F6;color:#fff}
+.badge-new{background:#F59E0B;color:#fff}
+.badge-hold{background:#6B7280;color:#fff}
+.badge-review{background:#8B5CF6;color:#fff}
+.badge-stop{background:#EF4444;color:#fff}
+.badge-global{background:#0EA5E9;color:#fff}
+.badge-promo{background:#EC4899;color:#fff}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
+th{background:#F3E8FF;color:#5B21B6;font-weight:700;padding:10px 8px;border:1px solid #E9D5FF;text-align:left;position:sticky;top:72px;z-index:10}
+td{padding:8px;border:1px solid #EDE9FE;vertical-align:top}
+tr:hover td{background:#FEFCE8}
+h2{scroll-margin-top:80px}
+.anchor-nav a{display:inline-block;padding:6px 14px;background:#fff;border:1px solid #DDD6FE;border-radius:9999px;color:#6D28D9;font-weight:600;font-size:13px;margin:4px}
+.anchor-nav a:hover{background:#7C3AED;color:#fff}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #EDE9FE}
+summary{cursor:pointer;font-weight:700;padding:10px 14px;background:#F3E8FF;border-radius:8px;color:#6D28D9}
+summary:hover{background:#DDD6FE}
+details[open] summary{background:#7C3AED;color:#fff}
+.ctrl-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+.ctrl-btn-primary{background:#7C3AED;color:#fff}
+.ctrl-btn-primary:hover{background:#6D28D9}
+.ctrl-btn-yellow{background:#FDE047;color:#1F2937}
+.ctrl-btn-yellow:hover{background:#FACC15}
+.ctrl-btn-ghost{background:#F3F4F6;color:#374151}
+.ctrl-btn-ghost:hover{background:#E5E7EB}
+mark{background:#FDE047;padding:1px 4px;border-radius:3px}
+.notice{background:#FEF3C7;border-left:4px solid #F59E0B;padding:12px 16px;border-radius:4px;margin:12px 0;font-size:14px;color:#78350F}
+</style>
+</head>
+<body class="text-gray-800">
+
+<div class="sig-bar h-2"></div>
+
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-purple-100 shadow-sm">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div>
+      <div class="text-xs text-purple-600 font-bold tracking-wider">JEWELICE BUSINESS ASSET · 01 / 04</div>
+      <h1 class="text-xl font-black text-gray-900">채널 계정 <span class="text-purple-600">&amp;</span> 회사정보</h1>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="saveStatus" class="text-xs text-gray-500"></span>
+      <button class="ctrl-btn ctrl-btn-ghost" onclick="resetContent()">초기화</button>
+      <button class="ctrl-btn ctrl-btn-yellow" onclick="toggleEdit()" id="editBtn">✎ 편집</button>
+      <button class="ctrl-btn ctrl-btn-primary" onclick="saveContent()">💾 저장</button>
+    </div>
+  </div>
+  <nav class="max-w-7xl mx-auto px-6 pb-3 anchor-nav">
+    <a href="#company">① 회사정보</a>
+    <a href="#team">② 팀 명단</a>
+    <a href="#channels">③ 채널 계정 (61)</a>
+    <a href="#etc">④ 기타 계정</a>
+    <a href="#contract">⑤ 전자계약</a>
+    <a href="#ad">⑥ 광고/배송</a>
+  </nav>
+</header>
+
+<main id="content" class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+
+<div class="notice">
+  <strong>1차안</strong> — 2026-04-21 최초 생성 · <strong>원본:</strong> 촤종★마스터마인딩 사업팀_거래처정보20260330.xlsx · <strong>계속 업데이트 예정.</strong> 잘못된 정보나 업데이트 필요한 부분은 편집 모드로 바로 수정 가능합니다.
+</div>
+
+<!-- ① 회사정보 -->
+<section id="company">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>회사 기본정보</h2>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="card">
+      <div class="sig-yellow inline-block px-3 py-1 rounded text-xs font-bold mb-3">법인 · 메인</div>
+      <h3 class="text-lg font-bold mb-3">주식회사 마스터마인딩그룹</h3>
+      <table class="text-sm">
+        <tr><th class="w-28">대표</th><td>장정훈</td></tr>
+        <tr><th>사업자등록번호</th><td>426-87-00479</td></tr>
+        <tr><th>법인등록번호</th><td>110111-6134186</td></tr>
+        <tr><th>통신판매업</th><td>제 2023-성남중원-0086호</td></tr>
+        <tr><th>대표번호</th><td>070-7152-0340</td></tr>
+        <tr><th>휴대폰</th><td>010-9625-0340</td></tr>
+        <tr><th>대표메일</th><td>jewelice@jewelice.kr</td></tr>
+        <tr><th>정산계좌</th><td>KB국민은행 <strong>207301-04-086853</strong><br>(주식회사마스터마인딩그룹)</td></tr>
+        <tr><th>본사주소</th><td>(13403) 경기도 성남시 중원구 둔촌대로 388번길 24, 13층 1305A호<br>(상대원동, 성남 우림라이온스밸리 3차)</td></tr>
+        <tr><th>출고지 / 반품지</th><td>경기도 양주시 은현면 화합로1169번길 72-54<br>주식회사 피플스토리 (3PL)</td></tr>
+        <tr><th>기본 택배사</th><td>CJ대한통운 (본사사무실 · 3PL 동일)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="sig-purple-soft inline-block px-3 py-1 rounded text-xs font-bold mb-3">일반 사업자</div>
+      <h3 class="text-lg font-bold mb-3">씨앤에프 트레이딩 (C&amp;F Trading)</h3>
+      <table class="text-sm">
+        <tr><th class="w-28">대표</th><td>장정훈</td></tr>
+        <tr><th>사업자등록번호</th><td>620-38-00938</td></tr>
+        <tr><th>통신판매업</th><td>제 2024-성남수정-0869호</td></tr>
+        <tr><th>대표번호</th><td>070-7152-0340</td></tr>
+        <tr><th>대표메일</th><td>jewelice@jewelice.kr</td></tr>
+        <tr><th>주소</th><td>경기도 성남시 수정구 위례서일로 30, 1018호<br>(창곡동, 위례혜리움)</td></tr>
+        <tr><th>출고지 / 반품지</th><td>경기도 양주시 은현면 화합로1169번길 72-54<br>주식회사 피플스토리 (3PL)</td></tr>
+      </table>
+      <div class="mt-4 p-3 bg-purple-50 rounded text-xs text-purple-900">
+        <strong>활용 :</strong> 쿠팡 씨앤에프 계정 / 오픈마켓 서브 계정 운영용
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 card">
+    <h3 class="text-base font-bold mb-3"><span class="badge sig-purple">내선 · 메일 분장</span></h3>
+    <table>
+      <thead><tr><th>NO</th><th>용도</th><th>수신</th><th>e-mail</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>발주 (3PL)</td><td>발주담당</td><td>jewelice@jewelice.kr</td><td></td></tr>
+        <tr><td>2</td><td>세금계산서 · 정산</td><td>정산담당</td><td>jewelice@jewelice.kr</td><td>KB 207301-04-086853</td></tr>
+        <tr><td>3</td><td>문자 수발신</td><td>전 직원</td><td>jewelice@jewelice.kr</td><td></td></tr>
+        <tr><td>4</td><td>팩스</td><td>전 직원</td><td>jewelice@jewelice.kr</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ② 팀 명단 -->
+<section id="team">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>팀 명단</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>NO</th><th>직함 / 부서</th><th>이름</th><th>휴대폰</th><th>회사메일</th><th>네이트온</th><th>담당</th><th>비고 메일</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="font-bold">대표</td><td class="font-bold">장정훈</td><td>010-3167-0961</td><td>charles@jewelice.kr</td><td></td><td>전체 총괄</td><td>thinkintoreal@gmail.com / jewelice99@gmail.com / mmg.master3@gmail.com / hello@jewelice.kr</td></tr>
+        <tr class="bg-yellow-50"><td>2</td><td class="font-bold">팀장 · 사업본부</td><td class="font-bold">박지현</td><td>010-9942-7171</td><td>lucy@jewelice.kr</td><td>upupnn@nate.com</td><td>사업 총괄 운영 관리</td><td></td></tr>
+        <tr><td>3</td><td>차장 · 경영관리/SCM</td><td>이호혁</td><td>010-5000-8761</td><td>denny@jewelice.kr</td><td></td><td></td><td></td></tr>
+        <tr><td>4</td><td>과장 · MD 운영팀</td><td>권나경</td><td>010-4133-5844</td><td>bona@jewelice.kr</td><td>bknk32@nate.com</td><td></td><td></td></tr>
+        <tr><td>5</td><td>대리 · 콘텐츠 광고팀</td><td>조송희</td><td>010-7471-4479</td><td>kathy@jewelice.kr</td><td>zzong1324@nate.com</td><td></td><td></td></tr>
+        <tr><td>6</td><td>대리 · 고객지원팀</td><td>권수지</td><td>010-9545-1147</td><td>—</td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ③ 채널 계정 -->
+<section id="channels">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span>채널 계정 현황 <span class="text-sm font-normal text-gray-500">· 총 61개</span></h2>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 mb-4">
+    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">A등급</div><div class="text-2xl font-black text-emerald-600">9</div></div>
+    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">B등급</div><div class="text-2xl font-black text-blue-600">12</div></div>
+    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">신규</div><div class="text-2xl font-black text-amber-600">15</div></div>
+    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">보류</div><div class="text-2xl font-black text-gray-600">2</div></div>
+    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">검토</div><div class="text-2xl font-black text-violet-600">3</div></div>
+    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">글로벌</div><div class="text-2xl font-black text-sky-600">2</div></div>
+    <div class="card !p-3 text-center"><div class="text-xs text-gray-500">중단</div><div class="text-2xl font-black text-red-500">18</div></div>
+  </div>
+
+  <details open class="mb-3">
+    <summary>🟢 A등급 · 현 운영 (비율 3% · 핵심 채널 9개)</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto">
+    <table>
+      <thead><tr><th>NO</th><th>구분</th><th>채널</th><th>입점수수료</th><th>행사수수료</th><th>운영</th><th>ID</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>자사몰</td><td class="font-bold">카페24</td><td>—</td><td>5.0%</td><td><span class="badge badge-A">A</span></td><td>nemochip</td><td>자사몰</td></tr>
+        <tr><td>2</td><td>전문몰</td><td class="font-bold">유튜브 쇼핑</td><td>—</td><td>—</td><td><span class="badge badge-A">A</span></td><td>nemochip</td><td>자사몰 연결</td></tr>
+        <tr><td>3</td><td>자사몰</td><td class="font-bold">네이버 스마트스토어</td><td>2%</td><td>5.0%</td><td><span class="badge badge-A">A</span></td><td>jewelice99@gmail.com</td><td>판매자아이디</td></tr>
+        <tr><td>4</td><td>자사몰</td><td class="font-bold">네이버페이</td><td>2%</td><td>5.0%</td><td><span class="badge badge-A">A</span></td><td>nemochip2</td><td>네이버아이디</td></tr>
+        <tr><td>5</td><td>오픈마켓</td><td class="font-bold">카카오 파트너센터/페이</td><td>—</td><td>—</td><td><span class="badge badge-A">A</span></td><td>jewelice99@daum.net</td><td>기본3.3%+노출3.3%, 톡딜10%</td></tr>
+        <tr><td>6</td><td>오픈마켓</td><td class="font-bold">카카오 선물하기/톡스토어</td><td>—</td><td>—</td><td><span class="badge badge-A">A</span></td><td>jewelice99@daum.net</td><td>기본3.3%+노출3.3%, 톡딜10%</td></tr>
+        <tr><td>7</td><td>오픈마켓</td><td class="font-bold">와디즈</td><td>—</td><td>—</td><td><span class="badge badge-A">A</span></td><td>jewelice99@gmail.com</td><td>펀딩메이트: 알렌미디어</td></tr>
+        <tr><td>8</td><td>오픈마켓</td><td class="font-bold">쿠팡 (한반도키친)</td><td>35%</td><td>—</td><td><span class="badge badge-A">A</span></td><td>hanbandokitchen</td><td>메인계정</td></tr>
+        <tr><td>9</td><td>오픈마켓</td><td class="font-bold">쿠팡 (씨앤에프)</td><td>35%</td><td>—</td><td><span class="badge badge-A">A</span></td><td>nemochip</td><td>씨앤에프 계정</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+
+  <details class="mb-3">
+    <summary>🔵 B등급 · 현 운영 12개</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto">
+    <table>
+      <thead><tr><th>NO</th><th>구분</th><th>채널</th><th>입점수수료</th><th>행사수수료</th><th>운영</th><th>ID</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>10</td><td>종합몰</td><td class="font-bold">SSG</td><td>—</td><td>—</td><td><span class="badge badge-B">B</span></td><td>24778914</td><td></td></tr>
+        <tr><td>11</td><td>종합몰</td><td class="font-bold">롯데ON</td><td>15%</td><td>15.0%</td><td><span class="badge badge-B">B</span></td><td>jewelice99</td><td></td></tr>
+        <tr><td>12</td><td>오픈마켓</td><td class="font-bold">이베이 (마스터)</td><td>—</td><td>—</td><td><span class="badge badge-B">B</span></td><td>nemochip99</td><td></td></tr>
+        <tr><td>13</td><td>오픈마켓</td><td class="font-bold">지마켓</td><td>13%</td><td>—</td><td><span class="badge badge-B">B</span></td><td>nemochip</td><td></td></tr>
+        <tr><td>14</td><td>오픈마켓</td><td class="font-bold">지마켓 (메인)</td><td>13%</td><td>—</td><td><span class="badge badge-B">B</span></td><td>nemochip99</td><td>메인</td></tr>
+        <tr><td>15</td><td>오픈마켓</td><td class="font-bold">옥션</td><td>13%</td><td>—</td><td><span class="badge badge-B">B</span></td><td>nemochip99</td><td>메인</td></tr>
+        <tr><td>16</td><td>오픈마켓</td><td class="font-bold">11번가</td><td>13%</td><td>—</td><td><span class="badge badge-B">B</span></td><td>hanbandokitchen</td><td></td></tr>
+        <tr><td>17</td><td>전문몰</td><td class="font-bold">오아시스</td><td>8%</td><td>—</td><td><span class="badge badge-B">B</span></td><td>jewelice99</td><td></td></tr>
+        <tr><td>18</td><td>전문몰</td><td class="font-bold">오늘의집</td><td>8%</td><td>—</td><td><span class="badge badge-B">B</span></td><td>jewelice99@gmail.com</td><td></td></tr>
+        <tr><td>19</td><td>전문몰</td><td class="font-bold">토스</td><td>—</td><td>—</td><td><span class="badge badge-B">B</span></td><td>jewelice99@gmail.com</td><td></td></tr>
+        <tr><td>20</td><td>기타몰</td><td class="font-bold">올웨이즈</td><td>—</td><td>—</td><td><span class="badge badge-B">B</span></td><td>jewelice99</td><td>app 전용</td></tr>
+        <tr><td>21</td><td>판촉</td><td class="font-bold">고려기프트</td><td>—</td><td>—</td><td><span class="badge badge-B">B</span></td><td>jewelice99</td><td></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+
+  <details class="mb-3">
+    <summary>🟠 신규 추진 15개</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto">
+    <table>
+      <thead><tr><th>NO</th><th>구분</th><th>채널</th><th>입점수수료</th><th>행사수수료</th><th>ID</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>22</td><td>전문몰</td><td class="font-bold">마켓컬리</td><td>—</td><td>—</td><td>—</td><td><span class="badge badge-new">신규</span></td></tr>
+        <tr><td>23</td><td>종합몰</td><td class="font-bold">GS</td><td>30%</td><td>15.0%</td><td>1055784</td><td>협력사코드: 1055784</td></tr>
+        <tr><td>24</td><td>종합몰</td><td class="font-bold">CJ</td><td>30%</td><td>15.0%</td><td>576570</td><td></td></tr>
+        <tr><td>25</td><td>종합몰</td><td class="font-bold">갤러리아몰</td><td>25%</td><td>8.0%</td><td>—</td><td></td></tr>
+        <tr><td>26</td><td>라이브</td><td class="font-bold">그립</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td><td></td></tr>
+        <tr><td>27</td><td>전문몰</td><td class="font-bold">리멤버 선물하기</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td><td></td></tr>
+        <tr><td>28</td><td>종합몰</td><td class="font-bold">신세계TV쇼핑</td><td>—</td><td>—</td><td>—</td><td></td></tr>
+        <tr><td>29</td><td>전문몰</td><td class="font-bold">SK스토아</td><td>—</td><td>—</td><td>—</td><td></td></tr>
+        <tr><td>30</td><td>전문몰</td><td class="font-bold">T딜</td><td>—</td><td>—</td><td>jewelice</td><td></td></tr>
+        <tr><td>31</td><td>전문몰</td><td class="font-bold">HyundaiShop</td><td>—</td><td>—</td><td>jewelice99</td><td></td></tr>
+        <tr><td>32</td><td>전문몰</td><td class="font-bold">올리브영</td><td>—</td><td>—</td><td>jewelice99</td><td></td></tr>
+        <tr><td>33</td><td>전문몰</td><td class="font-bold">지그재그</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td><td>카카오스타일 파트너스</td></tr>
+        <tr><td>34</td><td>전문몰</td><td class="font-bold">코오롱</td><td>—</td><td>—</td><td>—</td><td></td></tr>
+        <tr><td>35</td><td>전문몰</td><td class="font-bold">에이블리</td><td>—</td><td>—</td><td>thinkintoreal@gmail.com</td><td></td></tr>
+        <tr><td>36</td><td>전문몰</td><td class="font-bold">무신사</td><td>—</td><td>—</td><td>342215</td><td></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+
+  <details class="mb-3">
+    <summary>⚪ 보류 · 검토 · 글로벌</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto">
+    <table>
+      <thead><tr><th>구분</th><th>채널</th><th>상태</th><th>수수료</th><th>행사</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>종합몰</td><td class="font-bold">Hmall</td><td><span class="badge badge-hold">보류</span></td><td>25%</td><td>20.0%</td><td></td></tr>
+        <tr><td>종합몰</td><td class="font-bold">더현대닷컴</td><td><span class="badge badge-hold">보류</span></td><td>—</td><td>—</td><td></td></tr>
+        <tr><td>종합몰</td><td class="font-bold">공영홈쇼핑</td><td><span class="badge badge-review">검토</span></td><td>—</td><td>—</td><td></td></tr>
+        <tr><td>종합몰</td><td class="font-bold">NS</td><td><span class="badge badge-review">검토</span></td><td>25%</td><td>15.0%</td><td></td></tr>
+        <tr><td>종합몰</td><td class="font-bold">홈앤쇼핑</td><td><span class="badge badge-review">검토</span></td><td>—</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td class="font-bold">쇼피파이</td><td><span class="badge badge-global">글로벌</span></td><td>—</td><td>—</td><td>jewelice@jewelice.kr</td></tr>
+        <tr><td>전문몰</td><td class="font-bold">아마존</td><td><span class="badge badge-global">글로벌</span></td><td>—</td><td>—</td><td>jewelice99@gmail.com</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+
+  <details class="mb-3">
+    <summary>🔴 운영 중단 (18)</summary>
+    <div class="mt-2 card !p-0 overflow-x-auto">
+    <table>
+      <thead><tr><th>구분</th><th>채널</th><th>수수료</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>오픈마켓</td><td>인터파크</td><td>13%</td><td></td></tr>
+        <tr><td>종합몰</td><td>AK</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>닥터다이어리</td><td>—</td><td>app 전용</td></tr>
+        <tr><td>전문몰</td><td>국민클럽</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>군복지몰</td><td>7%</td><td></td></tr>
+        <tr><td>전문몰</td><td>PX몰</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>에이블리 (구)</td><td>—</td><td>신규로 재진행</td></tr>
+        <tr><td>전문몰</td><td>허닭</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>제이슨딜</td><td>25%</td><td></td></tr>
+        <tr><td>전문몰</td><td>핑크다이어리</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>W 컨셉</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>떠리몰</td><td>15%</td><td></td></tr>
+        <tr><td>전문몰</td><td>이유몰</td><td>15%</td><td></td></tr>
+        <tr><td>오픈마켓</td><td>카카오 메이커스</td><td>—</td><td></td></tr>
+        <tr><td>마트</td><td>홈플러스</td><td>—</td><td></td></tr>
+        <tr><td>마트</td><td>롯데마트</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>아이스크림미디어</td><td>—</td><td></td></tr>
+        <tr><td>전문몰</td><td>이케이 주식회사</td><td>—</td><td>EK Co., Ltd</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+</section>
+
+<!-- ④ 기타 계정 -->
+<section id="etc">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span>기타 계정 · 운영 시스템</h2>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="card">
+      <h3 class="font-bold mb-3 text-purple-700">📦 사방넷 (통합관리)</h3>
+      <table>
+        <thead><tr><th>이름</th><th>ID</th></tr></thead>
+        <tbody>
+          <tr><td><strong>마스터 계정</strong> (jewelice99)</td><td>Charles@911</td></tr>
+          <tr><td>찰스</td><td>jewelice_charles</td></tr>
+          <tr><td class="font-bold bg-yellow-50">박지현</td><td class="bg-yellow-50">jewelice_lucy</td></tr>
+          <tr><td>이호혁</td><td>jewelice_denny</td></tr>
+          <tr><td>권나경</td><td>jewelice_bon2</td></tr>
+          <tr><td>조송희</td><td>jewelice_kathy</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 class="font-bold mb-3 text-purple-700">👥 채용 / 운영 플랫폼</h3>
+      <table>
+        <thead><tr><th>플랫폼</th><th>도메인</th><th>ID</th></tr></thead>
+        <tbody>
+          <tr><td>사람인</td><td>triplehhh</td><td>jewelice</td></tr>
+          <tr><td>잡코리아</td><td>triplehhh</td><td>jewelice</td></tr>
+          <tr><td>이지어드민</td><td>triplehhh</td><td>jewelice</td></tr>
+          <tr><td>판판대로</td><td>fanfandaero.kr</td><td>jewelice99@gmail.com</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 class="font-bold mb-3 text-purple-700">📱 SNS · 광고 계정</h3>
+      <table>
+        <thead><tr><th>채널</th><th>ID</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>구글 (대표)</td><td>thinktoreal@gmail.com</td><td>2차인증: 회사 폰</td></tr>
+          <tr><td>구글 (회사메일)</td><td>jewelice99@gmail.com</td><td>2차인증: 대표 폰</td></tr>
+          <tr><td>유튜브 SNS</td><td>thinktoreal@gmail.com</td><td></td></tr>
+          <tr><td>유튜브 주유소</td><td>thinktoreal@gmail.com</td><td>정과프로젝트</td></tr>
+          <tr><td>페이스북</td><td>nemochip@gmail.com</td><td>2차인증: 대표 폰</td></tr>
+          <tr><td class="font-bold bg-yellow-50">인스타그램 (공식)</td><td class="bg-yellow-50">jewelice_official</td><td class="bg-yellow-50">2차인증: 대표 폰 · 추가계정 있음</td></tr>
+          <tr><td>인스타 (정과)</td><td>nut.nut_official</td><td>정과프로젝트</td></tr>
+          <tr><td>틱톡</td><td>jewelice99@gmail.com</td><td>이메일/아이디 로그인</td></tr>
+          <tr><td>X</td><td>thinktoreal@gmail.com</td><td>구글 계정 로그인</td></tr>
+          <tr><td>메타 광고 (현)</td><td>jewelice99@gmail.com</td><td>2차 해킹 후 재생성</td></tr>
+          <tr><td>메타 광고 (구)</td><td>nemochip@gmail.com</td><td>1차 해킹 후 재생성</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 class="font-bold mb-3 text-purple-700">📧 메일 / 도메인</h3>
+      <table>
+        <thead><tr><th>항목</th><th>값</th></tr></thead>
+        <tbody>
+          <tr><td>다음메일</td><td>—</td></tr>
+          <tr><td>롯데택배 (엘토스)</td><td>—</td></tr>
+          <tr><td>회사메일 (다우오피스)</td><td>jewelice@jewelice.kr</td></tr>
+          <tr><td>개인 (대표)</td><td>charles@jewelice.kr / thinkintoreal@gmail.com</td></tr>
+          <tr><td>개인 (박지현)</td><td>lucy@jewelice.kr</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ 전자계약 -->
+<section id="contract">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span>전자계약 · 계약관련</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>구분</th><th>플랫폼</th><th>URL</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>법인</td><td>공인인증서</td><td>—</td><td>공인인증서 비밀번호 관리</td></tr>
+        <tr><td>법인</td><td>Hmall</td><td>전자계약</td><td></td></tr>
+        <tr><td>법인</td><td>갤러리아몰</td><td>전자계약</td><td></td></tr>
+        <tr><td>법인</td><td>공영쇼핑</td><td>전자계약</td><td></td></tr>
+        <tr><td>법인</td><td>더블유쇼핑</td><td>—</td><td></td></tr>
+        <tr><td>법인</td><td>싸인오케이</td><td>전자계약</td><td></td></tr>
+        <tr><td>법인</td><td>스마트빌사인</td><td>—</td><td></td></tr>
+        <tr><td>법인</td><td>스마트빌</td><td>—</td><td></td></tr>
+        <tr><td>법인</td><td>트러스트온</td><td>—</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ⑥ 광고 / 배송 / 기타 -->
+<section id="ad">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑥</span>광고 · 배송 · 디자인 · 참고</h2>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="card">
+      <h3 class="font-bold mb-3 text-purple-700">📣 광고 플랫폼</h3>
+      <ul class="text-sm space-y-1">
+        <li>• 네이버 광고</li>
+        <li>• 네이버 GFA광고</li>
+        <li>• 카카오모먼트</li>
+        <li>• 카카오 광고</li>
+        <li>• 메타 광고 (상기 SNS 참조)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="font-bold mb-3 text-purple-700">🚚 배송 / 물류</h3>
+      <ul class="text-sm space-y-1">
+        <li>• <strong>CJ대한통운</strong> (본사 · 3PL) · CNPlus 설치</li>
+        <li>• 후다닥퀵</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="font-bold mb-3 text-purple-700">🎨 디자인 · 인쇄</h3>
+      <ul class="text-sm space-y-1">
+        <li>• 클립아트코리아 — 이미지/PPT/폰트</li>
+        <li>• 성원애드피아 — 인쇄/출력</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="font-bold mb-3 text-purple-700">📚 참고 · 신고 · 협회</h3>
+      <ul class="text-sm space-y-1 grid grid-cols-2 gap-x-2">
+        <li>• 네이버 쇼핑라이브 관리툴</li>
+        <li>• 네이버 서치어드바이저</li>
+        <li>• 카카오 비즈니스 / 세미나</li>
+        <li>• 11번가 지식재산권보호센터</li>
+        <li>• 네이버 지식재산권신고센터</li>
+        <li>• 네이버 게시중단 요청</li>
+        <li>• 특허로</li>
+        <li>• 코리안넷</li>
+        <li>• 중소기업현황정보시스템</li>
+        <li>• 식품안전나라</li>
+        <li>• 한국건강기능식품협회 (표시광고심의)</li>
+        <li>• 한국식품산업협회</li>
+        <li>• 건강기능식품교육센터</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="mt-12 p-6 sig-purple rounded-xl text-white">
+  <div class="font-bold text-xl mb-2">📌 다음 업데이트 예정</div>
+  <ul class="text-sm space-y-1 opacity-90">
+    <li>• 채널별 정산계좌 · 사업자 매핑 (현재 엑셀에 빈 항목)</li>
+    <li>• 채널별 보증보험 기간</li>
+    <li>• 채널별 MD · 담당자 연락처</li>
+    <li>• 비밀번호 별도 보안 파일 분리 (현재 엑셀 그대로 인용)</li>
+  </ul>
+</div>
+
+</main>
+
+<footer class="max-w-7xl mx-auto px-6 py-8 text-center text-xs text-gray-400 border-t">
+  쥬얼아이스 사업자산 허브 · 박지현 팀장 · 화경 제작 · 2026-04-21
+</footer>
+
+<script>
+const KEY='jihyun_ch_accounts_v1';
+function loadContent(){
+  const saved=localStorage.getItem(KEY);
+  if(saved){
+    try{
+      const data=JSON.parse(saved);
+      if(data.html)document.getElementById('content').innerHTML=data.html;
+      if(data.ts)document.getElementById('saveStatus').textContent='마지막 저장 '+new Date(data.ts).toLocaleString('ko-KR');
+    }catch(e){}
+  }
+}
+function saveContent(){
+  const data={html:document.getElementById('content').innerHTML,ts:Date.now()};
+  localStorage.setItem(KEY,JSON.stringify(data));
+  document.getElementById('saveStatus').textContent='✓ 저장됨 '+new Date().toLocaleTimeString('ko-KR');
+}
+function toggleEdit(){
+  const el=document.getElementById('content');
+  const btn=document.getElementById('editBtn');
+  const now=el.contentEditable==='true';
+  el.contentEditable=now?'false':'true';
+  btn.textContent=now?'✎ 편집':'✎ 편집중';
+  btn.classList.toggle('ctrl-btn-yellow',!now?false:true);
+  if(!now){el.focus();document.getElementById('saveStatus').textContent='편집 모드';}
+}
+function resetContent(){
+  if(confirm('편집한 내용을 모두 되돌립니다. 계속?')){
+    localStorage.removeItem(KEY);
+    location.reload();
+  }
+}
+loadContent();
+window.addEventListener('beforeunload',(e)=>{
+  if(document.getElementById('content').contentEditable==='true'){
+    saveContent();
+  }
+});
+</script>
+</body>
+</html>
