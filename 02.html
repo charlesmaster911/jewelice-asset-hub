@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>② 상품리스트 · 원가 — 쥬얼아이스 사업자산</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body{font-family:'Pretendard','Malgun Gothic',system-ui,sans-serif;background:#FAFAFA}
+.sig-bar{background:linear-gradient(90deg,#7C3AED 0%,#A78BFA 55%,#FDE047 100%)}
+.sig-purple{background:#7C3AED;color:#fff}
+.sig-yellow{background:#FDE047;color:#1F2937}
+.sig-purple-soft{background:#F3E8FF;color:#6D28D9}
+[contenteditable="true"]{background:#FFFBEB;outline:2px dashed #FCD34D;outline-offset:2px;border-radius:4px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
+th{background:#F3E8FF;color:#5B21B6;font-weight:700;padding:10px 8px;border:1px solid #E9D5FF;text-align:left}
+td{padding:8px;border:1px solid #EDE9FE;vertical-align:top}
+tr:hover td{background:#FEFCE8}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.num-neg{color:#DC2626}
+.num-pos{color:#059669}
+h2{scroll-margin-top:80px}
+.anchor-nav a{display:inline-block;padding:6px 14px;background:#fff;border:1px solid #DDD6FE;border-radius:9999px;color:#6D28D9;font-weight:600;font-size:13px;margin:4px}
+.anchor-nav a:hover{background:#7C3AED;color:#fff}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #EDE9FE}
+summary{cursor:pointer;font-weight:700;padding:10px 14px;background:#F3E8FF;border-radius:8px;color:#6D28D9}
+details[open] summary{background:#7C3AED;color:#fff}
+.ctrl-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+.ctrl-btn-primary{background:#7C3AED;color:#fff}
+.ctrl-btn-yellow{background:#FDE047;color:#1F2937}
+.ctrl-btn-ghost{background:#F3F4F6;color:#374151}
+.brand-chip{display:inline-block;padding:3px 10px;border-radius:9999px;font-size:12px;font-weight:700}
+.brand-duo{background:#DBEAFE;color:#1E40AF}
+.brand-abler{background:#FCE7F3;color:#BE185D}
+.brand-zero{background:#D1FAE5;color:#065F46}
+.brand-new{background:#FDE047;color:#78350F}
+.brand-acc{background:#E5E7EB;color:#374151}
+.notice{background:#FEF3C7;border-left:4px solid #F59E0B;padding:12px 16px;border-radius:4px;margin:12px 0;font-size:14px;color:#78350F}
+.pack-warn{background:#FEE2E2;border-left:4px solid #DC2626;padding:12px 16px;border-radius:4px;margin:12px 0;font-size:14px;color:#7F1D1D}
+.sticky-th th{position:sticky;top:72px;z-index:10}
+</style>
+</head>
+<body class="text-gray-800">
+
+<div class="sig-bar h-2"></div>
+
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-purple-100 shadow-sm">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div>
+      <div class="text-xs text-purple-600 font-bold tracking-wider">JEWELICE BUSINESS ASSET · 02 / 04</div>
+      <h1 class="text-xl font-black text-gray-900">상품리스트 <span class="text-purple-600">·</span> 원가</h1>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="saveStatus" class="text-xs text-gray-500"></span>
+      <button class="ctrl-btn ctrl-btn-ghost" onclick="resetContent()">초기화</button>
+      <button class="ctrl-btn ctrl-btn-yellow" onclick="toggleEdit()" id="editBtn">✎ 편집</button>
+      <button class="ctrl-btn ctrl-btn-primary" onclick="saveContent()">💾 저장</button>
+    </div>
+  </div>
+  <nav class="max-w-7xl mx-auto px-6 pb-3 anchor-nav">
+    <a href="#overview">① 브랜드 개요</a>
+    <a href="#policy">② 가격 정책</a>
+    <a href="#duo">③ 듀오메이커</a>
+    <a href="#abler">④ 아블러</a>
+    <a href="#zero">⑤ 아블러 제로</a>
+    <a href="#new">⑥ 신규</a>
+    <a href="#acc">⑦ 구성품</a>
+  </nav>
+</header>
+
+<main id="content" class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+
+<div class="notice">
+  <strong>1차안</strong> — 2026-04-21 · 원본: <em>촤종★마스터마인딩 사업팀_거래처정보20260330.xlsx</em> + <em>마스터마인딩_가격관리표_v4</em> + <em>쥬얼아이스 본질_제품별_박지현</em> · <strong>모든 원가는 VAT별도 · 배송비는 3,000원 기준</strong>
+</div>
+
+<!-- ① 브랜드 개요 -->
+<section id="overview">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">①</span>브랜드 · 본질 개요</h2>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="card border-t-4 border-blue-500">
+      <div class="brand-chip brand-duo mb-3">듀오메이커</div>
+      <h3 class="text-lg font-bold mb-2">좋은 음료를 더 제대로 즐기게 해주는 좋은 얼음</h3>
+      <p class="text-sm text-gray-600 mb-3">프리미엄 얼음 경험 / 좋은 음료에는 좋은 얼음</p>
+      <div class="text-xs space-y-1 text-gray-700">
+        <div>• 정상가: <strong>89,000원~</strong></div>
+        <div>• 최저가: <strong>49,000원</strong> (▼44.9%)</div>
+        <div>• 타겟: 위스키·하이볼·홈바 감성 2030</div>
+      </div>
+    </div>
+    <div class="card border-t-4 border-pink-500">
+      <div class="brand-chip brand-abler mb-3">아블러</div>
+      <h3 class="text-lg font-bold mb-2">얼음 좋아하는 사람이 시원함을 오래 누리게 해주는 제품</h3>
+      <p class="text-sm text-gray-600 mb-3">얼음 부자 경험 / 아침에 담아 저녁까지 시원하게</p>
+      <div class="text-xs space-y-1 text-gray-700">
+        <div>• 정상가: <strong>69,000원~</strong></div>
+        <div>• 최저가: <strong>39,000원</strong> (▼43.5%)</div>
+        <div>• 타겟: 사무실·운동·일상, 시원함 지속</div>
+      </div>
+    </div>
+    <div class="card border-t-4 border-emerald-500">
+      <div class="brand-chip brand-zero mb-3">아블러 제로</div>
+      <h3 class="text-lg font-bold mb-2">매일 쓰는 텀블러를 더 깨끗하고 안심되게 쓰고 싶은 욕구</h3>
+      <p class="text-sm text-gray-600 mb-3">위생적이고 안심되는 데일리 사용 경험</p>
+      <div class="text-xs space-y-1 text-gray-700">
+        <div>• 정상가: <strong>49,000원~</strong></div>
+        <div>• 최저가: <strong>29,000원</strong> (▼40.8%)</div>
+        <div>• 타겟: 위생·안심·데일리</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <h3 class="font-bold mb-3 text-purple-700">💡 콘텐츠 · 광고 방향 (제품별 본질 기반)</h3>
+    <table>
+      <thead><tr><th>항목</th><th>방향</th></tr></thead>
+      <tbody>
+        <tr><td>상세페이지</td><td>설명서 ✗ / <strong>갖고 싶은 장면</strong> ○</td></tr>
+        <tr><td>광고</td><td>기능 설명 ✗ / <strong>리뷰처럼 보이는 경험 광고</strong> ○</td></tr>
+        <tr><td>구매 전환</td><td>"왜 사야 하지?" ✗ / <strong>"어? 이건 나도 필요하겠다"</strong> ○</td></tr>
+        <tr><td>리뷰</td><td>기능 평가 ✗ / <strong>실제 사용 장면 + 만족감</strong> ○</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ② 가격 정책 -->
+<section id="policy">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">②</span>가격 구간 · 공급가 산출 정책 <span class="text-sm font-normal text-gray-500">v4.0</span></h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead><tr><th>가격구간</th><th>정의</th><th class="text-center">수수료</th><th>공급가(VAT별도)</th><th>운영 주의</th></tr></thead>
+    <tbody>
+      <tr><td class="font-bold">정상가</td><td>채널 기본 표시가격 · 모든 할인율의 기준점</td><td class="text-center">0%</td><td>판매가 ÷ 1.1</td><td class="text-red-600">임의 변경 금지</td></tr>
+      <tr><td class="font-bold">상시가</td><td>채널 상시 노출 가격 · 연중 운영 기준가</td><td class="text-center">15%</td><td>공급가(포함) ÷ 1.1</td><td>정상가 대비 15~30% 수준 권장</td></tr>
+      <tr><td class="font-bold">특가</td><td>시즌 / 기간 한정 행사 가격</td><td class="text-center">15%</td><td>공급가(포함) ÷ 1.1</td><td>상시가 대비 최대 15% 추가</td></tr>
+      <tr class="bg-red-50"><td class="font-bold text-red-700">단독특가</td><td>채널 MD 단독 최저가 행사 · <strong>브랜드 최저가 = 절대 하한</strong></td><td class="text-center">15%</td><td>공급가(포함) ÷ 1.1</td><td class="text-red-700">최저가 이하 절대 불가 · MD 계약 필수</td></tr>
+      <tr><td class="font-bold">B2B가</td><td>기업 납품 · 판촉물 · 대량 직거래</td><td class="text-center">0%</td><td>판매가 ÷ 1.1</td><td>계약서 필수 · 재판매 금지</td></tr>
+      <tr><td class="font-bold">공동구매가</td><td>인스타 / 카카오 공구 채널 전용</td><td class="text-center">10%</td><td>공급가(포함) ÷ 1.1</td><td>중계사 수수료율 별도</td></tr>
+      <tr><td class="font-bold">폐쇄몰가</td><td>기업 복지몰 / 폐쇄몰 전용</td><td class="text-center">20%</td><td>공급가(포함) ÷ 1.1</td><td>폐쇄몰 수수료 계약 확인</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="pack-warn mt-3">
+    <strong>⛔ 마진 공식:</strong> 마진(VAT별도) = 공급가(별도) − 원가(별도) − 배송비(3,000원)<br>
+    <strong>⛔ 금형개발비</strong>는 원가에 포함하지 않음. 투자금 회수는 별도 기획으로 관리.
+  </div>
+</section>
+
+<!-- ③ 듀오메이커 -->
+<section id="duo">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">③</span><span class="brand-chip brand-duo">듀오메이커</span></h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead class="sticky-th"><tr>
+      <th>제품명</th><th>형태</th><th>색상</th>
+      <th class="text-right">정상가</th><th class="text-right">단독특가</th>
+      <th class="text-right">할인율</th>
+      <th class="text-right">공급가<br>(VAT별도)</th>
+      <th class="text-right">원가<br>(VAT별도)</th>
+      <th class="text-right">배송</th>
+      <th class="text-right">단독특가 마진</th>
+      <th class="text-right">이익률</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>아이스스틱 투명 얼음틀 위스키 홈바</td><td>스틱</td><td>화/블랙/블루</td><td class="num">89,000</td><td class="num">49,000</td><td class="num">100%</td><td class="num">37,864</td><td class="num">12,364</td><td class="num">3,000</td><td class="num num-pos">21,881</td><td class="num num-pos">58%</td></tr>
+      <tr><td>아이스볼 투명 얼음틀 위스키 홈바</td><td>아이스볼</td><td>화/블랙/블루</td><td class="num">89,000</td><td class="num">49,000</td><td class="num">100%</td><td class="num">37,864</td><td class="num">12,364</td><td class="num">3,000</td><td class="num num-pos">21,881</td><td class="num num-pos">58%</td></tr>
+      <tr class="bg-purple-50"><td><strong>+추가몰드</strong> 얼죽아·하이볼·위스키 전용</td><td>스틱·볼</td><td>4색</td><td class="num">158,000</td><td class="num">88,000</td><td class="num">100%</td><td class="num">68,000</td><td class="num">17,364</td><td class="num">3,000</td><td class="num num-pos">46,768</td><td class="num num-pos">69%</td></tr>
+      <tr class="bg-yellow-50"><td><strong>더블세트</strong> 아이스볼·스틱 + 보관통·집게 증정</td><td>스틱·볼</td><td>4색</td><td class="num">197,000</td><td class="num">118,000</td><td class="num">100%</td><td class="num">91,182</td><td class="num">27,637</td><td class="num">3,000</td><td class="num num-pos">59,163</td><td class="num num-pos">65%</td></tr>
+      <tr><td>쥬얼아이스 개별 몰드</td><td>스틱·볼</td><td>화이트</td><td class="num">69,000</td><td class="num">49,000</td><td class="num">100%</td><td class="num">37,864</td><td class="num">5,000</td><td class="num">3,000</td><td class="num num-pos">29,614</td><td class="num num-pos">78%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="notice mt-3">
+    <strong>제조 레퍼런스:</strong> 성준테크/세진정밀 (몰드/실리콘 사출, MOQ 1천개) · 해피홈 (TPE 몰드사출&조립) · 진명인쇄 (인쇄) · 삼성피아이티 (실링스티커) · 보명씨앤아이 (컬러박스·기프트박스)
+  </div>
+</section>
+
+<!-- ④ 아블러 -->
+<section id="abler">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">④</span><span class="brand-chip brand-abler">아블러</span></h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead class="sticky-th"><tr>
+      <th>제품명</th><th>형태</th><th>색상</th>
+      <th class="text-right">정상가</th><th class="text-right">상시가</th><th class="text-right">특가</th><th class="text-right">단독특가</th>
+      <th class="text-right">공급가<br>(VAT별도)</th>
+      <th class="text-right">원가<br>(VAT별도)</th>
+      <th class="text-right">단독특가<br>마진</th>
+      <th class="text-right">이익률</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="font-semibold">아블러 텀블러</td><td>—</td><td>블/블루/실/화</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">30,136</td><td class="num">3,985</td>
+        <td class="num num-pos">22,952</td><td class="num num-pos">76%</td></tr>
+      <tr><td>3in1 아이스메이커 텀블러 - <strong>볼</strong></td><td>볼</td><td>블/블루/실/화</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">30,136</td><td class="num">11,364</td>
+        <td class="num num-pos">15,204</td><td class="num num-pos">50%</td></tr>
+      <tr><td>3in1 아이스메이커 텀블러 - <strong>스피어</strong></td><td>스피어</td><td>블/블루/실/화</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">30,136</td><td class="num">11,364</td>
+        <td class="num num-pos">15,204</td><td class="num num-pos">50%</td></tr>
+      <tr><td>3in1 아이스메이커 텀블러 - <strong>큐브</strong></td><td>큐브</td><td>블/블루/실/화</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">30,136</td><td class="num">11,364</td>
+        <td class="num num-pos">15,204</td><td class="num num-pos">50%</td></tr>
+      <tr class="bg-purple-50"><td><strong>+추가몰드</strong> 3in1 (메이커+얼음컵+텀블러)</td><td>볼·스피어·큐브·해골</td><td>4색</td>
+        <td class="num">108,000</td><td class="num">79,000</td><td class="num">69,000</td><td class="num">63,000</td>
+        <td class="num">48,682</td><td class="num">17,273</td>
+        <td class="num num-pos">27,545</td><td class="num num-pos">57%</td></tr>
+      <tr class="bg-yellow-50"><td><strong>더블세트</strong> 3in1 + 보관통·집게 선물</td><td>볼·스피어·큐브·해골</td><td>4색</td>
+        <td class="num">138,000</td><td class="num">99,000</td><td class="num">85,000</td><td class="num">78,000</td>
+        <td class="num">60,273</td><td class="num">37,273</td>
+        <td class="num num-pos">18,136</td><td class="num num-pos">30%</td></tr>
+      <tr><td>아블러 추가 몰드</td><td>볼·스피어·큐브·해골</td><td>화이트</td>
+        <td class="num">69,000</td><td class="num">49,000</td><td class="num">45,000</td><td class="num">39,000</td>
+        <td class="num">30,136</td><td class="num">5,909</td>
+        <td class="num num-pos">20,932</td><td class="num num-pos">69%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="notice mt-3">
+    <strong>제조 레퍼런스:</strong> Zhejiang Green Home Industry (중국, Ellie Sheng · MOQ 1천개/컬러) · MOQ 2천개(컬러배합 시)
+  </div>
+</section>
+
+<!-- ⑤ 아블러 제로 -->
+<section id="zero">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑤</span><span class="brand-chip brand-zero">아블러 제로</span></h2>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead class="sticky-th"><tr>
+      <th>제품명</th><th>색상</th>
+      <th class="text-right">정상가</th><th class="text-right">상시가</th><th class="text-right">특가</th><th class="text-right">단독특가</th>
+      <th class="text-right">공급가<br>(VAT별도)</th>
+      <th class="text-right">원가<br>(VAT별도)</th>
+      <th class="text-right">단독특가<br>마진</th>
+      <th class="text-right">이익률</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>강화유리 이중 투명 텀블러</td><td>아이보리/블랙</td>
+        <td class="num">49,000</td><td class="num">39,000</td><td class="num">34,000</td><td class="num">29,000</td>
+        <td class="num">22,409</td><td class="num">5,690</td>
+        <td class="num num-pos">13,150</td><td class="num num-pos">59%</td></tr>
+      <tr class="bg-purple-50"><td><strong>[1+1]</strong> 강화유리 이중 투명 텀블러</td><td>아이보리/블랙</td>
+        <td class="num">98,000</td><td class="num">78,000</td><td class="num">68,000</td><td class="num">58,000</td>
+        <td class="num">44,818</td><td class="num">11,380</td>
+        <td class="num num-pos">29,300</td><td class="num num-pos">65%</td></tr>
+      <tr class="bg-yellow-50"><td class="font-bold">톡딜 [1+1] ★</td><td>블랙·아이보리</td>
+        <td class="num">98,000</td><td class="num">78,000</td><td class="num">49,000</td><td class="num">39,000</td>
+        <td class="num">30,136</td><td class="num">11,380</td>
+        <td class="num num-pos">14,618</td><td class="num num-pos">49%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="notice mt-3">
+    <strong>제조:</strong> Shanghai ForeverGold Industrial (Aron · MOQ 1천개/컬러)
+  </div>
+</section>
+
+<!-- ⑥ 신규 -->
+<section id="new">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑥</span><span class="brand-chip brand-new">신규 라인</span></h2>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="card border-t-4 border-yellow-400">
+      <div class="brand-chip brand-duo mb-2">듀오메이커</div>
+      <h3 class="text-lg font-bold mb-2">미니큐브 몰드 ★신규</h3>
+      <table class="text-sm">
+        <tr><th>정상가</th><td class="num">49,000원</td></tr>
+        <tr><th>최저 판매가</th><td class="num">35,000원</td></tr>
+        <tr><th>최대 할인율</th><td class="num">▼ 28.6%</td></tr>
+        <tr><th>제조원가</th><td class="num">12,982원 (VAT별도)</td></tr>
+      </table>
+      <div class="mt-3 p-3 bg-yellow-50 rounded text-xs text-yellow-900">
+        금형개발비는 원가 불포함. 별도 기획안으로 회수 관리.
+      </div>
+    </div>
+    <div class="card border-t-4 border-red-400">
+      <div class="brand-chip brand-new mb-2">크리슨 글라스잔</div>
+      <h3 class="text-lg font-bold mb-2">신규 ★ 세트 판매 권장</h3>
+      <table class="text-sm">
+        <tr><th>단품 정상가</th><td class="num">19,000원</td></tr>
+        <tr><th>단품 참고가</th><td class="num">15,000원</td></tr>
+        <tr><th>원가 (VAT별도)</th><td class="num">8,000원</td></tr>
+        <tr><th class="text-red-600">단품 단독특가</th><td class="num num-neg">13,000원 (적자)</td></tr>
+        <tr class="bg-green-50"><th class="text-green-700">세트 포함 시</th><td class="num num-pos">마진 2,614원 (21.1%)</td></tr>
+      </table>
+      <div class="pack-warn mt-3 !my-0">
+        <strong>⛔ 단품 단독 판매 금지</strong><br>
+        몰드 세트 / 홈바세트 / 선물세트 결합 판매만 운영
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 구성품 -->
+<section id="acc">
+  <h2 class="text-2xl font-black mb-4 flex items-center gap-2"><span class="sig-purple px-3 py-1 rounded-lg text-sm">⑦</span><span class="brand-chip brand-acc">구성품 · 증정용 · 기타</span></h2>
+  <div class="pack-warn">
+    <strong>⚠ 주의:</strong> 구성품 단독 판매는 대부분 적자 구조. 세트 증정용 또는 묶음 판매 전용.
+  </div>
+  <div class="card !p-0 overflow-x-auto">
+  <table>
+    <thead><tr>
+      <th>품목</th>
+      <th class="text-right">정상가</th><th class="text-right">상시가</th>
+      <th class="text-right">공급가<br>(VAT별도)</th>
+      <th class="text-right">원가<br>(VAT별도)</th>
+      <th class="text-right">배송</th>
+      <th class="text-right">상시 마진</th>
+      <th>운영</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>범용 볼 얼음 보관통</td><td class="num">10,000</td><td class="num">5,000</td><td class="num">3,864</td><td class="num">1,545</td><td class="num">3,000</td><td class="num num-neg">(759)</td><td>증정용</td></tr>
+      <tr><td>스틱 얼음 보관통</td><td class="num">10,000</td><td class="num">5,000</td><td class="num">3,864</td><td class="num">1,727</td><td class="num">3,000</td><td class="num num-neg">(950)</td><td>증정용</td></tr>
+      <tr><td>볼 보관통 + 집게</td><td class="num">12,000</td><td class="num">6,000</td><td class="num">4,636</td><td class="num">2,727</td><td class="num">3,000</td><td class="num num-neg">(1,227)</td><td>증정용</td></tr>
+      <tr><td>스틱 보관통 + 집게</td><td class="num">12,000</td><td class="num">6,000</td><td class="num">4,636</td><td class="num">2,909</td><td class="num">3,000</td><td class="num num-neg">(1,418)</td><td>증정용</td></tr>
+      <tr><td>얼음집게</td><td class="num">5,000</td><td class="num">2,500</td><td class="num">1,932</td><td class="num">1,182</td><td class="num">3,000</td><td class="num num-neg">(2,309)</td><td>증정용</td></tr>
+      <tr><td>지거</td><td class="num">10,000</td><td class="num">5,000</td><td class="num">3,864</td><td class="num">5,909</td><td class="num">3,000</td><td class="num num-neg">(5,341)</td><td>세트 전용</td></tr>
+      <tr><td>바스푼</td><td class="num">5,000</td><td class="num">2,500</td><td class="num">1,932</td><td class="num">1,364</td><td class="num">3,000</td><td class="num num-neg">(2,500)</td><td>증정용</td></tr>
+      <tr><td>하이볼 글라스</td><td class="num">4,500</td><td class="num">2,250</td><td class="num">1,739</td><td class="num">1,209</td><td class="num">3,000</td><td class="num num-neg">(2,531)</td><td>세트 전용</td></tr>
+      <tr><td>온더락 글라스</td><td class="num">4,500</td><td class="num">2,250</td><td class="num">1,739</td><td class="num">1,527</td><td class="num">3,000</td><td class="num num-neg">(2,865)</td><td>세트 전용</td></tr>
+      <tr><td>닐링 체어</td><td class="num">199,000</td><td class="num">99,500</td><td class="num">76,886</td><td class="num">82,654</td><td class="num">3,000</td><td class="num num-neg">(12,900)</td><td>⛔ 재검토</td></tr>
+      <tr><td>정과</td><td class="num">9,800</td><td class="num">4,900</td><td class="num">3,786</td><td class="num">3,984</td><td class="num">3,000</td><td class="num num-neg">(3,397)</td><td>콜라보</td></tr>
+      <tr><td>세척솔</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>등록 예정</td></tr>
+      <tr><td>쇼핑백</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>등록 예정</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<div class="mt-12 p-6 sig-purple rounded-xl text-white">
+  <div class="font-bold text-xl mb-2">📌 다음 업데이트 예정</div>
+  <ul class="text-sm space-y-1 opacity-90">
+    <li>• 선물세트 구성표 (마스터마인딩_가격관리표_v4 → 선물세트 시트 반영)</li>
+    <li>• 마진 요약 대시보드 지표 시각화</li>
+    <li>• 경쟁업체 가격 데이터 수집 (현재 빈 필드)</li>
+    <li>• 상품별 채널별 공급가 매핑 표</li>
+    <li>• 세척솔 · 쇼핑백 등 신규 구성품 가격 정책</li>
+  </ul>
+</div>
+
+</main>
+
+<footer class="max-w-7xl mx-auto px-6 py-8 text-center text-xs text-gray-400 border-t">
+  쥬얼아이스 사업자산 허브 · 박지현 팀장 · 화경 제작 · 2026-04-21
+</footer>
+
+<script>
+const KEY='jihyun_products_v1';
+function loadContent(){
+  const saved=localStorage.getItem(KEY);
+  if(saved){
+    try{
+      const data=JSON.parse(saved);
+      if(data.html)document.getElementById('content').innerHTML=data.html;
+      if(data.ts)document.getElementById('saveStatus').textContent='마지막 저장 '+new Date(data.ts).toLocaleString('ko-KR');
+    }catch(e){}
+  }
+}
+function saveContent(){
+  const data={html:document.getElementById('content').innerHTML,ts:Date.now()};
+  localStorage.setItem(KEY,JSON.stringify(data));
+  document.getElementById('saveStatus').textContent='✓ 저장됨 '+new Date().toLocaleTimeString('ko-KR');
+}
+function toggleEdit(){
+  const el=document.getElementById('content');
+  const btn=document.getElementById('editBtn');
+  const now=el.contentEditable==='true';
+  el.contentEditable=now?'false':'true';
+  btn.textContent=now?'✎ 편집':'✎ 편집중';
+  if(!now){el.focus();document.getElementById('saveStatus').textContent='편집 모드';}
+}
+function resetContent(){
+  if(confirm('편집한 내용을 모두 되돌립니다. 계속?')){
+    localStorage.removeItem(KEY);
+    location.reload();
+  }
+}
+loadContent();
+window.addEventListener('beforeunload',()=>{
+  if(document.getElementById('content').contentEditable==='true')saveContent();
+});
+</script>
+</body>
+</html>
